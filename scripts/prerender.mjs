@@ -3,7 +3,7 @@
 // the SEO plugin wrote stays byte for byte. Fails the build if a page renders no <h1>.
 import { createServer } from 'node:http';
 import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
-import { dirname, extname, join, resolve, sep } from 'node:path';
+import { dirname, extname, join, relative, resolve, sep } from 'node:path';
 import { chromium } from 'playwright';
 
 const DIST = resolve('dist');
@@ -94,13 +94,20 @@ if (failures.length) {
 }
 
 // Static hosts such as Hostinger do not apply Vercel's cleanUrls behaviour.
-// Mirror every top-level generated foo.html file as foo/index.html so /foo and
-// /foo/ work without a server rewrite. This includes the six legacy offer
-// pages, which have no React root and therefore are intentionally not in paths.
-for (const entry of readdirSync(DIST, { withFileTypes: true })) {
-  if (!entry.isFile() || extname(entry.name) !== '.html' || entry.name === 'index.html' || entry.name === '404.html') continue;
-  const path = entry.name.slice(0, -'.html'.length);
-  const source = join(DIST, entry.name);
+// Mirror every generated foo.html file as foo/index.html so /foo and /foo/ work
+// without a server rewrite. This must recurse: service routes are generated as
+// /services/foo.html, not at dist's top level. Legacy offer pages have no React
+// root but are still included because they are ordinary generated HTML files.
+const generatedHtml = (dir) =>
+  readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
+    const file = join(dir, entry.name);
+    return entry.isDirectory() ? generatedHtml(file) : entry.isFile() && extname(entry.name) === '.html' ? [file] : [];
+  });
+
+for (const source of generatedHtml(DIST)) {
+  const pathname = relative(DIST, source).replace(/\\/g, '/');
+  if (pathname === 'index.html' || pathname === '404.html' || pathname.endsWith('/index.html')) continue;
+  const path = pathname.slice(0, -'.html'.length);
   const destination = join(DIST, path, 'index.html');
   mkdirSync(dirname(destination), { recursive: true });
   copyFileSync(source, destination);

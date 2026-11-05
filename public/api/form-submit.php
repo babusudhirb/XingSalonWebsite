@@ -63,7 +63,8 @@ function sendMail(array $mail, array $to, string $subject, string $html, string 
         smtpCommand($socket, 'EHLO xingsalons.com', [250]);
         smtpCommand($socket, 'AUTH LOGIN', [334]);
         smtpCommand($socket, base64_encode($mail['smtp_user']), [334]);
-        smtpCommand($socket, base64_decode($mail['smtp_password_b64'], true) ?: '', [235]);
+        // SMTP AUTH LOGIN expects the Base64 token itself; the deployment already stores the password encoded.
+        smtpCommand($socket, $mail['smtp_password_b64'], [235]);
         smtpCommand($socket, 'MAIL FROM:<' . $mail['smtp_user'] . '>', [250]);
         foreach ($to as $recipient) smtpCommand($socket, 'RCPT TO:<' . $recipient . '>', [250, 251]);
         smtpCommand($socket, 'DATA', [354]);

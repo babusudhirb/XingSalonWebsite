@@ -65,17 +65,28 @@ const UNDERLINE = <span className="absolute inset-x-0 bottom-0 h-0.5 rounded-ful
  * A desktop nav item with a dropdown: opens on hover or from its button, Esc closes it and returns to that button.
  * With `href` the label is a link to the section's page and the chevron is the button.
  */
-function NavDropdown({ id, label, href, isActive, badge, children }: { id: string; label: string; href?: string; isActive: boolean; badge?: ReactNode; children: ReactNode }) {
+function NavDropdown({ id, label, href, isActive, badge, children, clickOnly = false }: { id: string; label: string; href?: string; isActive: boolean; badge?: ReactNode; children: ReactNode; clickOnly?: boolean }) {
   const [open, setOpen] = useState(false);
   const toggle = useRef<HTMLButtonElement>(null);
+  const menu = useRef<HTMLLIElement>(null);
   const chevron = <ChevronDown aria-hidden className={cn('size-3.5 transition-transform duration-200', open && 'rotate-180')} />;
   const tone = isActive ? 'font-medium text-berry' : 'text-ink';
 
+  useEffect(() => {
+    if (!clickOnly || !open) return;
+    const closeOnOutsideClick = (event: PointerEvent) => {
+      if (!menu.current?.contains(event.target as Node)) setOpen(false);
+    };
+    document.addEventListener('pointerdown', closeOnOutsideClick);
+    return () => document.removeEventListener('pointerdown', closeOnOutsideClick);
+  }, [clickOnly, open]);
+
   return (
     <li
+      ref={menu}
       className="relative flex h-full items-center"
-      onMouseEnter={() => setOpen(true)}
-      onMouseLeave={() => setOpen(false)}
+      onMouseEnter={() => !clickOnly && setOpen(true)}
+      onMouseLeave={() => !clickOnly && setOpen(false)}
       onBlur={(e) => !e.currentTarget.contains(e.relatedTarget) && setOpen(false)}
       onKeyDown={(e) => {
         if (e.key !== 'Escape' || !open) return;
@@ -108,7 +119,7 @@ function NavDropdown({ id, label, href, isActive, badge, children }: { id: strin
           type="button"
           aria-expanded={open}
           aria-controls={`${id}-menu`}
-          onClick={() => setOpen(true)}
+          onClick={() => setOpen((value) => !value)}
           className={cn(NAV_LINK, 'inline-flex items-center gap-1', tone)}
         >
           {label}
@@ -130,7 +141,7 @@ function LinksMenu({ id, label, href, isActive, menu, badge }: { id: string; lab
   const [openSalon, setOpenSalon] = useState<string | null>(null);
 
   return (
-    <NavDropdown id={id} label={label} href={href} isActive={isActive} badge={badge}>
+    <NavDropdown id={id} label={label} href={href} isActive={isActive} badge={badge} clickOnly>
       <ul>
         {menu.items.map((item) => {
           const hasServices = Boolean(item.links?.length);
@@ -140,8 +151,6 @@ function LinksMenu({ id, label, href, isActive, menu, badge }: { id: string; lab
             <li
               key={item.label}
               className="relative"
-              onMouseEnter={() => hasServices && setOpenSalon(item.label)}
-              onFocus={() => hasServices && setOpenSalon(item.label)}
             >
               {hasServices ? (
                 <button

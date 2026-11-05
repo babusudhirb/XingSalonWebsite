@@ -125,7 +125,12 @@ export function blendOfferPage(html: string, inject: Inject) {
 }
 
 /** What the built pages load: the theme after the pages' own styles, and the header's script. */
+// Hostinger caches the fixed header filename for a week. A per-build query string
+// ensures that the standalone offer pages fetch the matching header bundle after
+// every deployment instead of keeping a previous menu implementation.
+const headerBuildVersion = Date.now().toString(36);
+
 export const offerPageAssets: Inject = {
   head: '<link rel="stylesheet" href="/offer-pages/site-theme.css">',
-  body: '<script type="module" src="/embed/site-header.js"></script>',
+  body: `<script type="module" src="/embed/site-header.js?v=${headerBuildVersion}"></script>`,
 };

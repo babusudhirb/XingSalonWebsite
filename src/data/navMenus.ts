@@ -46,7 +46,11 @@ export const offersMenu = (): NavMenu => ({
   items: [
     ...locations.map((salon) => {
       if (salon.id === 'brookfield') {
-        return { label: 'AECS Salon Offers', note: 'Brookefield', href: 'https://xingsalon.com/' };
+        return {
+          label: 'Xing Brookfield',
+          href: 'https://xingsalon.com/',
+          links: [{ label: 'AECS Salon Offers', href: 'https://xingsalon.com/' }],
+        };
       }
       const pages = salonOfferPages[salon.id as BranchId];
       return { label: `Xing ${salon.name}`, href: pages['hair-colour'], links: OFFER_LINKS.map((offer) => ({ label: offer.label, href: pages[offer.id] })) };

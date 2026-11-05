@@ -1,5 +1,6 @@
 // The Offers, Gifts and Salons menus, for the desktop header and the mobile drawer.
 import { locations, salonsPath } from './branches';
+import { celebrationOffersPath } from './celebrationOffers';
 import type { Img } from './content';
 import { membershipPath } from './membershipLinks';
 import type { BranchId } from './offers';
@@ -32,6 +33,7 @@ export interface NavMenu {
 const GIFT_ITEMS: NavMenuItem[] = [
   { label: 'Membership Offers', href: `${membershipPath}#membership`, divider: true },
   { label: 'Gift Cards', href: `${membershipPath}#gift-cards` },
+  { label: 'Birthday & Anniversary Offers', href: celebrationOffersPath },
 ];
 
 const OFFER_LINKS: { id: OfferPageId; label: string }[] = [

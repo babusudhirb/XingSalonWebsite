@@ -1,6 +1,7 @@
 // Per-route <head> data: title, description, canonical and JSON-LD. Read by vite.config.ts at build time.
 import { about } from './about';
 import { salonsPath, type Salon } from './branches';
+import { celebrationOffersPath } from './celebrationOffers';
 import { branchPages, salonsPage, type BranchPageContent } from './branchPages';
 import { allFaqs, faqGroups, faqPage } from './faqPage';
 import { faq, faqPath, footer, guidePath, guides, hero, HERO_SIZES, locations, seo, SERVICE_HERO_SIZES, signatureColor, site } from './content';
@@ -566,6 +567,45 @@ export const faqPageMeta: PageMeta = {
 
 /** Places the gift cards and memberships serve, named in the schema. */
 const GM_AREAS = ['Bengaluru', 'Sarjapur Road', 'HSR Layout', 'Brookfield', 'Koramangala', 'Bellandur', 'Whitefield', 'Marathahalli', 'ITPL', 'Electronic City'];
+
+/** /birthday-anniversary-offers: terms for the two celebratory salon offers. */
+export const celebrationOffersMeta: PageMeta = {
+  path: celebrationOffersPath,
+  title: 'Birthday & Anniversary Offers in Bangalore | Xing Salon',
+  description: 'Celebrate your birthday or anniversary at Xing Premium Salon with flat 20% off within seven days of your special date. Monday–Thursday terms apply.',
+  image: { src: '/images/birthday-offer.png', width: 1280, height: 684, alt: 'Xing birthday offer: flat 20% off' },
+  preload: { src: '/images/birthday-offer.png', sizes: '(min-width: 1024px) 50vw, 100vw', type: 'image/png' },
+  jsonLd: [
+    crumbs([
+      ['Home', '/'],
+      ['Birthday & Anniversary Offers', celebrationOffersPath],
+    ]),
+    {
+      '@context': 'https://schema.org',
+      '@type': 'OfferCatalog',
+      name: 'Xing Birthday & Anniversary Offers',
+      url: abs(celebrationOffersPath),
+      itemListElement: [
+        {
+          '@type': 'Offer',
+          name: 'Birthday offer — Flat 20% off',
+          description: 'Flat 20% off, valid within seven days of your birthday. Monday through Thursday only; show ID at the salon; advance booking preferred.',
+          url: `${abs(celebrationOffersPath)}#birthday`,
+          seller: { '@id': `${site.url}/#organization` },
+          itemOffered: { '@type': 'Service', name: 'Birthday salon celebration' },
+        },
+        {
+          '@type': 'Offer',
+          name: 'Anniversary offer — Flat 20% off',
+          description: 'Flat 20% off, valid within seven days of your anniversary. Monday through Thursday only; mention at booking; advance booking required.',
+          url: `${abs(celebrationOffersPath)}#anniversary`,
+          seller: { '@id': `${site.url}/#organization` },
+          itemOffered: { '@type': 'Service', name: 'Anniversary salon celebration' },
+        },
+      ],
+    },
+  ],
+};
 
 /**
  * /membership-gift-cards: the organisation's catalogue of memberships and gift cards (as services, never with a

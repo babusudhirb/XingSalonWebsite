@@ -189,13 +189,13 @@ function ServiceMenu({ openId, query, scrollTo, onToggle, onQuery }: ServiceMenu
           </div>
           <Button
             size="sm"
-            variant="outline"
+            variant="primary"
             href="/menu/xing-salons-menu-catalog-2026.pdf"
             external
             arrow={false}
-            className="self-start border-berry/70 bg-white pr-4 shadow-sm hover:shadow-soft sm:self-auto"
+            className="self-start pr-4 shadow-sm hover:shadow-soft sm:self-auto"
           >
-            <span className="grid size-6 place-items-center rounded-full bg-berry text-cream transition-transform duration-200 group-hover/btn:rotate-[-8deg] group-hover/btn:scale-110 motion-reduce:transition-none">
+            <span className="grid size-6 place-items-center rounded-full bg-cream/15 text-cream transition-transform duration-200 group-hover/btn:rotate-[-8deg] group-hover/btn:scale-110 motion-reduce:transition-none">
               <BookOpen aria-hidden className="size-3.5 stroke-[2.5]" />
             </span>
             Xing Salons Menu

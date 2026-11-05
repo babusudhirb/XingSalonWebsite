@@ -48,9 +48,11 @@ jobs:
       - name: Install the secure SSH transfer helper
         run: sudo apt-get update && sudo apt-get install --yes sshpass
 
-      # Hostinger's SSH service uses port 65002. Pin its ED25519 fingerprint
-      # shown in hPanel before sending the deployment password. A staging archive
-      # ensures public_html is replaced only after the complete build arrives.
+      # Hostinger's SSH service uses port 65002. First make an unauthenticated
+      # handshake (password and interactive login are disabled), save the public
+      # host key, and verify the hPanel fingerprint before sending credentials.
+      # A staging archive ensures public_html is replaced only after the complete
+      # build arrives.
       - name: Replace Hostinger public_html with the verified build over SSH
         env:
           HOSTINGER_HOST: ${{ secrets.HOSTINGER_FTP_SERVER }}
@@ -58,7 +60,7 @@ jobs:
           HOSTINGER_PASSWORD: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
         run: |
           install -m 700 -d ~/.ssh
-          ssh-keyscan -p 65002 -t ed25519 "$HOSTINGER_HOST" > ~/.ssh/known_hosts
+          ssh -p 65002 -o StrictHostKeyChecking=accept-new -o PreferredAuthentications=none -o PasswordAuthentication=no -o KbdInteractiveAuthentication=no -o GSSAPIAuthentication=no "$HOSTINGER_USERNAME@$HOSTINGER_HOST" 'true' || true
           ssh-keygen -lf ~/.ssh/known_hosts -E sha256 | grep -F 'SHA256:XQQLhQE5nX/8jCp35U3StskSjy++r4ncFsnJufIu6QII'
           tar -C dist -czf "$RUNNER_TEMP/xingsalons-build.tar.gz" .
           export SSHPASS="$HOSTINGER_PASSWORD"

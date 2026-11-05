@@ -190,7 +190,7 @@ function ServiceMenu({ openId, query, scrollTo, onToggle, onQuery }: ServiceMenu
           <Button
             size="sm"
             variant="outline"
-            href="/downloads/xing-salons-menu-catalog-2026.pdf"
+            href="/menu/xing-salons-menu-catalog-2026.pdf"
             external
             arrow={false}
             className="self-start border-berry/70 bg-white pr-4 shadow-sm hover:shadow-soft sm:self-auto"

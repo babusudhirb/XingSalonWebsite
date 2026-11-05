@@ -30,6 +30,23 @@ jobs:
       - name: Install application dependencies
         run: npm ci
 
+      # Fail before deploying if the dedicated mailbox password is missing or cannot authenticate. This sends no
+      # message; it only opens a TLS SMTP session and logs in.
+      - name: Verify Hostinger SMTP credentials
+        env:
+          HOSTINGER_SMTP_PASSWORD: ${{ secrets.HOSTINGER_SMTP_PASSWORD }}
+        run: |
+          test -n "$HOSTINGER_SMTP_PASSWORD"
+          python3 - <<'PY'
+          import os
+          import smtplib
+          import ssl
+
+          with smtplib.SMTP_SSL('smtp.hostinger.com', 465, context=ssl.create_default_context(), timeout=20) as smtp:
+              smtp.login('appointments@xingsalons.com', os.environ['HOSTINGER_SMTP_PASSWORD'])
+          print('Hostinger SMTP authentication succeeded.')
+          PY
+
       # The site's build pre-renders pages for search engines, which requires Chromium.
       - name: Install the pre-rendering browser
         run: npx playwright install --with-deps chromium

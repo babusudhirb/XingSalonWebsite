@@ -1,6 +1,6 @@
 import { useState, type ReactNode } from 'react';
 import { ArrowUp, ChevronDown, Dumbbell, Facebook, Instagram, Mail, Navigation, Phone } from 'lucide-react';
-import { useBooking } from '../context/booking';
+import { bookingPath } from '../data/bookingLinks';
 import { builtBy, cta, footer, locations, site } from '../data/content';
 import { fitness } from '../data/fitness';
 import { GRIEVANCES, salonsPath } from '../data/branches';
@@ -16,8 +16,6 @@ const SOCIAL_ICONS = { instagram: Instagram, facebook: Facebook } as const;
 type SocialIcon = keyof typeof SOCIAL_ICONS;
 
 export function CtaBand() {
-  const booking = useBooking();
-
   return (
     <section aria-labelledby="cta-title" className="on-dark relative overflow-hidden border-b border-cream/10 bg-ink py-12">
       <Floral className="-left-10 -top-10 h-56 rotate-180 text-berry" />
@@ -27,7 +25,7 @@ export function CtaBand() {
           {cta.title}
         </h2>
         <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:flex-wrap sm:justify-center">
-          <Button onClick={() => booking.open()}>{cta.book}</Button>
+          <Button href={bookingPath}>{cta.book}</Button>
           <Button variant="outlineLight" href={salonsPath} arrow={false}>
             {cta.find}
           </Button>

@@ -1,4 +1,5 @@
 import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from 'react';
+import { bookingHref } from '../data/bookingLinks';
 
 interface BookingState {
   isOpen: boolean;
@@ -28,7 +29,9 @@ export function BookingProvider({ children }: { children: ReactNode }) {
     setLocation(presetLocation);
     setDetail(presetDetail);
     setOffer(presetOffer);
-    setIsOpen(true);
+    // Booking needs a stable, shareable URL for Google Business Profile and campaigns. Keep the CTA's exact
+    // service, salon and offer context as query parameters instead of opening an unshareable overlay.
+    window.location.assign(bookingHref(presetService, presetLocation, presetDetail, presetOffer));
   }, []);
   const close = useCallback(() => setIsOpen(false), []);
 

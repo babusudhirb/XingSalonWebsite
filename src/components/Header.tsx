@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
 import { ChevronDown, ChevronRight, MapPin, Menu, Phone } from 'lucide-react';
-import { useBooking } from '../context/booking';
+import { bookingPath } from '../data/bookingLinks';
 import { locations, salonsPath } from '../data/branches';
 import { faqPath, hero, nav, site } from '../data/content';
 import { offersMenu, salonsMenu, type NavMenu } from '../data/navMenus';
@@ -242,7 +242,6 @@ function SalonsMenu({ label, isActive }: { label: string; isActive: boolean }) {
 }
 
 export function Header() {
-  const booking = useBooking();
   const contact = pageContact();
   const spied = useScrollSpy(NAV_IDS);
   // Service pages have no landing sections to spy on: they sit under Services.
@@ -355,7 +354,7 @@ export function Header() {
               <Phone aria-hidden className="size-4 text-berry" />
               {contact?.phone ?? 'Call a salon'}
             </a>
-            <Button size="sm" onClick={() => booking.open()} className="hidden min-h-11 md:inline-flex">
+            <Button size="sm" href={bookingPath} className="hidden min-h-11 md:inline-flex">
               {hero.primaryCta}
             </Button>
             <a

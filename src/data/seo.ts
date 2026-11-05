@@ -2,6 +2,7 @@
 import { about } from './about';
 import { salonsPath, type Salon } from './branches';
 import { celebrationOffersPath } from './celebrationOffers';
+import { bookingPath } from './bookingLinks';
 import { branchPages, salonsPage, type BranchPageContent } from './branchPages';
 import { allFaqs, faqGroups, faqPage } from './faqPage';
 import { faq, faqPath, footer, guidePath, guides, hero, HERO_SIZES, locations, seo, SERVICE_HERO_SIZES, signatureColor, site } from './content';
@@ -567,6 +568,30 @@ export const faqPageMeta: PageMeta = {
 
 /** Places the gift cards and memberships serve, named in the schema. */
 const GM_AREAS = ['Bengaluru', 'Sarjapur Road', 'HSR Layout', 'Brookfield', 'Koramangala', 'Bellandur', 'Whitefield', 'Marathahalli', 'ITPL', 'Electronic City'];
+
+/** The permanent booking URL, suitable for Google Business Profile and campaign links. */
+export const bookingMeta: PageMeta = {
+  path: bookingPath,
+  title: 'Book a Salon Appointment in Bangalore | Xing Premium Salon',
+  description: 'Book your hair, skin, nail or salon appointment at Xing Premium Salon in Sarjapur Road, HSR Layout or Brookfield, Bangalore.',
+  image: OG_IMAGE,
+  jsonLd: [
+    crumbs([
+      ['Home', '/'],
+      ['Book an Appointment', bookingPath],
+    ]),
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      '@id': `${abs(bookingPath)}#webpage`,
+      url: abs(bookingPath),
+      name: 'Book an Appointment at Xing Premium Salon',
+      description: 'Choose a service, salon, date and preferred time, then confirm your appointment request with Xing on WhatsApp.',
+      inLanguage: 'en-IN',
+      isPartOf: { '@id': `${site.url}/#website` },
+    },
+  ],
+};
 
 /** /birthday-anniversary-offers: terms for the two celebratory salon offers. */
 export const celebrationOffersMeta: PageMeta = {

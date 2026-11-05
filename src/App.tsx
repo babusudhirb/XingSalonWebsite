@@ -6,11 +6,11 @@ import { ConsentBar } from './components/ConsentBar';
 import { FloatingActions } from './components/FloatingActions';
 import { Footer } from './components/Footer';
 import { Header } from './components/Header';
-import { BookingProvider, useBooking } from './context/booking';
+import { BookingProvider } from './context/booking';
 import { MobileStickyBar } from './components/service/MobileStickyBar';
 import { OfferSheetsProvider } from './components/offers/OfferSheets';
 import { trackContactClicks } from './lib/analytics';
-import { blogRoute, currentCategory, currentPage, currentSalon, isAbout, isCelebrationOffers, isFaq, isPrivacy, isServicePage, loadCurrentPage, isMembership, isNotFound, isSalons, isServicesHub } from './lib/route';
+import { blogRoute, currentCategory, currentPage, currentSalon, isAbout, isBooking, isCelebrationOffers, isFaq, isPrivacy, isServicePage, loadCurrentPage, isMembership, isNotFound, isSalons, isServicesHub } from './lib/route';
 import { whenHydrated } from './lib/hydration';
 import { isPrerender, readyLazy, wasPrerendered } from './lib/prerender';
 import { bookingWhatsappHref } from './lib/whatsapp';
@@ -27,12 +27,12 @@ const FaqPage = readyLazy(() => import('./pages/FaqPage'));
 const PrivacyPage = readyLazy(() => import('./pages/PrivacyPage'));
 const MembershipPage = readyLazy(() => import('./pages/MembershipPage'));
 const CelebrationOffersPage = readyLazy(() => import('./pages/CelebrationOffersPage'));
+const BookingPage = readyLazy(() => import('./pages/BookingPage'));
 const SalonsPage = readyLazy(() => import('./pages/SalonsPage'));
 const BranchPage = readyLazy(() => import('./pages/BranchPage'));
 const NotFoundPage = readyLazy(() => import('./pages/NotFoundPage'));
 // Neither is needed to show a page, so both load later: the booking form on its first use, the offer popup
 // once the page has settled.
-const BookingModal = lazy(() => import('./components/BookingModal').then((module) => ({ default: module.BookingModal })));
 const OfferPopup = lazy(() => import('./components/offers/OfferPopup'));
 
 const loadMotion = () => import('./lib/motionFeatures').then((module) => module.default);
@@ -68,6 +68,8 @@ async function loadPage() {
                   ? MembershipPage
                   : isCelebrationOffers
                     ? CelebrationOffersPage
+                    : isBooking
+                      ? BookingPage
                   : currentSalon
                     ? BranchPage
                     : isSalons
@@ -79,20 +81,6 @@ async function loadPage() {
 }
 
 const POPUP_AFTER_MS = 3000;
-
-/** Loads the booking form the first time a "Book" button asks for it. */
-function BookingModalOnDemand() {
-  const { isOpen } = useBooking();
-  const [wanted, setWanted] = useState(false);
-  useEffect(() => {
-    if (isOpen) setWanted(true);
-  }, [isOpen]);
-  return wanted ? (
-    <Suspense fallback={null}>
-      <BookingModal />
-    </Suspense>
-  ) : null;
-}
 
 /** Loads the offer popup a few seconds after the page has finished loading. */
 /** The page's place while its code loads: a blush hero with the heading's and buttons' outlines, softly pulsing. */
@@ -195,6 +183,8 @@ export default function App() {
               <MembershipPage />
             ) : isCelebrationOffers ? (
               <CelebrationOffersPage />
+            ) : isBooking ? (
+              <BookingPage />
             ) : currentSalon ? (
               <BranchPage salon={currentSalon} />
             ) : isSalons ? (
@@ -209,12 +199,11 @@ export default function App() {
           <FloatingActions />
           {/* Service pages, salon pages, the offers page and the membership page render the buttons themselves,
               with their own prefilled message (and, on a salon's page, that salon's numbers). */}
-          {!currentPage && !currentSalon && !isMembership && !isCelebrationOffers && <MobileStickyBar whatsappHref={bookingWhatsappHref} />}
+          {!currentPage && !currentSalon && !isMembership && !isCelebrationOffers && !isBooking && <MobileStickyBar whatsappHref={bookingWhatsappHref} />}
           {/* Not on the offers page, which already shows every offer, nor on the membership page, whose own
               form and the quick-actions bar are the only things allowed at the foot of the screen there. */}
-          {!isFaq && !isPrivacy && !isNotFound && !isMembership && !isCelebrationOffers && !isPrerender && <OfferPopupWhenIdle />}
+          {!isFaq && !isPrivacy && !isNotFound && !isMembership && !isCelebrationOffers && !isBooking && !isPrerender && <OfferPopupWhenIdle />}
         </Boundary>
-        <BookingModalOnDemand />
         {/* Asks which salon for every general WhatsApp, Call and Directions button. */}
         <BranchPicker />
         <ConsentBar />

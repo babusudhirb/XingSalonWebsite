@@ -82,8 +82,17 @@ function FieldError({ id, message }: { id: string; message?: string }) {
   );
 }
 
-export function BookingModal() {
-  const { isOpen, service, location, detail, offer, close } = useBooking();
+interface BookingFlowProps {
+  service?: string;
+  location?: string;
+  detail?: string;
+  offer?: string;
+  active?: boolean;
+  onDone?: () => void;
+}
+
+/** The reusable multi-step form: it can sit on the dedicated page or inside the legacy modal wrapper. */
+export function BookingFlow({ service = '', location = '', detail = '', offer = '', active = true, onDone }: BookingFlowProps) {
   const [step, setStep] = useState(0);
   const [form, setForm] = useState<Form>(EMPTY);
   const [errors, setErrors] = useState<Errors>({});
@@ -92,17 +101,17 @@ export function BookingModal() {
   // Start fresh each time the modal opens, pre-filling whatever the CTA asked for. The salon comes from the CTA
   // (a salon page passes its own), else ?salon= in the address, else the visitor's last choice.
   useEffect(() => {
-    if (!isOpen) return;
+    if (!active) return;
     const asked = new URLSearchParams(window.location.search).get('salon') ?? getBranch() ?? '';
     setForm({ ...EMPTY, service, location: location || (locations.find((loc) => loc.id === asked)?.name ?? '') });
     setErrors({});
     setStep(0);
-  }, [isOpen, service, location]);
+  }, [active, service, location]);
 
   // Announce each step change to keyboard and screen-reader users.
   useEffect(() => {
-    if (isOpen && step > 0) headingRef.current?.focus();
-  }, [isOpen, step]);
+    if (active && step > 0) headingRef.current?.focus();
+  }, [active, step]);
 
   const update = (field: keyof Form) => (value: string) => {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -131,21 +140,23 @@ export function BookingModal() {
   ];
 
   return (
-    <Modal open={isOpen} onClose={close} labelledBy="booking-title" layout="full">
+    <>
       {/* Phones: the title and the Continue row stay in place while the fields scroll between them. */}
       <div className="flex min-h-full flex-col px-6 sm:p-8">
         <div className="sticky top-0 z-10 -mx-6 flex items-start justify-between gap-4 bg-cream px-6 pb-3 pt-[max(1.5rem,env(safe-area-inset-top))] sm:static sm:mx-0 sm:p-0">
           <h2 id="booking-title" className="font-display text-3xl font-medium text-ink">
             {booking.title}
           </h2>
-          <button
-            type="button"
-            aria-label="Close booking"
-            onClick={close}
-            className="-mr-2 -mt-1 grid size-11 shrink-0 place-items-center rounded-full text-ink hover:bg-blush hover:text-berry"
-          >
-            <X aria-hidden className="size-5" />
-          </button>
+          {onDone && (
+            <button
+              type="button"
+              aria-label="Close booking"
+              onClick={onDone}
+              className="-mr-2 -mt-1 grid size-11 shrink-0 place-items-center rounded-full text-ink hover:bg-blush hover:text-berry"
+            >
+              <X aria-hidden className="size-5" />
+            </button>
+          )}
         </div>
 
         {offer && step < SUCCESS_STEP && (
@@ -210,9 +221,11 @@ export function BookingModal() {
                     <WhatsAppIcon className="size-4" />
                     Confirm on WhatsApp
                   </a>
-                  <Button variant="outline" arrow={false} onClick={close}>
-                    Done
-                  </Button>
+                  {onDone && (
+                    <Button variant="outline" arrow={false} onClick={onDone}>
+                      Done
+                    </Button>
+                  )}
                 </div>
               </div>
             ) : (
@@ -339,6 +352,16 @@ export function BookingModal() {
           </m.div>
         </AnimatePresence>
       </div>
+    </>
+  );
+}
+
+/** Retained for the embedded legacy header; normal site CTAs use the dedicated booking page. */
+export function BookingModal() {
+  const { isOpen, service, location, detail, offer, close } = useBooking();
+  return (
+    <Modal open={isOpen} onClose={close} labelledBy="booking-title" layout="full">
+      <BookingFlow service={service} location={location} detail={detail} offer={offer} active={isOpen} onDone={close} />
     </Modal>
   );
 }

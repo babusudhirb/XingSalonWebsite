@@ -1,7 +1,7 @@
 import { useId, type MouseEvent } from 'react';
 import { m, useMotionValue, useReducedMotion, useSpring, useTransform } from 'framer-motion';
 import { Check, MapPin, ShieldCheck, Sparkles, Star, UserRoundCheck } from 'lucide-react';
-import { useBooking } from '../context/booking';
+import { bookingPath } from '../data/bookingLinks';
 import { hero, HERO_SIZES } from '../data/content';
 import { bookingWhatsappHref } from '../lib/whatsapp';
 import { isPrerender, wasPrerendered } from '../lib/prerender';
@@ -45,7 +45,6 @@ function RotatingBadge() {
 }
 
 export function Hero() {
-  const booking = useBooking();
   const reduceMotion = useReducedMotion();
   const pointerX = useMotionValue(0);
   const pointerY = useMotionValue(0);
@@ -142,7 +141,7 @@ export function Hero() {
             </div>
           </div>
           <m.div variants={item} className="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4 lg:mt-8">
-            <Button onClick={() => booking.open()}>{hero.primaryCta}</Button>
+            <Button href={bookingPath}>{hero.primaryCta}</Button>
             <Button variant="outline" href={bookingWhatsappHref} external arrow={false}>
               <WhatsAppIcon className="size-4" />
               {hero.secondaryCta}

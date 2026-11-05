@@ -18,7 +18,7 @@ import { CategoryBody } from './src/pages/ServiceCategoryPage';
 import { BLOG_DIR, loadBlog } from './src/blog/build';
 import { site } from './src/data/content';
 import { servicePages } from './src/data/pages';
-import { aboutMeta, blogRoutes, celebrationOffersMeta, faqPageMeta, metaFor, membershipMeta, notFoundMeta, privacyMeta, robotsMeta, robotsTxt, routes, siteNodes, type PageMeta } from './src/data/seo';
+import { aboutMeta, blogRoutes, bookingMeta, celebrationOffersMeta, faqPageMeta, metaFor, membershipMeta, notFoundMeta, privacyMeta, robotsMeta, robotsTxt, routes, siteNodes, type PageMeta } from './src/data/seo';
 import { tagSnippets, type TagEnv } from './src/lib/tags';
 import { novemberCampaign } from './src/data/offers';
 import { staticPages } from './src/data/staticOfferPages';
@@ -26,6 +26,7 @@ import { blendOfferPage, offerPageAssets } from './src/lib/offerPageHtml';
 import { categories, categoryOf, redirects, services, servicesHubPath } from './src/data/services';
 import { membershipPath } from './src/data/membershipLinks';
 import { celebrationOffersPath } from './src/data/celebrationOffers';
+import { bookingPath } from './src/data/bookingLinks';
 
 const SLOT = '<!--seo-->';
 const START = '<!--seo:start-->';
@@ -266,6 +267,7 @@ function routeChunks(bundle: OutputBundle) {
   const privacyPage = files((id) => id.endsWith('/src/pages/PrivacyPage.tsx'));
   const membershipPage = files((id) => id.endsWith('/src/pages/MembershipPage.tsx'));
   const celebrationOffersPage = files((id) => id.endsWith('/src/pages/CelebrationOffersPage.tsx'));
+  const bookingPage = files((id) => id.endsWith('/src/pages/BookingPage.tsx'));
   const notFoundPage = files((id) => id.endsWith('/src/pages/NotFoundPage.tsx'));
   const salonsPage = files((id) => id.endsWith('/src/pages/SalonsPage.tsx'));
   const branchPage = files((id) => id.endsWith('/src/pages/BranchPage.tsx'));
@@ -279,6 +281,7 @@ function routeChunks(bundle: OutputBundle) {
     if (path === '/privacy') return privacyPage;
     if (path === membershipPath) return membershipPage;
     if (path === celebrationOffersPath) return celebrationOffersPage;
+    if (path === bookingPath) return bookingPage;
     if (path === '/404') return notFoundPage;
     if (path === '/salons') return salonsPage;
     if (path.startsWith('/salons/')) return branchPage;
@@ -309,6 +312,7 @@ function contentFiles(path: string) {
   if (path === '/faq') return ['src/data/faqPage.ts'];
   if (path === membershipPath) return ['src/data/giftMembership.ts'];
   if (path === celebrationOffersPath) return ['src/data/celebrationOffers.ts'];
+  if (path === bookingPath) return ['src/data/bookingLinks.ts', 'src/components/BookingModal.tsx'];
   if (path === '/salons') return ['src/data/branchPages/index.ts', 'src/data/branches.ts'];
   if (path.startsWith('/salons/')) return [`src/data/branchPages${path.slice('/salons'.length)}.ts`, 'src/data/branches.ts'];
   if (path.startsWith('/blog')) return ['content/blog'];
@@ -326,7 +330,7 @@ const suppliedOfferPage = (path: string) => readFile(join(OFFER_PAGES, `${path.s
 
 function seoPlugin(state: { blog: Blog }, options: HeadOptions): Plugin {
   let outDir = 'dist';
-  const extra = () => [aboutMeta, faqPageMeta, privacyMeta, membershipMeta, celebrationOffersMeta, notFoundMeta, ...blogRoutes(state.blog.posts.map((post) => ({ ...post.meta, faqs: post.body.faqs })), state.blog.categories)];
+  const extra = () => [aboutMeta, faqPageMeta, privacyMeta, membershipMeta, celebrationOffersMeta, bookingMeta, notFoundMeta, ...blogRoutes(state.blog.posts.map((post) => ({ ...post.meta, faqs: post.body.faqs })), state.blog.categories)];
 
   return {
     name: 'xing-seo',

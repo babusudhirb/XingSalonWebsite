@@ -61,9 +61,7 @@ jobs:
         run: |
           install -m 700 -d ~/.ssh
           ssh -p 65002 -o StrictHostKeyChecking=accept-new -o PreferredAuthentications=none -o PasswordAuthentication=no -o KbdInteractiveAuthentication=no -o GSSAPIAuthentication=no "$HOSTINGER_USERNAME@$HOSTINGER_HOST" 'true' || true
-          echo 'Hostinger public host-key fingerprint:'
-          ssh-keygen -lf ~/.ssh/known_hosts -E sha256
-          ssh-keygen -lf ~/.ssh/known_hosts -E sha256 | grep -F 'SHA256:XQQLhQE5nX/8jCp35U3StskSjy++r4ncFsnJufIu6QII'
+          ssh-keygen -lf ~/.ssh/known_hosts -E sha256 | grep -F 'SHA256:XQQLhQE5nX/8jCp35U3StskSjy+r4ncFsnJufIu6QII'
           tar -C dist -czf "$RUNNER_TEMP/xingsalons-build.tar.gz" .
           export SSHPASS="$HOSTINGER_PASSWORD"
           sshpass -e scp -P 65002 -o StrictHostKeyChecking=yes "$RUNNER_TEMP/xingsalons-build.tar.gz" "$HOSTINGER_USERNAME@$HOSTINGER_HOST:xingsalons-build.tar.gz"

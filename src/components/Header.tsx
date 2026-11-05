@@ -141,9 +141,7 @@ function LinksMenu({ id, label, href, isActive, menu, badge }: { id: string; lab
               key={item.label}
               className="relative"
               onMouseEnter={() => hasServices && setOpenSalon(item.label)}
-              onMouseLeave={() => hasServices && setOpenSalon(null)}
               onFocus={() => hasServices && setOpenSalon(item.label)}
-              onBlur={(event) => hasServices && !event.currentTarget.contains(event.relatedTarget) && setOpenSalon(null)}
             >
               {hasServices ? (
                 <button
@@ -172,7 +170,7 @@ function LinksMenu({ id, label, href, isActive, menu, badge }: { id: string; lab
               {hasServices && salonOpen && (
                 <ul
                   id={`${id}-${item.label.replace(/[^a-z0-9]+/gi, '-').toLowerCase()}-services`}
-                  className="absolute left-full top-0 z-10 ml-2 w-48 rounded-card border border-ink/10 bg-cream p-2 shadow-lift"
+                  className="absolute left-full top-0 z-10 -ml-px w-48 rounded-card border border-ink/10 bg-cream p-2 shadow-lift"
                 >
                   {item.links!.map((service) => (
                     <li key={service.label}>

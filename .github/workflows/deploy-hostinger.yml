@@ -5,10 +5,11 @@ on:
     branches: [main]
   workflow_dispatch:
 
-# A later commit must never race an earlier deployment.
+# Deployments must finish in order. Cancelling an upload midway can leave a
+# half-published website at public_html.
 concurrency:
   group: hostinger-production
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 permissions:
   contents: read
@@ -52,8 +53,9 @@ jobs:
       # handshake (password and interactive login are disabled), save the public
       # host key, and verify the hPanel fingerprint before sending credentials.
       # Hostinger stores this domain at domains/xingsalons.com/public_html under
-      # the SSH home directory. A staging archive ensures that directory is
-      # replaced only after the complete build arrives.
+      # the SSH home directory. The archive is unpacked beside public_html, then
+      # published by an atomic directory rename—visitors never see a partly
+      # copied bundle.
       - name: Replace Hostinger public_html with the verified build over SSH
         env:
           HOSTINGER_HOST: ${{ secrets.HOSTINGER_FTP_SERVER }}
@@ -66,7 +68,27 @@ jobs:
           tar -C dist -czf "$RUNNER_TEMP/xingsalons-build.tar.gz" .
           export SSHPASS="$HOSTINGER_PASSWORD"
           sshpass -e scp -P 65002 -o StrictHostKeyChecking=yes "$RUNNER_TEMP/xingsalons-build.tar.gz" "$HOSTINGER_USERNAME@$HOSTINGER_HOST:xingsalons-build.tar.gz"
-          sshpass -e ssh -p 65002 -o StrictHostKeyChecking=yes "$HOSTINGER_USERNAME@$HOSTINGER_HOST" 'set -eu; deploy_root="$HOME/domains/xingsalons.com/public_html"; test -d "$deploy_root"; rm -rf xingsalons-deploy-staging; mkdir xingsalons-deploy-staging; tar -xzf xingsalons-build.tar.gz -C xingsalons-deploy-staging; find "$deploy_root" -mindepth 1 -maxdepth 1 -exec rm -rf -- {} +; cp -a xingsalons-deploy-staging/. "$deploy_root"/; rm -rf xingsalons-deploy-staging xingsalons-build.tar.gz'
+          sshpass -e ssh -p 65002 -o StrictHostKeyChecking=yes "$HOSTINGER_USERNAME@$HOSTINGER_HOST" 'bash -s' <<'REMOTE_SCRIPT'
+          set -eu
+          site_root="$HOME/domains/xingsalons.com"
+          deploy_root="$site_root/public_html"
+          staging_root="$site_root/.xingsalons-deploy-staging"
+          backup_root="$site_root/.xingsalons-previous"
+          archive="$HOME/xingsalons-build.tar.gz"
+
+          test -d "$deploy_root"
+          rm -rf "$staging_root"
+          mkdir "$staging_root"
+          tar -xzf "$archive" -C "$staging_root"
+          test -f "$staging_root/index.html"
+          rm -rf "$backup_root"
+          mv "$deploy_root" "$backup_root"
+          if ! mv "$staging_root" "$deploy_root"; then
+            mv "$backup_root" "$deploy_root"
+            exit 1
+          fi
+          rm -rf "$backup_root" "$archive"
+          REMOTE_SCRIPT
 
       - name: Verify the deployed homepage and legacy offer pages
         run: |

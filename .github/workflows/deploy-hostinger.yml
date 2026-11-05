@@ -45,13 +45,43 @@ jobs:
           ! grep -q '/src/main.tsx' dist/index.html
           grep -q '/assets/' dist/index.html
 
-      - name: Replace Hostinger public_html with the verified build
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.HOSTINGER_FTP_SERVER }}
-          username: ${{ secrets.HOSTINGER_FTP_USERNAME }}
-          password: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
-          protocol: ftps
-          server-dir: public_html/
-          local-dir: ./dist/
-          dangerous-clean-slate: true
+      - name: Install the secure SFTP transfer client
+        run: sudo apt-get update && sudo apt-get install --yes lftp
+
+      # Hostinger SFTP uses the same main FTP/SSH credentials, on port 65002.
+      # --delete removes raw source files so public_html contains only dist/.
+      - name: Replace Hostinger public_html with the verified build over SFTP
+        env:
+          HOSTINGER_HOST: ${{ secrets.HOSTINGER_FTP_SERVER }}
+          HOSTINGER_USERNAME: ${{ secrets.HOSTINGER_FTP_USERNAME }}
+          HOSTINGER_PASSWORD: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
+        run: |
+          lftp -e "
+            set sftp:auto-confirm yes;
+            set net:timeout 30;
+            set net:max-retries 2;
+            open -u \"$HOSTINGER_USERNAME\",\"$HOSTINGER_PASSWORD\" sftp://$HOSTINGER_HOST:65002;
+            mirror --reverse --delete --ignore-time --verbose ./dist/ public_html/;
+            bye
+          "
+
+      - name: Verify the deployed homepage and legacy offer pages
+        run: |
+          for attempt in {1..12}; do
+            homepage="$(curl --fail --silent --show-error https://xingsalons.com/ || true)"
+            if [[ "$homepage" != *'/src/main.tsx'* && "$homepage" == *'/assets/index-'* ]]; then
+              break
+            fi
+            sleep 10
+          done
+          [[ "$homepage" != *'/src/main.tsx'* ]]
+          [[ "$homepage" == *'/assets/index-'* ]]
+          for path in \
+            /sarjapaurahaircoloroffers/ \
+            /sarjapurahairtreatmentoffers/ \
+            /sarjapuraskincareoffers/ \
+            /hsrhaircoloroffers/ \
+            /hsrhairtreatmentoffers/ \
+            /hsrskincareoffers/; do
+            curl --fail --silent --show-error "https://xingsalons.com$path" | grep -q 'data-site-header'
+          done

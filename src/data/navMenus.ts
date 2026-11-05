@@ -40,21 +40,18 @@ const OFFER_LINKS: { id: OfferPageId; label: string }[] = [
   { id: 'skin-care', label: 'Skin care' },
 ];
 
-/** One item per salon, straight to its offer pages: the name opens hair colour, and the three links under it open each page. */
+/** One item per treatment: people choose what they want first, then their salon. */
 export const offersMenu = (): NavMenu => ({
   title: 'Offers',
   items: [
-    ...locations.map((salon) => {
-      if (salon.id === 'brookfield') {
-        return {
-          label: 'Xing Brookfield',
-          href: 'https://xingsalon.com/',
-          links: [{ label: 'AECS Salon Offers', href: 'https://xingsalon.com/' }],
-        };
-      }
-      const pages = salonOfferPages[salon.id as BranchId];
-      return { label: `Xing ${salon.name}`, href: pages['hair-colour'], links: OFFER_LINKS.map((offer) => ({ label: offer.label, href: pages[offer.id] })) };
-    }),
+    ...OFFER_LINKS.map((offer) => ({
+      label: offer.label,
+      href: salonOfferPages['hsr-layout'][offer.id],
+      links: locations.map((salon) => {
+        if (salon.id === 'brookfield') return { label: 'Xing Brookfield', href: 'https://xingsalon.com/' };
+        return { label: `Xing ${salon.name}`, href: salonOfferPages[salon.id as BranchId][offer.id] };
+      }),
+    })),
     ...GIFT_ITEMS,
   ],
 });

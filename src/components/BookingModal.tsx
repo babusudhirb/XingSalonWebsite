@@ -96,6 +96,8 @@ export function BookingFlow({ service = '', location = '', detail = '', offer = 
   const [step, setStep] = useState(0);
   const [form, setForm] = useState<Form>(EMPTY);
   const [errors, setErrors] = useState<Errors>({});
+  const [sending, setSending] = useState(false);
+  const [notice, setNotice] = useState('');
   const headingRef = useRef<HTMLHeadingElement>(null);
 
   // Start fresh each time the modal opens, pre-filling whatever the CTA asked for. The salon comes from the CTA
@@ -105,6 +107,7 @@ export function BookingFlow({ service = '', location = '', detail = '', offer = 
     const asked = new URLSearchParams(window.location.search).get('salon') ?? getBranch() ?? '';
     setForm({ ...EMPTY, service, location: location || (locations.find((loc) => loc.id === asked)?.name ?? '') });
     setErrors({});
+    setNotice('');
     setStep(0);
   }, [active, service, location]);
 
@@ -118,11 +121,32 @@ export function BookingFlow({ service = '', location = '', detail = '', offer = 
     setErrors((prev) => ({ ...prev, [field]: undefined }));
   };
 
-  const onSubmit = (e: FormEvent) => {
+  const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const found = validate(step, form);
     setErrors(found);
-    if (Object.keys(found).length === 0) setStep(step + 1);
+    if (Object.keys(found).length > 0) return;
+    if (step < booking.steps.length - 1) {
+      setStep(step + 1);
+      return;
+    }
+
+    setSending(true);
+    setNotice('');
+    try {
+      const response = await fetch('/api/form-submit.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'appointment', ...form, detail, offer }),
+      });
+      const body = await response.json().catch(() => ({}));
+      if (!response.ok || !body.ok) throw new Error(body.code ?? 'mail_failed');
+      setStep(SUCCESS_STEP);
+    } catch {
+      setNotice('We could not send your booking request just now. Please try again shortly or contact your selected salon on WhatsApp.');
+    } finally {
+      setSending(false);
+    }
   };
 
   // Keep the exact menu item only while the client stays on the service it belongs to.
@@ -345,8 +369,9 @@ export function BookingFlow({ service = '', location = '', detail = '', offer = 
                   ) : (
                     <span />
                   )}
-                  <Button type="submit">{step === booking.steps.length - 1 ? 'Request Booking' : 'Continue'}</Button>
+                  <Button type="submit" className={sending ? 'pointer-events-none opacity-70' : undefined}>{step === booking.steps.length - 1 ? (sending ? 'Sending…' : 'Request Booking') : 'Continue'}</Button>
                 </div>
+                {notice && <p role="alert" className="mt-3 text-sm font-medium text-berry">{notice}</p>}
               </form>
             )}
           </m.div>

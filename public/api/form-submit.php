@@ -49,15 +49,17 @@ function smtpRead($socket): string {
 function smtpCommand($socket, string $command, array $expected): void {
     fwrite($socket, $command . "\r\n");
     $reply = smtpRead($socket);
-    if ($reply === '' || !in_array((int) substr($reply, 0, 3), $expected, true)) throw new RuntimeException('SMTP rejected a command.');
+    $status = (int) substr($reply, 0, 3);
+    if ($reply === '') throw new RuntimeException('smtp_no_reply');
+    if (!in_array($status, $expected, true)) throw new RuntimeException('smtp_rejected_' . $status);
 }
 function sendMail(array $mail, array $to, string $subject, string $html, string $replyTo = ''): void {
     $socket = stream_socket_client('tls://' . $mail['smtp_host'] . ':' . $mail['smtp_port'], $errno, $error, 20, STREAM_CLIENT_CONNECT);
-    if (!$socket) throw new RuntimeException('Could not connect to the mail server.');
+    if (!$socket) throw new RuntimeException('smtp_connect_failed_' . $errno);
     stream_set_timeout($socket, 20);
     try {
         $welcome = smtpRead($socket);
-        if ((int) substr($welcome, 0, 3) !== 220) throw new RuntimeException('Mail server unavailable.');
+        if ((int) substr($welcome, 0, 3) !== 220) throw new RuntimeException('smtp_unavailable');
         smtpCommand($socket, 'EHLO xingsalons.com', [250]);
         smtpCommand($socket, 'AUTH LOGIN', [334]);
         smtpCommand($socket, base64_encode($mail['smtp_user']), [334]);
@@ -125,5 +127,5 @@ try {
     respond(200, ['ok' => true, 'leadId' => $leadId]);
 } catch (Throwable $error) {
     error_log('Xing form email failed: ' . $error->getMessage());
-    respond(502, ['ok' => false, 'code' => 'mail_failed']);
+    respond(502, ['ok' => false, 'code' => $error->getMessage()]);
 }

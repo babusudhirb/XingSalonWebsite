@@ -31,9 +31,9 @@ export interface NavMenu {
 
 /** Under Offers whether or not a campaign is running. */
 const GIFT_ITEMS: NavMenuItem[] = [
-  { label: 'Membership Offers', href: `${membershipPath}#membership`, divider: true },
+  { label: 'Birthday & Anniversary Offers', href: celebrationOffersPath, divider: true },
+  { label: 'Membership Offers', href: `${membershipPath}#membership` },
   { label: 'Gift Cards', href: `${membershipPath}#gift-cards` },
-  { label: 'Birthday & Anniversary Offers', href: celebrationOffersPath },
 ];
 
 const OFFER_LINKS: { id: OfferPageId; label: string }[] = [

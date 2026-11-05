@@ -56,14 +56,16 @@ jobs:
           HOSTINGER_USERNAME: ${{ secrets.HOSTINGER_FTP_USERNAME }}
           HOSTINGER_PASSWORD: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
         run: |
-          lftp -e "
+          lftp \
+            -u "$HOSTINGER_USERNAME","$HOSTINGER_PASSWORD" \
+            -e "
             set sftp:auto-confirm yes;
             set net:timeout 30;
             set net:max-retries 2;
-            open -u \"$HOSTINGER_USERNAME\",\"$HOSTINGER_PASSWORD\" sftp://$HOSTINGER_HOST:65002;
             mirror --reverse --delete --ignore-time --verbose ./dist/ public_html/;
             bye
-          "
+            " \
+            "sftp://$HOSTINGER_HOST:65002"
 
       - name: Verify the deployed homepage and legacy offer pages
         run: |

@@ -45,27 +45,25 @@ jobs:
           ! grep -q '/src/main.tsx' dist/index.html
           grep -q '/assets/' dist/index.html
 
-      - name: Install the secure SFTP transfer client
-        run: sudo apt-get update && sudo apt-get install --yes lftp
+      - name: Install the secure SSH transfer helper
+        run: sudo apt-get update && sudo apt-get install --yes sshpass
 
-      # Hostinger SFTP uses the same main FTP/SSH credentials, on port 65002.
-      # --delete removes raw source files so public_html contains only dist/.
-      - name: Replace Hostinger public_html with the verified build over SFTP
+      # Hostinger's SSH service uses port 65002. Pin its ED25519 fingerprint
+      # shown in hPanel before sending the deployment password. A staging archive
+      # ensures public_html is replaced only after the complete build arrives.
+      - name: Replace Hostinger public_html with the verified build over SSH
         env:
           HOSTINGER_HOST: ${{ secrets.HOSTINGER_FTP_SERVER }}
           HOSTINGER_USERNAME: ${{ secrets.HOSTINGER_FTP_USERNAME }}
           HOSTINGER_PASSWORD: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
         run: |
-          lftp \
-            -u "$HOSTINGER_USERNAME","$HOSTINGER_PASSWORD" \
-            -e "
-            set sftp:auto-confirm yes;
-            set net:timeout 30;
-            set net:max-retries 2;
-            mirror --reverse --delete --ignore-time --verbose ./dist/ public_html/;
-            bye
-            " \
-            "sftp://$HOSTINGER_HOST:65002"
+          install -m 700 -d ~/.ssh
+          ssh-keyscan -p 65002 -t ed25519 "$HOSTINGER_HOST" > ~/.ssh/known_hosts
+          ssh-keygen -lf ~/.ssh/known_hosts -E sha256 | grep -F 'SHA256:XQQLhQE5nX/8jCp35U3StskSjy++r4ncFsnJufIu6QII'
+          tar -C dist -czf "$RUNNER_TEMP/xingsalons-build.tar.gz" .
+          export SSHPASS="$HOSTINGER_PASSWORD"
+          sshpass -e scp -P 65002 -o StrictHostKeyChecking=yes "$RUNNER_TEMP/xingsalons-build.tar.gz" "$HOSTINGER_USERNAME@$HOSTINGER_HOST:xingsalons-build.tar.gz"
+          sshpass -e ssh -p 65002 -o StrictHostKeyChecking=yes "$HOSTINGER_USERNAME@$HOSTINGER_HOST" 'set -eu; rm -rf xingsalons-deploy-staging; mkdir xingsalons-deploy-staging; tar -xzf xingsalons-build.tar.gz -C xingsalons-deploy-staging; mkdir -p public_html; find public_html -mindepth 1 -maxdepth 1 -exec rm -rf -- {} +; cp -a xingsalons-deploy-staging/. public_html/; rm -rf xingsalons-deploy-staging xingsalons-build.tar.gz'
 
       - name: Verify the deployed homepage and legacy offer pages
         run: |

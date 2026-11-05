@@ -1,6 +1,6 @@
 import { Fragment, useMemo, useRef, useState, type MutableRefObject } from 'react';
 import { AnimatePresence, m } from 'framer-motion';
-import { ArrowRight, ChevronDown, Search, Sparkles, X } from 'lucide-react';
+import { ArrowRight, ChevronDown, FileText, Search, Sparkles, X } from 'lucide-react';
 import { useBooking } from '../context/booking';
 import { serviceMenu, services } from '../data/content';
 import type { IconKey } from '../data/pages/types';
@@ -153,38 +153,44 @@ function ServiceMenu({ openId, query, scrollTo, onToggle, onQuery }: ServiceMenu
         <Eyebrow>{services.menuEyebrow}</Eyebrow>
         <h3 className="heading mt-3 text-ink">{services.menuTitle}</h3>
 
-        <div className="relative mt-6 sm:max-w-sm">
-          <label htmlFor={SEARCH_ID} className="sr-only">
-            {services.menuSearch}
-          </label>
-          <Search aria-hidden className="pointer-events-none absolute left-4 top-1/2 size-4 -translate-y-1/2 text-muted" />
-          <input
-            id={SEARCH_ID}
-            type="text"
-            inputMode="search"
-            enterKeyHint="search"
-            autoComplete="off"
-            value={query}
-            placeholder={services.menuSearch}
-            onChange={(e) => onQuery(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === 'Escape' && query) onQuery('');
-            }}
-            className="h-12 w-full rounded-full border border-ink/15 bg-white pl-11 pr-12 text-base text-ink placeholder:text-muted focus:border-berry focus:outline-none focus:ring-2 focus:ring-berry/25 md:text-sm"
-          />
-          {query && (
-            <button
-              type="button"
-              aria-label="Clear search"
-              onClick={() => {
-                onQuery('');
-                document.getElementById(SEARCH_ID)?.focus();
+        <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
+          <div className="relative sm:w-80">
+            <label htmlFor={SEARCH_ID} className="sr-only">
+              {services.menuSearch}
+            </label>
+            <Search aria-hidden className="pointer-events-none absolute left-4 top-1/2 size-4 -translate-y-1/2 text-muted" />
+            <input
+              id={SEARCH_ID}
+              type="text"
+              inputMode="search"
+              enterKeyHint="search"
+              autoComplete="off"
+              value={query}
+              placeholder={services.menuSearch}
+              onChange={(e) => onQuery(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Escape' && query) onQuery('');
               }}
-              className="absolute right-1 top-1/2 grid size-10 -translate-y-1/2 place-items-center rounded-full text-muted hover:text-berry"
-            >
-              <X aria-hidden className="size-4" />
-            </button>
-          )}
+              className="h-12 w-full rounded-full border border-ink/15 bg-white pl-11 pr-12 text-base text-ink placeholder:text-muted focus:border-berry focus:outline-none focus:ring-2 focus:ring-berry/25 md:text-sm"
+            />
+            {query && (
+              <button
+                type="button"
+                aria-label="Clear search"
+                onClick={() => {
+                  onQuery('');
+                  document.getElementById(SEARCH_ID)?.focus();
+                }}
+                className="absolute right-1 top-1/2 grid size-10 -translate-y-1/2 place-items-center rounded-full text-muted hover:text-berry"
+              >
+                <X aria-hidden className="size-4" />
+              </button>
+            )}
+          </div>
+          <Button size="sm" variant="outline" href="/downloads/xing-salons-menu-catalog-2026.pdf" external arrow={false} className="self-start sm:self-auto">
+            <FileText aria-hidden className="size-4" />
+            Xing Salons Menu
+          </Button>
         </div>
 
         <div role="status" aria-live="polite">

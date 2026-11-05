@@ -75,7 +75,11 @@ function NavDropdown({ id, label, href, isActive, badge, children, clickOnly = f
   useEffect(() => {
     if (!clickOnly || !open) return;
     const closeOnOutsideClick = (event: PointerEvent) => {
-      if (!menu.current?.contains(event.target as Node)) setOpen(false);
+      // On the six legacy offer pages Header is rendered inside a Shadow DOM.
+      // At document level, `event.target` is retargeted to the shadow host, so a
+      // normal contains(target) check incorrectly treats every menu click as an
+      // outside click. The composed path preserves the actual clicked element.
+      if (!event.composedPath().includes(menu.current!)) setOpen(false);
     };
     document.addEventListener('pointerdown', closeOnOutsideClick);
     return () => document.removeEventListener('pointerdown', closeOnOutsideClick);

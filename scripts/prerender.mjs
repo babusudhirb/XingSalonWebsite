@@ -94,16 +94,16 @@ if (failures.length) {
 }
 
 // Static hosts such as Hostinger do not apply Vercel's cleanUrls behaviour.
-// Mirror each generated foo.html page as foo/index.html so /foo and /foo/
-// work without any server rewrite configuration.
-for (const path of paths) {
-  if (path === '/') continue;
-  const source = join(DIST, `${path}.html`);
+// Mirror every top-level generated foo.html file as foo/index.html so /foo and
+// /foo/ work without a server rewrite. This includes the six legacy offer
+// pages, which have no React root and therefore are intentionally not in paths.
+for (const entry of readdirSync(DIST, { withFileTypes: true })) {
+  if (!entry.isFile() || extname(entry.name) !== '.html' || entry.name === 'index.html' || entry.name === '404.html') continue;
+  const path = entry.name.slice(0, -'.html'.length);
+  const source = join(DIST, entry.name);
   const destination = join(DIST, path, 'index.html');
-  if (existsSync(source)) {
-    mkdirSync(dirname(destination), { recursive: true });
-    copyFileSync(source, destination);
-  }
+  mkdirSync(dirname(destination), { recursive: true });
+  copyFileSync(source, destination);
 }
 
 console.log(`Prerendered ${paths.length} pages.`);

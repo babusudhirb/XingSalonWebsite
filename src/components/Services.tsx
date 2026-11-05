@@ -1,6 +1,6 @@
 import { Fragment, useMemo, useRef, useState, type MutableRefObject } from 'react';
 import { AnimatePresence, m } from 'framer-motion';
-import { ArrowRight, ChevronDown, FileText, Search, Sparkles, X } from 'lucide-react';
+import { ArrowRight, BookOpen, ChevronDown, Search, Sparkles, X } from 'lucide-react';
 import { useBooking } from '../context/booking';
 import { serviceMenu, services } from '../data/content';
 import type { IconKey } from '../data/pages/types';
@@ -187,8 +187,17 @@ function ServiceMenu({ openId, query, scrollTo, onToggle, onQuery }: ServiceMenu
               </button>
             )}
           </div>
-          <Button size="sm" variant="outline" href="/downloads/xing-salons-menu-catalog-2026.pdf" external arrow={false} className="self-start sm:self-auto">
-            <FileText aria-hidden className="size-4" />
+          <Button
+            size="sm"
+            variant="outline"
+            href="/downloads/xing-salons-menu-catalog-2026.pdf"
+            external
+            arrow={false}
+            className="self-start border-berry/70 bg-white pr-4 shadow-sm hover:shadow-soft sm:self-auto"
+          >
+            <span className="grid size-6 place-items-center rounded-full bg-berry text-cream transition-transform duration-200 group-hover/btn:rotate-[-8deg] group-hover/btn:scale-110 motion-reduce:transition-none">
+              <BookOpen aria-hidden className="size-3.5 stroke-[2.5]" />
+            </span>
             Xing Salons Menu
           </Button>
         </div>

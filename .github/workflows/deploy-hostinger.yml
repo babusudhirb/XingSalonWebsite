@@ -1,0 +1,57 @@
+name: Deploy verified production build to Hostinger
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# A later commit must never race an earlier deployment.
+concurrency:
+  group: hostinger-production
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the exact committed version
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install application dependencies
+        run: npm ci
+
+      # The site's build pre-renders pages for search engines, which requires Chromium.
+      - name: Install the pre-rendering browser
+        run: npx playwright install --with-deps chromium
+
+      - name: Create the production build
+        run: npm run build
+
+      # This prevents the exact failure seen in production: uploading Vite source
+      # whose entry point is /src/main.tsx instead of the generated /assets bundle.
+      - name: Verify the upload is a compiled website
+        run: |
+          test -f dist/index.html
+          test -d dist/assets
+          ! grep -q '/src/main.tsx' dist/index.html
+          grep -q '/assets/' dist/index.html
+
+      - name: Replace Hostinger public_html with the verified build
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.HOSTINGER_FTP_SERVER }}
+          username: ${{ secrets.HOSTINGER_FTP_USERNAME }}
+          password: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
+          protocol: ftps
+          server-dir: public_html/
+          local-dir: ./dist/
+          dangerous-clean-slate: true

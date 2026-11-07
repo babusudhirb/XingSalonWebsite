@@ -81,6 +81,7 @@ async function loadPage() {
 }
 
 const POPUP_AFTER_MS = 3000;
+const isUat = import.meta.env.VITE_DEPLOY_ENV === 'uat';
 
 /** Loads the offer popup a few seconds after the page has finished loading. */
 /** The page's place while its code loads: a blush hero with the heading's and buttons' outlines, softly pulsing. */
@@ -160,6 +161,11 @@ export default function App() {
         >
           Skip to content
         </a>
+        {isUat && (
+          <div role="status" className="sticky top-0 z-[60] bg-amber-200 px-4 py-2 text-center text-xs font-semibold text-stone-900">
+            UAT — Test Environment. Changes here are not live on xingsalons.com.
+          </div>
+        )}
         <Header />
         {/* The footer waits with the page, so it never shows first and then jumps down. Meanwhile a branded
             placeholder stands in for the hero, instead of a blank page. */}

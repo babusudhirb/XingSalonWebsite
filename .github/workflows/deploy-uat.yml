@@ -1,0 +1,131 @@
+name: Deploy UAT build to Hostinger
+
+on:
+  push:
+    branches: [UAT]
+  workflow_dispatch:
+
+# UAT lives inside production public_html/uat, so serialize it with the
+# production release. This prevents either atomic directory swap from
+# interrupting the other deployment.
+concurrency:
+  group: hostinger-site-deploy
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the exact UAT version
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install application dependencies
+        run: npm ci
+
+      # This opens a TLS login only; no email is sent during the check.
+      - name: Verify Hostinger SMTP credentials
+        env:
+          HOSTINGER_SMTP_PASSWORD: ${{ secrets.HOSTINGER_SMTP_PASSWORD }}
+        run: |
+          test -n "$HOSTINGER_SMTP_PASSWORD"
+          python3 - <<'PY'
+          import os
+          import smtplib
+          import ssl
+
+          with smtplib.SMTP_SSL('smtp.hostinger.com', 465, context=ssl.create_default_context(), timeout=20) as smtp:
+              smtp.login('appointments@xingsalons.com', os.environ['HOSTINGER_SMTP_PASSWORD'])
+          print('Hostinger SMTP authentication succeeded.')
+          PY
+
+      - name: Install the pre-rendering browser
+        run: npx playwright install --with-deps chromium
+
+      - name: Create the UAT build
+        run: VITE_DEPLOY_ENV=uat npm run build && node scripts/mark-uat-build.mjs
+
+      - name: Verify the UAT upload is a compiled noindex website
+        run: |
+          test -f dist/index.html
+          test -d dist/assets
+          ! grep -q '/src/main.tsx' dist/index.html
+          grep -q 'noindex, nofollow' dist/index.html
+
+      - name: Install secure transfer helpers
+        run: sudo apt-get update && sudo apt-get install --yes sshpass php-cli && php -l dist/api/form-submit.php
+
+      - name: Replace only the UAT directory over SSH
+        env:
+          HOSTINGER_HOST: ${{ secrets.HOSTINGER_FTP_SERVER }}
+          HOSTINGER_USERNAME: ${{ secrets.HOSTINGER_FTP_USERNAME }}
+          HOSTINGER_PASSWORD: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
+          HOSTINGER_SMTP_PASSWORD: ${{ secrets.HOSTINGER_SMTP_PASSWORD }}
+        run: |
+          test -n "$HOSTINGER_SMTP_PASSWORD"
+          install -m 700 -d ~/.ssh
+          ssh -p 65002 -o StrictHostKeyChecking=accept-new -o PreferredAuthentications=none -o PasswordAuthentication=no -o KbdInteractiveAuthentication=no -o GSSAPIAuthentication=no "$HOSTINGER_USERNAME@$HOSTINGER_HOST" 'true' || true
+          ssh-keygen -lf ~/.ssh/known_hosts -E sha256 | grep -F 'SHA256:XQQLhQE5nX/8jCp35U3StskSjy+r4ncFsnJufIu6QII'
+          tar -C dist -czf "$RUNNER_TEMP/xingsalons-uat-build.tar.gz" .
+          smtp_password_b64="$(printf %s "$HOSTINGER_SMTP_PASSWORD" | base64 -w0)"
+          cat > "$RUNNER_TEMP/xingsalons-uat-mail-config.php" <<EOF
+          <?php
+          return [
+            'smtp_host' => 'smtp.hostinger.com',
+            'smtp_port' => 465,
+            'smtp_user' => 'appointments@xingsalons.com',
+            'smtp_password_b64' => '$smtp_password_b64',
+            'central_recipient' => 'appointments@xingsalons.com',
+            'copy_recipient' => 'rachnasinha2020@gmail.com',
+          ];
+          EOF
+          export SSHPASS="$HOSTINGER_PASSWORD"
+          sshpass -e scp -P 65002 -o StrictHostKeyChecking=yes "$RUNNER_TEMP/xingsalons-uat-build.tar.gz" "$HOSTINGER_USERNAME@$HOSTINGER_HOST:xingsalons-uat-build.tar.gz"
+          sshpass -e scp -P 65002 -o StrictHostKeyChecking=yes "$RUNNER_TEMP/xingsalons-uat-mail-config.php" "$HOSTINGER_USERNAME@$HOSTINGER_HOST:xingsalons-uat-mail-config.php"
+          sshpass -e ssh -p 65002 -o StrictHostKeyChecking=yes "$HOSTINGER_USERNAME@$HOSTINGER_HOST" 'bash -s' <<'REMOTE_SCRIPT'
+          set -eu
+          site_root="$HOME/domains/xingsalons.com"
+          deploy_root="$site_root/public_html/uat"
+          staging_root="$site_root/.xingsalons-uat-deploy-staging"
+          backup_root="$site_root/.xingsalons-uat-previous"
+          archive="$HOME/xingsalons-uat-build.tar.gz"
+          mail_config="$HOME/xingsalons-uat-mail-config.php"
+          private_root="$site_root/.xing-private"
+
+          test -d "$deploy_root"
+          test -f "$mail_config"
+          install -d -m 700 "$private_root"
+          mv "$mail_config" "$private_root/uat-mail.php"
+          chmod 600 "$private_root/uat-mail.php"
+          rm -rf "$staging_root"
+          mkdir "$staging_root"
+          tar -xzf "$archive" -C "$staging_root"
+          test -f "$staging_root/index.html"
+          rm -rf "$backup_root"
+          mv "$deploy_root" "$backup_root"
+          if ! mv "$staging_root" "$deploy_root"; then
+            mv "$backup_root" "$deploy_root"
+            exit 1
+          fi
+          rm -rf "$backup_root" "$archive"
+          REMOTE_SCRIPT
+
+      - name: Verify the UAT deployment
+        run: |
+          for attempt in {1..12}; do
+            homepage="$(curl --fail --silent --show-error https://uat.xingsalons.com/ || true)"
+            if [[ "$homepage" == *'noindex, nofollow'* && "$homepage" == *'UAT — Test Environment'* ]]; then
+              break
+            fi
+            sleep 10
+          done
+          [[ "$homepage" == *'noindex, nofollow'* ]]
+          [[ "$homepage" == *'UAT — Test Environment'* ]]

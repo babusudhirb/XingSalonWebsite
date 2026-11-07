@@ -14,8 +14,12 @@ function respond(int $status, array $body): never {
 
 if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') respond(405, ['ok' => false, 'code' => 'method_not_allowed']);
 
+$host = strtolower($_SERVER['HTTP_HOST'] ?? '');
+$isUat = $host === 'uat.xingsalons.com';
 $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
-if ($origin !== '' && !in_array($origin, ['https://xingsalons.com', 'https://www.xingsalons.com'], true)) respond(403, ['ok' => false, 'code' => 'invalid_origin']);
+$allowedOrigins = ['https://xingsalons.com', 'https://www.xingsalons.com'];
+if ($isUat) $allowedOrigins[] = 'https://uat.xingsalons.com';
+if ($origin !== '' && !in_array($origin, $allowedOrigins, true)) respond(403, ['ok' => false, 'code' => 'invalid_origin']);
 
 $raw = file_get_contents('php://input');
 if ($raw === false || strlen($raw) > 32_000) respond(413, ['ok' => false, 'code' => 'payload_too_large']);
@@ -23,7 +27,10 @@ $lead = json_decode($raw, true);
 if (!is_array($lead)) respond(400, ['ok' => false, 'code' => 'invalid_json']);
 if (!empty($lead['company_website'])) respond(200, ['ok' => true, 'leadId' => 'XG-' . date('ymd') . '-OK']); // Honeypot.
 
-$config = dirname(__DIR__, 2) . '/.xing-private/mail.php';
+// uat.xingsalons.com is served from public_html/uat, one level deeper than
+// production. Its configuration lives outside public_html beside production's
+// credentials, and is deliberately separate from live form delivery.
+$config = dirname(__DIR__, $isUat ? 3 : 2) . '/.xing-private/' . ($isUat ? 'uat-mail.php' : 'mail.php');
 if (!is_file($config)) respond(503, ['ok' => false, 'code' => 'mail_not_configured']);
 $mail = require $config;
 if (!is_array($mail) || empty($mail['smtp_password_b64'])) respond(503, ['ok' => false, 'code' => 'mail_not_configured']);
@@ -124,7 +131,11 @@ foreach ($fields as $label => $value) if ($value !== '') $rows .= '<tr><th style
 $html = '<!doctype html><html><body style="font-family:Arial,sans-serif;color:#27151C"><h2>New Xing ' . htmlspecialchars($typeLabel, ENT_QUOTES, 'UTF-8') . ' request</h2><table style="border-collapse:collapse;width:100%;max-width:680px">' . $rows . '</table></body></html>';
 
 try {
-    sendMail($mail, array_values(array_unique([$recipients[$salonKey], $mail['central_recipient'], $mail['copy_recipient']])), "New Xing {$typeLabel} request — {$salonInput}", $html, clean($lead['email'] ?? '', 120));
+    $targets = $isUat
+        ? array_values(array_unique([$mail['central_recipient'], $mail['copy_recipient']]))
+        : array_values(array_unique([$recipients[$salonKey], $mail['central_recipient'], $mail['copy_recipient']]));
+    $subject = ($isUat ? '[UAT TEST] ' : '') . "New Xing {$typeLabel} request — {$salonInput}";
+    sendMail($mail, $targets, $subject, $html, clean($lead['email'] ?? '', 120));
     respond(200, ['ok' => true, 'leadId' => $leadId]);
 } catch (Throwable $error) {
     error_log('Xing form email failed: ' . $error->getMessage());

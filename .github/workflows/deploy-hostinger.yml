@@ -8,7 +8,9 @@ on:
 # Deployments must finish in order. Cancelling an upload midway can leave a
 # half-published website at public_html.
 concurrency:
-  group: hostinger-production
+  # Production and UAT share one Hostinger account. They must never replace
+  # directories concurrently.
+  group: hostinger-site-deploy
   cancel-in-progress: false
 
 permissions:
@@ -106,6 +108,8 @@ jobs:
           deploy_root="$site_root/public_html"
           staging_root="$site_root/.xingsalons-deploy-staging"
           backup_root="$site_root/.xingsalons-previous"
+          uat_root="$deploy_root/uat"
+          uat_hold="$site_root/.xingsalons-uat-preserved"
           archive="$HOME/xingsalons-build.tar.gz"
           mail_config="$HOME/xingsalons-mail-config.php"
           private_root="$site_root/.xing-private"
@@ -120,10 +124,22 @@ jobs:
           tar -xzf "$archive" -C "$staging_root"
           test -f "$staging_root/index.html"
           rm -rf "$backup_root"
+          # hPanel hosts uat.xingsalons.com inside public_html/uat. Preserve it
+          # outside the atomic production swap, then restore it unchanged.
+          rm -rf "$uat_hold"
+          if [ -d "$uat_root" ]; then
+            mv "$uat_root" "$uat_hold"
+          fi
           mv "$deploy_root" "$backup_root"
           if ! mv "$staging_root" "$deploy_root"; then
             mv "$backup_root" "$deploy_root"
+            if [ -d "$uat_hold" ]; then
+              mv "$uat_hold" "$deploy_root/uat"
+            fi
             exit 1
+          fi
+          if [ -d "$uat_hold" ]; then
+            mv "$uat_hold" "$deploy_root/uat"
           fi
           rm -rf "$backup_root" "$archive"
           REMOTE_SCRIPT

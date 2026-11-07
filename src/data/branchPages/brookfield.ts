@@ -23,7 +23,7 @@ export const brookfield: BranchPageContent = {
     ],
   },
   hero: {
-    h1: 'Premium Unisex Salon in Brookfield, Bangalore',
+    h1: 'Premium Hair, Skin & Nail Salon in Brookfield, Bangalore',
     sub: 'Hair, skin, nails and bridal hair care on 60 Feet Road, AECS Layout, near DMart Ready. A short drive from Whitefield, Kundalahalli and Marathahalli.',
     photo: 5,
     photoAlt: 'Styling floor with a green plant wall at Xing, a premium unisex salon in Brookfield, Bangalore',

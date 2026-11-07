@@ -23,7 +23,7 @@ export const sarjapurRoad: BranchPageContent = {
     ],
   },
   hero: {
-    h1: 'Premium Unisex Salon on Sarjapur Road, Bangalore',
+    h1: 'Premium Hair, Skin & Nail Salon on Sarjapur Road, Bangalore',
     sub: 'Hair, skin, nails and grooming on the first floor of Samvit Greens, Kasavanahalli. Open till 9:30 PM every day, for weekday evenings and easy weekends.',
     photo: 3,
     photoAlt: 'Teal styling chairs and sculpted mirrors at Xing, a premium unisex salon on Sarjapur Road, Bangalore',

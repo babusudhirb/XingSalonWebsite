@@ -23,7 +23,7 @@ export const hsrLayout: BranchPageContent = {
     ],
   },
   hero: {
-    h1: 'Premium Unisex Salon in HSR Layout, Bangalore',
+    h1: 'Premium Hair, Skin & Nail Salon in HSR Layout, Bangalore',
     sub: 'Our flagship salon at GSR Arcade on 24th Main Road: pastel interiors, a dedicated Nail Bar, a pedicure lounge and a kids’ corner, for every sector of HSR.',
     photo: 0,
     photoAlt: 'Reception with the illuminated Xing sign at Xing, a premium unisex salon in HSR Layout, Bangalore',

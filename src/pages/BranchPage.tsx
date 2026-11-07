@@ -26,6 +26,7 @@ import { servicePages } from '../data/pages';
 import { servicesHubPath } from '../data/services';
 import { cn } from '../lib/cn';
 import { whatsappLink } from '../lib/whatsapp';
+import { bookingHref } from '../data/bookingLinks';
 
 
 
@@ -36,6 +37,7 @@ export default function BranchPage({ salon }: { salon: Salon }) {
   // "Hi Xing Brookfield! I'd like to book the Hair Colour offer. Preferred day/time: "
   const book = (what: string) => whatsappLink(`Hi Xing ${salon.name}! I’d like to book ${what}. Preferred day/time: `, salon.whatsappHref);
   const bookHref = book('an appointment');
+  const appointmentHref = bookingHref('', salon.id);
   const others = locations.filter((other) => other.id !== salon.id);
 
   return (
@@ -67,34 +69,29 @@ export default function BranchPage({ salon }: { salon: Salon }) {
                 </li>
               </ul>
               <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4 lg:mt-7">
-                <Button href={bookHref} external arrow={false}>
-                  <WhatsAppIcon className="size-4" />
-                  Book on WhatsApp
+                <Button href={appointmentHref} arrow={false}>
+                  Book appointment
                 </Button>
-                <Button variant="outline" href={salon.phoneHref} arrow={false}>
-                  <Phone aria-hidden className="size-4" />
-                  Call {salon.name}
+                <Button variant="outline" href={bookHref} external arrow={false}>
+                  <WhatsAppIcon className="size-4" />
+                  Ask on WhatsApp
                 </Button>
               </div>
-              <a
-                href={salon.directionsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-2 inline-flex min-h-11 items-center gap-2 text-sm font-medium text-berry underline-offset-4 hover:underline"
-              >
-                <Navigation aria-hidden className="size-4" />
-                Get directions
-              </a>
+              <div className="mt-2 flex flex-wrap gap-x-5 gap-y-1">
+                <a href={salon.phoneHref} className="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-berry underline-offset-4 hover:underline"><Phone aria-hidden className="size-4" />Call {salon.name}</a>
+                <a href={salon.directionsUrl} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-berry underline-offset-4 hover:underline"><Navigation aria-hidden className="size-4" />Get directions</a>
+              </div>
             </>
           }
         />
       </div>
 
       <QuickInfo salon={salon} />
+      <SalonSwitcher salon={salon} />
       <QuickAnswers faqs={withCampaignFaq(page.faqs)} />
 
       {/* The same three offer pages at every salon. */}
-      <OfferPagesSection salon={salon.id as BranchId} />
+      <OfferPagesSection salon={salon.id as BranchId} title={`Current offers at Xing ${salon.name}`} />
 
       {/* Popular services */}
       <Section tone="white" id="services">
@@ -229,6 +226,26 @@ function QuickInfo({ salon }: { salon: Salon }) {
             </p>
           )}
         </SalonNap>
+      </div>
+    </section>
+  );
+}
+
+/** Keeps the branch choice close to the booking decision on every salon page. */
+function SalonSwitcher({ salon }: { salon: Salon }) {
+  return (
+    <section aria-label="Choose another Xing salon" className="bg-cream pb-4">
+      <div className="container-site">
+        <div className="flex flex-col gap-3 rounded-card border border-ink/10 bg-white p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
+          <p className="text-sm text-muted"><span className="font-semibold text-ink">You’re viewing Xing {salon.name}.</span> Choose another branch if it is more convenient.</p>
+          <nav className="no-scrollbar -mx-1 flex gap-2 overflow-x-auto px-1 sm:mx-0 sm:px-0" aria-label="Xing salon branches">
+            {locations.map((location) => (
+              <a key={location.id} href={location.path} aria-current={location.id === salon.id ? 'page' : undefined} className={cn('flex min-h-11 shrink-0 items-center rounded-full border px-4 text-sm font-medium', location.id === salon.id ? 'border-berry bg-berry text-cream' : 'border-ink/15 text-ink hover:border-berry hover:text-berry')}>
+                {location.name}
+              </a>
+            ))}
+          </nav>
+        </div>
       </div>
     </section>
   );

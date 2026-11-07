@@ -61,67 +61,29 @@ jobs:
           grep -q 'noindex, nofollow' dist/index.html
 
       - name: Install secure transfer helpers
-        run: sudo apt-get update && sudo apt-get install --yes sshpass php-cli && php -l dist/api/form-submit.php
+        run: sudo apt-get update && sudo apt-get install --yes lftp php-cli && php -l dist/api/form-submit.php
 
-      - name: Replace only the UAT directory over SSH
+      - name: Replace only the UAT directory over FTPS
         env:
           HOSTINGER_HOST: ${{ secrets.HOSTINGER_FTP_SERVER }}
           HOSTINGER_USERNAME: ${{ secrets.HOSTINGER_FTP_USERNAME }}
           HOSTINGER_PASSWORD: ${{ secrets.HOSTINGER_FTP_PASSWORD }}
           HOSTINGER_SMTP_PASSWORD: ${{ secrets.HOSTINGER_SMTP_PASSWORD }}
         run: |
-          test -n "$HOSTINGER_SMTP_PASSWORD"
-          install -m 700 -d ~/.ssh
-          # Hostinger occasionally accepts a TCP connection but stalls during SSH/SCP. Bound every network
-          # operation so a transient server problem fails visibly instead of blocking later UAT releases.
-          timeout 30s ssh -p 65002 -o ConnectTimeout=20 -o ConnectionAttempts=2 -o ServerAliveInterval=15 -o ServerAliveCountMax=2 -o StrictHostKeyChecking=accept-new -o PreferredAuthentications=none -o PasswordAuthentication=no -o KbdInteractiveAuthentication=no -o GSSAPIAuthentication=no "$HOSTINGER_USERNAME@$HOSTINGER_HOST" 'true' || true
-          ssh-keygen -lf ~/.ssh/known_hosts -E sha256 | grep -F 'SHA256:XQQLhQE5nX/8jCp35U3StskSjy+r4ncFsnJufIu6QII'
-          tar -C dist -czf "$RUNNER_TEMP/xingsalons-uat-build.tar.gz" .
-          smtp_password_b64="$(printf %s "$HOSTINGER_SMTP_PASSWORD" | base64 -w0)"
-          cat > "$RUNNER_TEMP/xingsalons-uat-mail-config.php" <<EOF
-          <?php
-          return [
-            'smtp_host' => 'smtp.hostinger.com',
-            'smtp_port' => 465,
-            'smtp_user' => 'appointments@xingsalons.com',
-            'smtp_password_b64' => '$smtp_password_b64',
-            'central_recipient' => 'appointments@xingsalons.com',
-            'copy_recipient' => 'rachnasinha2020@gmail.com',
-          ];
-          EOF
-          export SSHPASS="$HOSTINGER_PASSWORD"
-          # OpenSSH scp uses Hostinger's SFTP subsystem by default. That subsystem timed out above even though
-          # the SSH host and fingerprint are healthy, so copy each file through the regular SSH shell instead.
-          # This preserves encrypted transfer and avoids relying on a second server-side subsystem.
-          timeout 240s sshpass -e ssh -p 65002 -o ConnectTimeout=20 -o ConnectionAttempts=2 -o ServerAliveInterval=15 -o ServerAliveCountMax=2 -o StrictHostKeyChecking=yes "$HOSTINGER_USERNAME@$HOSTINGER_HOST" 'cat > "$HOME/xingsalons-uat-build.tar.gz"' < "$RUNNER_TEMP/xingsalons-uat-build.tar.gz"
-          timeout 60s sshpass -e ssh -p 65002 -o ConnectTimeout=20 -o ConnectionAttempts=2 -o ServerAliveInterval=15 -o ServerAliveCountMax=2 -o StrictHostKeyChecking=yes "$HOSTINGER_USERNAME@$HOSTINGER_HOST" 'cat > "$HOME/xingsalons-uat-mail-config.php"' < "$RUNNER_TEMP/xingsalons-uat-mail-config.php"
-          timeout 180s sshpass -e ssh -p 65002 -o ConnectTimeout=20 -o ConnectionAttempts=2 -o ServerAliveInterval=15 -o ServerAliveCountMax=2 -o StrictHostKeyChecking=yes "$HOSTINGER_USERNAME@$HOSTINGER_HOST" 'bash -s' <<'REMOTE_SCRIPT'
-          set -eu
-          site_root="$HOME/domains/xingsalons.com"
-          deploy_root="$site_root/public_html/uat"
-          staging_root="$site_root/.xingsalons-uat-deploy-staging"
-          backup_root="$site_root/.xingsalons-uat-previous"
-          archive="$HOME/xingsalons-uat-build.tar.gz"
-          mail_config="$HOME/xingsalons-uat-mail-config.php"
-          private_root="$site_root/.xing-private"
-
-          test -d "$deploy_root"
-          test -f "$mail_config"
-          install -d -m 700 "$private_root"
-          mv "$mail_config" "$private_root/uat-mail.php"
-          chmod 600 "$private_root/uat-mail.php"
-          rm -rf "$staging_root"
-          mkdir "$staging_root"
-          tar -xzf "$archive" -C "$staging_root"
-          test -f "$staging_root/index.html"
-          rm -rf "$backup_root"
-          mv "$deploy_root" "$backup_root"
-          if ! mv "$staging_root" "$deploy_root"; then
-            mv "$backup_root" "$deploy_root"
-            exit 1
-          fi
-          rm -rf "$backup_root" "$archive"
-          REMOTE_SCRIPT
+          # UAT uses the account's encrypted FTPS service because password SSH transfers from GitHub are currently
+          # timing out. This mirror is deliberately confined to the UAT document root; production is never named.
+          # The mail configuration was installed outside public_html by the earlier successful UAT deployment and
+          # is not touched here.
+          timeout 240s lftp -u "$HOSTINGER_USERNAME","$HOSTINGER_PASSWORD" "ftps://$HOSTINGER_HOST:21" -e '
+            set cmd:fail-exit yes
+            set net:max-retries 2
+            set net:timeout 20
+            set net:reconnect-interval-base 3
+            set ftp:ssl-force true
+            set ssl:verify-certificate yes
+            mirror --reverse --delete --verbose dist domains/xingsalons.com/public_html/uat
+            bye
+          '
 
       - name: Verify the UAT deployment
         run: |

@@ -31,6 +31,9 @@ export function BlogListPage({ category }: { category?: BlogCategory }) {
   const pages = Math.max(1, Math.ceil(matches.length / PER_PAGE));
   // Searching shows every match on one page.
   const shown = q ? matches : matches.slice((page - 1) * PER_PAGE, page * PER_PAGE);
+  // The newest article is intentionally the lead story on the all-posts first page.
+  const featured = !category && !q && page === 1 ? shown[0] : undefined;
+  const cards = featured ? shown.slice(1) : shown;
   const pageHref = (n: number) => (n === 1 ? basePath : `${basePath}?page=${n}`);
 
   return (
@@ -125,13 +128,20 @@ export function BlogListPage({ category }: { category?: BlogCategory }) {
             {q ? `${matches.length} ${matches.length === 1 ? 'article' : 'articles'} matching “${query.trim()}”` : null}
           </p>
           {shown.length > 0 ? (
-            <ul className="mt-4 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {shown.map((post, i) => (
+            <>
+              {featured && (
+                <div className="mt-4">
+                  <BlogCard post={featured} as="h2" eager featured />
+                </div>
+              )}
+              <ul className="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {cards.map((post, i) => (
                 <li key={post.slug}>
-                  <BlogCard post={post} as="h2" eager={i === 0} compact={i > 0} />
+                  <BlogCard post={post} as="h2" eager={!featured && i === 0} compact={i > 0} />
                 </li>
               ))}
-            </ul>
+              </ul>
+            </>
           ) : (
             <p className="mt-4 text-base text-ink">No articles match your search yet. Try another word, or browse a category above.</p>
           )}

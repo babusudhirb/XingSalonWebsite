@@ -23,7 +23,7 @@ interface MobileMenuProps {
   servicesId: string;
   /** Items that open a panel of links, by item id. */
   menus: Record<string, NavMenu>;
-  /** Where the visitor is: [] the main list, ['services'] the categories, ['services', <category key>] one category. */
+  /** Where the visitor is: [] the main list; then Services or another menu and one of its sub-levels. */
   path: string[];
   /** Steps into a level (adds a history entry, so Back comes up again). */
   onEnter: (level: string) => void;
@@ -63,7 +63,7 @@ function LevelHeader({ title, back, onBack, onClose, headingRef }: { title: stri
   );
 }
 
-/** The site menu on phones and tablets: a main list, then Services › category › service, one level at a time. */
+/** The site menu on phones and tablets: a main list, then clear one-level-at-a-time choices. */
 export function MobileMenu({ items, servicesId, menus, path, onEnter, onUp, onClose, onNavigate, whatsappHref, phoneHref }: MobileMenuProps) {
   const reduce = useReducedMotion();
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -73,7 +73,9 @@ export function MobileMenu({ items, servicesId, menus, path, onEnter, onUp, onCl
   const forward = depth >= previousDepth.current;
   const category = depth === 2 ? categories.find((entry) => entry.key === path[1]) : undefined;
   const menu = depth === 1 ? menus[path[0]] : undefined;
-  const title = depth === 0 ? 'Menu' : menu?.title ?? (depth === 1 ? 'Services' : category?.title ?? 'Services');
+  const parentMenu = depth === 2 ? menus[path[0]] : undefined;
+  const menuItem = parentMenu?.items.find((item) => item.label === path[1]);
+  const title = depth === 0 ? 'Menu' : menu?.title ?? category?.title ?? menuItem?.label ?? 'Services';
 
   // Each level change moves focus to the new level's heading (not on first open: the dialog takes focus then).
   useEffect(() => {
@@ -155,23 +157,22 @@ export function MobileMenu({ items, servicesId, menus, path, onEnter, onUp, onCl
           )}
           {menu.items.map((item) => (
             <li key={item.label}>
-              <a href={item.href} onClick={onNavigate} className="flex min-h-14 items-center justify-between gap-3 py-2">
-                <span className="min-w-0">
-                  <span className={cn('block text-lg font-medium', item.highlight ? 'text-berry' : 'text-ink')}>{item.label}</span>
-                  {item.note && <span className="block text-sm text-muted">{item.note}</span>}
-                </span>
-                <ChevronRight aria-hidden className="size-5 shrink-0 text-berry" />
-              </a>
-              {item.links && (
-                <ul className="-mt-1 flex flex-wrap gap-2 pb-3">
-                  {item.links.map((link) => (
-                    <li key={link.label}>
-                      <a href={link.href} onClick={onNavigate} className="flex min-h-11 items-center rounded-full bg-blush px-4 text-sm font-medium text-berry">
-                        {link.label}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
+              {item.links ? (
+                <button type="button" onClick={() => onEnter(item.label)} className="flex min-h-14 w-full items-center justify-between gap-3 py-2 text-left">
+                  <span className="min-w-0">
+                    <span className={cn('block text-lg font-medium', item.highlight ? 'text-berry' : 'text-ink')}>{item.label}</span>
+                    <span className="block text-sm text-muted">Choose a salon</span>
+                  </span>
+                  <ChevronRight aria-hidden className="size-5 shrink-0 text-berry" />
+                </button>
+              ) : (
+                <a href={item.href} onClick={onNavigate} className="flex min-h-14 items-center justify-between gap-3 py-2">
+                  <span className="min-w-0">
+                    <span className={cn('block text-lg font-medium', item.highlight ? 'text-berry' : 'text-ink')}>{item.label}</span>
+                    {item.note && <span className="block text-sm text-muted">{item.note}</span>}
+                  </span>
+                  <ChevronRight aria-hidden className="size-5 shrink-0 text-berry" />
+                </a>
               )}
             </li>
           ))}
@@ -244,6 +245,19 @@ export function MobileMenu({ items, servicesId, menus, path, onEnter, onUp, onCl
         ))}
       </div>
     );
+  } else if (menuItem?.links) {
+    body = (
+      <ul className="min-h-0 flex-1 divide-y divide-ink/10 overflow-y-auto overscroll-contain px-4">
+        {menuItem.links.map((link) => (
+          <li key={link.label}>
+            <a href={link.href} onClick={onNavigate} className="flex min-h-16 items-center justify-between gap-3 py-2">
+              <span className="text-lg font-medium text-ink">{link.label}</span>
+              <ChevronRight aria-hidden className="size-5 shrink-0 text-berry" />
+            </a>
+          </li>
+        ))}
+      </ul>
+    );
   }
 
   return (
@@ -263,7 +277,7 @@ export function MobileMenu({ items, servicesId, menus, path, onEnter, onUp, onCl
         >
           <LevelHeader
             title={title}
-            back={depth === 1 ? 'Back' : 'Services'}
+            back={depth === 1 ? 'Back' : parentMenu?.title ?? 'Services'}
             onBack={depth > 0 ? onUp : undefined}
             onClose={onClose}
             headingRef={headingRef}

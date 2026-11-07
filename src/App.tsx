@@ -14,6 +14,7 @@ import { blogRoute, currentCategory, currentPage, currentSalon, isAbout, isBooki
 import { whenHydrated } from './lib/hydration';
 import { isPrerender, readyLazy, wasPrerendered } from './lib/prerender';
 import { bookingWhatsappHref } from './lib/whatsapp';
+import { isOffers } from './lib/route';
 
 // Each page type is its own chunk, so a page downloads only its own code and content. The build also
 // preloads the right chunk in each page's HTML, so it arrives alongside the main bundle.
@@ -31,6 +32,7 @@ const BookingPage = readyLazy(() => import('./pages/BookingPage'));
 const SalonsPage = readyLazy(() => import('./pages/SalonsPage'));
 const BranchPage = readyLazy(() => import('./pages/BranchPage'));
 const NotFoundPage = readyLazy(() => import('./pages/NotFoundPage'));
+const OffersPage = readyLazy(() => import('./pages/OffersPage'));
 // Neither is needed to show a page, so both load later: the booking form on its first use, the offer popup
 // once the page has settled.
 const OfferPopup = lazy(() => import('./components/offers/OfferPopup'));
@@ -177,6 +179,8 @@ export default function App() {
               <ServiceCategoryPage category={currentCategory} />
             ) : isServicesHub ? (
               <ServicesHubPage />
+            ) : isOffers ? (
+              <OffersPage />
             ) : blogRoute ? (
               <BlogRoutes route={blogRoute} />
             ) : isAbout ? (

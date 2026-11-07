@@ -27,6 +27,7 @@ import { categories, categoryOf, redirects, services, servicesHubPath } from './
 import { membershipPath } from './src/data/membershipLinks';
 import { celebrationOffersPath } from './src/data/celebrationOffers';
 import { bookingPath } from './src/data/bookingLinks';
+import { offersPath } from './src/data/offers';
 
 const SLOT = '<!--seo-->';
 const START = '<!--seo:start-->';
@@ -313,6 +314,7 @@ function contentFiles(path: string) {
   if (path === membershipPath) return ['src/data/giftMembership.ts'];
   if (path === celebrationOffersPath) return ['src/data/celebrationOffers.ts'];
   if (path === bookingPath) return ['src/data/bookingLinks.ts', 'src/components/BookingModal.tsx'];
+  if (path === offersPath) return ['src/data/offers.ts', 'src/data/offersPage.ts'];
   if (path === '/salons') return ['src/data/branchPages/index.ts', 'src/data/branches.ts'];
   if (path.startsWith('/salons/')) return [`src/data/branchPages${path.slice('/salons'.length)}.ts`, 'src/data/branches.ts'];
   if (path.startsWith('/blog')) return ['content/blog'];

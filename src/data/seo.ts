@@ -3,6 +3,8 @@ import { about } from './about';
 import { salonsPath, type Salon } from './branches';
 import { celebrationOffersPath } from './celebrationOffers';
 import { bookingPath } from './bookingLinks';
+import { offersPage } from './offersPage';
+import { offersPath } from './offers';
 import { branchPages, salonsPage, type BranchPageContent } from './branchPages';
 import { allFaqs, faqGroups, faqPage } from './faqPage';
 import { faq, faqPath, footer, guidePath, guides, hero, HERO_SIZES, locations, seo, SERVICE_HERO_SIZES, signatureColor, site } from './content';
@@ -166,6 +168,17 @@ const home: PageMeta = {
         acceptedAnswer: { '@type': 'Answer', text: item.a },
       })),
     },
+  ],
+};
+
+const offersMeta: PageMeta = {
+  path: offersPath,
+  title: offersPage.seo.title,
+  description: offersPage.seo.description,
+  image: OG_IMAGE,
+  jsonLd: [
+    crumbs([['Home', '/'], ['Offers', offersPath]]),
+    { '@context': 'https://schema.org', '@type': 'CollectionPage', name: 'Xing salon offers in Bangalore', url: abs(offersPath), isPartOf: { '@id': `${site.url}/#website` } },
   ],
 };
 
@@ -478,6 +491,7 @@ function categoryMeta(category: ServiceCategory): PageMeta {
 /** Every page the build writes to disk and lists in sitemap.xml. */
 export const routes: PageMeta[] = [
   home,
+  offersMeta,
   servicesHubMeta,
   ...categories.filter((category) => category.hasPage).map(categoryMeta),
   ...Object.values(servicePages).map(serviceMeta),

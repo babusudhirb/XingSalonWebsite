@@ -1281,9 +1281,7 @@ export const redirects: Record<string, string> = {
   '/services/mens-haircut-grooming': '/services/mens-haircut-beard-grooming',
   '/services/hair-color': '/services/global-hair-color',
   '/services/keratin-hair-treatment': '/services/keratin-treatment',
-  // Old and retired offer addresses, each one step to a salon offer page (src/data/staticOfferPages.ts) or to the
-  // home page's offers. reports/launch/old-urls.md lists them.
-  '/offers': '/#offers',
+  // Old and retired offer addresses, each one step to a salon offer page.
   '/offers/hair-colour': '/hsrhaircoloroffers',
   '/offers/hair-treatment': '/hsrhairtreatmentoffers',
   '/offers/skin-care': '/hsrskincareoffers',

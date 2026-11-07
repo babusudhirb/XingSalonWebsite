@@ -6,8 +6,9 @@ import { onTabKeyDown } from '../lib/a11y';
 import { cn } from '../lib/cn';
 import { BeforeAfter } from './BeforeAfter';
 import { ArrowLink } from './ui/Button';
-import { Eyebrow, Picture, Reveal } from './ui/Primitives';
+import { Picture, Reveal } from './ui/Primitives';
 import { SnapRow } from './ui/SnapRow';
+import { SectionHeader } from './service/SectionHeader';
 
 const INSTAGRAM_URL = footer.socials[0].href;
 
@@ -17,14 +18,11 @@ export function Transformations() {
   const category = categories[active];
 
   return (
-    <section id="transformations" className="section bg-cream">
+    <section id="transformations" className="relative bg-cream py-14 lg:py-24">
       <div className="container-site">
         <Reveal>
-          <div className="flex items-end justify-between gap-5">
-            <div>
-              <Eyebrow>{transformations.eyebrow}</Eyebrow>
-              <h2 className="heading mt-3 text-ink">{transformations.title}</h2>
-            </div>
+          <div className="flex flex-wrap items-end justify-between gap-5">
+            <SectionHeader eyebrow={transformations.eyebrow} title={transformations.title} text="Real Xing clients, photographed after their appointment." />
             <ArrowLink href={INSTAGRAM_URL} external className="hidden lg:inline-flex">
               {transformations.cta}
             </ArrowLink>
@@ -81,7 +79,7 @@ export function Transformations() {
                 <li key={item.image.src}>
                   <figure>
                     <Picture image={item.image} className="aspect-portrait w-full rounded-card object-cover shadow-soft" />
-                    <figcaption className="mt-3 text-center text-xs font-medium text-ink">{item.caption}</figcaption>
+                    <figcaption className="mt-3 text-xs font-medium text-ink">{item.caption}</figcaption>
                   </figure>
                 </li>
               ))}
@@ -97,9 +95,7 @@ export function Transformations() {
 
         <div id="before-after" className="mt-14 scroll-mt-24 border-t border-ink/10 pt-12 md:mt-16 md:pt-14">
           <Reveal>
-            <Eyebrow>{beforeAfter.eyebrow}</Eyebrow>
-            <h3 className="heading mt-3 text-ink">{beforeAfter.title}</h3>
-            <p className="mt-4 max-w-md text-sm leading-relaxed text-muted">{beforeAfter.text}</p>
+            <SectionHeader eyebrow={beforeAfter.eyebrow} title={beforeAfter.title} text={beforeAfter.text} />
           </Reveal>
           <div className="mt-8">
             <SnapRow className="md:grid-cols-3 md:gap-6">

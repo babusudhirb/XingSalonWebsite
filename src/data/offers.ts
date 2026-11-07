@@ -112,7 +112,7 @@ const COLOUR_PRICES: OfferPrice[] = [
 const BEST_COLOUR_SAVING = `${Math.max(...COLOUR_PRICES.map((price) => parseInt(savingPercent(price), 10)))}%`;
 
 /** Every current offer, in page order. */
-const salonOffers: SalonOffer[] = [
+export const salonOffers: SalonOffer[] = [
   {
     id: 'hydra-facial',
     category: 'skin',
@@ -584,7 +584,7 @@ export const offerFromHash = (hash: string) => {
 const OFFERS_SECTION = '/#offers';
 /** The offers page, where every offer is listed. */
 /** Where an Offers link goes: the home page's offers, with a tab per salon. */
-export const offersPath = '/#offers';
+export const offersPath = '/offers';
 /** An offer's entry on the offers page. */
 export const promoHref = (id: string) => `${campaignOfferById(id) ? novemberCampaign.path : offersPath}#${OFFER_ALIASES[id] ?? id}`;
 

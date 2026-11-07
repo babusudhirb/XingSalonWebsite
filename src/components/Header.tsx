@@ -3,13 +3,14 @@ import { ChevronDown, ChevronRight, MapPin, Menu, Phone } from 'lucide-react';
 import { bookingPath } from '../data/bookingLinks';
 import { locations, salonsPath } from '../data/branches';
 import { faqPath, hero, nav, site } from '../data/content';
+import { offersPath } from '../data/offers';
 import { offersMenu, salonsMenu, type NavMenu } from '../data/navMenus';
 import { servicesHubPath } from '../data/services';
 import { useHistoryClose } from '../hooks/useHistoryClose';
 import { useScrollSpy } from '../hooks/useScrollSpy';
 import { track } from '../lib/analytics';
 import { cn } from '../lib/cn';
-import { blogRoute, currentPage, currentSalon, hasBlog, homeHref, isAbout, isCelebrationOffers, isFaq, isHome, isMembership, isSalons, isStaticPage } from '../lib/route';
+import { blogRoute, currentPage, currentSalon, hasBlog, homeHref, isAbout, isCelebrationOffers, isFaq, isHome, isMembership, isOffers, isSalons, isStaticPage } from '../lib/route';
 import { bookingWhatsappHref, PICK_CALL, whatsappLink } from '../lib/whatsapp';
 import { StatusDot } from './branch/StatusChip';
 import { Button } from './ui/Button';
@@ -46,6 +47,8 @@ const navHref = (id: string) =>
     ? '/about'
     : id === FAQ_ID
       ? faqPath
+      : id === OFFERS_ID
+        ? offersPath
       : id === GUIDES_ID && hasBlog
         ? '/blog'
         : id === SALONS_ID
@@ -253,7 +256,7 @@ export function Header() {
         ? ABOUT_ID
         : isFaq
           ? FAQ_ID
-        : isMembership || isCelebrationOffers || isStaticPage
+        : isOffers || isMembership || isCelebrationOffers || isStaticPage
           ? OFFERS_ID
             : isSalons || currentSalon
               ? SALONS_ID

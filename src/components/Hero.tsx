@@ -1,12 +1,10 @@
 import { useId, type MouseEvent } from 'react';
 import { m, useMotionValue, useReducedMotion, useSpring, useTransform } from 'framer-motion';
 import { Check, MapPin, ShieldCheck, Sparkles, Star, UserRoundCheck } from 'lucide-react';
-import { bookingPath } from '../data/bookingLinks';
 import { hero, HERO_SIZES } from '../data/content';
-import { bookingWhatsappHref } from '../lib/whatsapp';
 import { isPrerender, wasPrerendered } from '../lib/prerender';
 import { Button } from './ui/Button';
-import { Floral, WhatsAppIcon } from './ui/Decor';
+import { Floral } from './ui/Decor';
 import { Eyebrow, Picture } from './ui/Primitives';
 
 const TRUST_ICONS = { star: Star, expert: UserRoundCheck, shield: ShieldCheck, pin: MapPin } as const;
@@ -141,9 +139,8 @@ export function Hero() {
             </div>
           </div>
           <m.div variants={item} className="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4 lg:mt-8">
-            <Button href={bookingPath}>{hero.primaryCta}</Button>
-            <Button variant="outline" href={bookingWhatsappHref} external arrow={false}>
-              <WhatsAppIcon className="size-4" />
+            <Button href="/salons">{hero.primaryCta}</Button>
+            <Button variant="outline" href="/offers" arrow={false}>
               {hero.secondaryCta}
             </Button>
           </m.div>

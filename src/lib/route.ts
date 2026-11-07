@@ -6,6 +6,7 @@ import { faqPath } from '../data/content';
 import { membershipPath } from '../data/membershipLinks';
 import type { ServicePageContent } from '../data/pages/types';
 import { privacyPath } from '../data/privacy';
+import { offersPath } from '../data/offers';
 import { categoryBySlug, redirects, servicesHubPath } from '../data/services';
 import { staticPages } from '../data/staticOfferPages';
 
@@ -35,6 +36,7 @@ export async function loadCurrentPage() {
 
 /** /services, the list of every category. */
 export const isServicesHub = path === servicesHubPath;
+export const isOffers = path === offersPath;
 
 // Only slugs live here, so the main bundle doesn't grow with every post; the blog pages look up the details.
 export type BlogRoute = { kind: 'list'; category?: string } | { kind: 'post'; slug: string };
@@ -82,9 +84,9 @@ const blogNotLiveYet = !hasBlog && /^\/blog(\/|$)/.test(path);
 
 /** An address no page answers to. */
 export const isNotFound =
-  path !== '/' && !isServicePage && !currentCategory && !isServicesHub && !blogRoute && !isAbout && !isFaq && !isPrivacy && !isMembership && !isCelebrationOffers && !isBooking && !isSalons && !currentSalon && !(path in redirects) && !isStaticPage && !blogNotLiveYet;
+  path !== '/' && !isServicePage && !currentCategory && !isServicesHub && !isOffers && !blogRoute && !isAbout && !isFaq && !isPrivacy && !isMembership && !isCelebrationOffers && !isBooking && !isSalons && !currentSalon && !(path in redirects) && !isStaticPage && !blogNotLiveYet;
 
-export const isHome = !isStaticPage && !isServicePage && !currentCategory && !isServicesHub && !blogRoute && !isAbout && !isFaq && !isPrivacy && !isMembership && !isCelebrationOffers && !isBooking && !isSalons && !currentSalon && !isNotFound;
+export const isHome = !isStaticPage && !isServicePage && !currentCategory && !isServicesHub && !isOffers && !blogRoute && !isAbout && !isFaq && !isPrivacy && !isMembership && !isCelebrationOffers && !isBooking && !isSalons && !currentSalon && !isNotFound;
 
 /** Link to a landing-page section such as "#offers", from whichever page we are on. Other paths pass through. */
 export const homeHref = (href: string) => (href.startsWith('#') && !isHome ? `/${href}` : href);

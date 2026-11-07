@@ -82,16 +82,16 @@ export const nav = [
 ] as const;
 
 export const hero = {
-  eyebrow: 'Premium Unisex Salon',
-  titleLines: ['Expert Beauty', 'Guidance.'],
-  titleAccent: 'Beautiful Results.',
-  text: 'Hair, skin, nails and bridal hair care designed around you.',
-  primaryCta: 'Book Appointment',
-  secondaryCta: 'Chat on WhatsApp',
+  eyebrow: 'Consultation-led salon care in Bangalore',
+  titleLines: ['Come in with', 'an idea.'],
+  titleAccent: 'Leave feeling like you.',
+  text: 'Hair, skin, nails and bridal care shaped around you at Xing Sarjapur Road, HSR Layout and Brookfield.',
+  primaryCta: 'Choose Your Salon',
+  secondaryCta: 'See Current Offers',
   assurances: ['Free consultation', 'Walk-ins welcome', 'Price confirmed before we start'],
   trust: [
     { icon: 'star', label: ratingHeadline },
-    { icon: 'expert', label: 'Expert professionals' },
+    { icon: 'expert', label: 'Consultation before every transformation' },
     { icon: 'shield', label: 'Hygienic & safe' },
     { icon: 'pin', label: '3 salons in Bangalore' },
   ],

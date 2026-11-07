@@ -348,7 +348,7 @@ function seoPlugin(state: { blog: Blog }, options: HeadOptions): Plugin {
           '<script type="module" src="/@vite/client"></script>',
           '<script type="module">import RefreshRuntime from "/@react-refresh";RefreshRuntime.injectIntoGlobalHook(window);window.$RefreshReg$=()=>{};window.$RefreshSig$=()=>(type)=>type;window.__vite_plugin_react_preamble_installed__=true;</script>',
         ].join('\n');
-        const html = blendOfferPage(await suppliedOfferPage(path), { head: `${offerPageAssets.head}\n${preamble}`, body: '<script type="module" src="/src/embed/siteHeader.tsx"></script>' });
+        const html = blendOfferPage(await suppliedOfferPage(path), { head: `${offerPageAssets.head}\n${preamble}`, body: '<script type="module" src="/src/embed/siteHeader.tsx"></script>' }, path);
         res.setHeader('Content-Type', 'text/html; charset=utf-8');
         res.end(html);
       });
@@ -384,7 +384,7 @@ function seoPlugin(state: { blog: Blog }, options: HeadOptions): Plugin {
       // The salon offer pages: the supplied files in the site's colours, fonts, logo and header. Their own inline
       // scripts (tags, galleries, forms) go into the CSP's hashes like the site's.
       for (const path of staticPages) {
-        const html = blendOfferPage(await suppliedOfferPage(path), offerPageAssets);
+        const html = blendOfferPage(await suppliedOfferPage(path), offerPageAssets, path);
         for (const m of html.matchAll(/<script(?![^>]*\bsrc=)(?![^>]*application\/ld\+json)[^>]*>([\s\S]*?)<\/script>/g)) if (m[1].trim()) inlineScripts.add(m[1]);
         await writeFile(join(outDir, `${path}.html`), html);
       }

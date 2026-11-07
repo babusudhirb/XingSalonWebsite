@@ -95,12 +95,20 @@ interface Inject {
   body: string;
 }
 
+const offerContact = (path: string) => {
+  const hsr = path.startsWith('/hsr');
+  const phone = hsr ? '+919380812348' : '+918970007440';
+  const label = hsr ? 'HSR Layout' : 'Sarjapur Road';
+  const message = encodeURIComponent(`Hi Xing ${label}! I’d like to know about the offer on this page.`);
+  return `<aside class="xing-offer-contact" aria-label="Contact Xing ${label}"><span>Questions about this offer?</span><a href="https://wa.me/${phone.replace('+', '')}?text=${message}" target="_blank" rel="noopener noreferrer">WhatsApp ${label}</a><a href="tel:${phone}">Call ${label}</a></aside><style>.xing-offer-contact{position:fixed;z-index:999;right:16px;bottom:16px;display:flex;align-items:center;gap:10px;padding:10px 12px 10px 16px;border:1px solid rgba(39,21,28,.12);border-radius:999px;background:#fff9f8;box-shadow:0 12px 30px rgba(39,21,28,.18);font:500 13px Poppins,Arial,sans-serif;color:#27151c}.xing-offer-contact span{color:#6b5b5e}.xing-offer-contact a{display:inline-flex;min-height:40px;align-items:center;padding:0 14px;border-radius:999px;background:#a8325e;color:#fff9f8;text-decoration:none}.xing-offer-contact a:last-child{background:transparent;border:1px solid #a8325e;color:#a8325e}@media(max-width:640px){.xing-offer-contact{left:10px;right:10px;bottom:10px;justify-content:center;gap:6px;padding:8px}.xing-offer-contact span{display:none}.xing-offer-contact a{flex:1;justify-content:center;font-size:12px;padding:0 8px}}</style>`;
+};
+
 const must = (html: string, pattern: RegExp, what: string) => {
   if (!pattern.test(html)) throw new Error(`offer page: no ${what} to replace`);
 };
 
 /** A supplied offer page with the site's colours, fonts, logo and header. */
-export function blendOfferPage(html: string, inject: Inject) {
+export function blendOfferPage(html: string, inject: Inject, path = '') {
   const header = /<header class="header">[\s\S]*?<\/header>\s*/;
   const wordmark = /(<footer[\s\S]*?)<span class="wordmark">[\s\S]*?<\/span>(<span class="brand-detail">)/;
   must(html, header, 'header');
@@ -124,7 +132,7 @@ export function blendOfferPage(html: string, inject: Inject) {
       // image directory. Make every image reference root-relative in the generated page, including gallery scripts.
       .replace(/(["'(])images\//g, '$1/images/')
       .replace('</head>', `${inject.head}\n</head>`)
-      .replace(/<\/body>(?![\s\S]*<\/body>)/, `${inject.body}\n</body>`)
+      .replace(/<\/body>(?![\s\S]*<\/body>)/, `${offerContact(path)}${inject.body}\n</body>`)
   );
 }
 

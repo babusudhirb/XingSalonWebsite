@@ -21,8 +21,6 @@ import { servicePages } from './src/data/pages';
 import { aboutMeta, blogRoutes, bookingMeta, celebrationOffersMeta, faqPageMeta, metaFor, membershipMeta, notFoundMeta, privacyMeta, robotsMeta, robotsTxt, routes, siteNodes, type PageMeta } from './src/data/seo';
 import { tagSnippets, type TagEnv } from './src/lib/tags';
 import { novemberCampaign } from './src/data/offers';
-import { staticPages } from './src/data/staticOfferPages';
-import { blendOfferPage, offerPageAssets } from './src/lib/offerPageHtml';
 import { categories, categoryOf, redirects, services, servicesHubPath } from './src/data/services';
 import { membershipPath } from './src/data/membershipLinks';
 import { celebrationOffersPath } from './src/data/celebrationOffers';
@@ -326,10 +324,6 @@ function contentFiles(path: string) {
   return ['src/data/services.ts'];
 }
 
-/** A salon offer page as supplied (content/offer-pages/), for /hsrhaircoloroffers and the rest. */
-const OFFER_PAGES = resolve(__dirname, 'content/offer-pages');
-const suppliedOfferPage = (path: string) => readFile(join(OFFER_PAGES, `${path.slice(1)}.html`), 'utf8');
-
 function seoPlugin(state: { blog: Blog }, options: HeadOptions): Plugin {
   let outDir = 'dist';
   const extra = () => [aboutMeta, faqPageMeta, privacyMeta, membershipMeta, celebrationOffersMeta, bookingMeta, notFoundMeta, ...blogRoutes(state.blog.posts.map((post) => ({ ...post.meta, faqs: post.body.faqs })), state.blog.categories)];
@@ -338,20 +332,6 @@ function seoPlugin(state: { blog: Blog }, options: HeadOptions): Plugin {
     name: 'xing-seo',
     configResolved(config) {
       outDir = resolve(config.root, config.build.outDir);
-    },
-    // The dev server serves the offer pages as the build does, with the header's code from source.
-    configureServer(server) {
-      server.middlewares.use(async (req, res, next) => {
-        const path = (req.url ?? '').split(/[?#]/)[0].replace(/\.html$/, '');
-        if (!staticPages.includes(path)) return next();
-        const preamble = [
-          '<script type="module" src="/@vite/client"></script>',
-          '<script type="module">import RefreshRuntime from "/@react-refresh";RefreshRuntime.injectIntoGlobalHook(window);window.$RefreshReg$=()=>{};window.$RefreshSig$=()=>(type)=>type;window.__vite_plugin_react_preamble_installed__=true;</script>',
-        ].join('\n');
-        const html = blendOfferPage(await suppliedOfferPage(path), { head: `${offerPageAssets.head}\n${preamble}`, body: '<script type="module" src="/src/embed/siteHeader.tsx"></script>' }, path);
-        res.setHeader('Content-Type', 'text/html; charset=utf-8');
-        res.end(html);
-      });
     },
     transformIndexHtml: {
       order: 'pre',
@@ -381,14 +361,6 @@ function seoPlugin(state: { blog: Blog }, options: HeadOptions): Plugin {
         await writeFile(file, html);
       }
 
-      // The salon offer pages: the supplied files in the site's colours, fonts, logo and header. Their own inline
-      // scripts (tags, galleries, forms) go into the CSP's hashes like the site's.
-      for (const path of staticPages) {
-        const html = blendOfferPage(await suppliedOfferPage(path), offerPageAssets, path);
-        for (const m of html.matchAll(/<script(?![^>]*\bsrc=)(?![^>]*application\/ld\+json)[^>]*>([\s\S]*?)<\/script>/g)) if (m[1].trim()) inlineScripts.add(m[1]);
-        await writeFile(join(outDir, `${path}.html`), html);
-      }
-
       for (const [from, to] of Object.entries(redirects)) {
         const html = `<!doctype html>\n<meta charset="UTF-8" />\n<title>Redirecting…</title>\n<meta name="robots" content="noindex,follow" />\n<link rel="canonical" href="${site.url}${to}" />\n<meta http-equiv="refresh" content="0; url=${to}" />\n<a href="${to}">Continue</a>\n`;
         const file = join(outDir, `${from}.html`);
@@ -402,8 +374,7 @@ function seoPlugin(state: { blog: Blog }, options: HeadOptions): Plugin {
       // goes to www on hosts that take domain rules (Netlify); the others set that in their dashboard (README).
       const host = new URL(site.url).host;
       const bare = host.replace(/^www\./, '');
-      // The salon offer pages (public/) too: hosts serve /<slug>.html at /<slug>, and the address with .html moves there.
-      const pages = [...all.filter((route) => route.path !== '/').map((route) => route.path), ...staticPages];
+      const pages = all.filter((route) => route.path !== '/').map((route) => route.path);
       await writeFile(
         join(outDir, '_redirects'),
         `${[

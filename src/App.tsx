@@ -10,7 +10,7 @@ import { BookingProvider } from './context/booking';
 import { MobileStickyBar } from './components/service/MobileStickyBar';
 import { OfferSheetsProvider } from './components/offers/OfferSheets';
 import { trackContactClicks } from './lib/analytics';
-import { blogRoute, currentCategory, currentPage, currentSalon, isAbout, isBooking, isCelebrationOffers, isFaq, isPrivacy, isServicePage, loadCurrentPage, isMembership, isNotFound, isSalons, isServicesHub } from './lib/route';
+import { blogRoute, currentCategory, currentLegacyOffer, currentPage, currentSalon, isAbout, isBooking, isCelebrationOffers, isFaq, isPrivacy, isServicePage, loadCurrentPage, isMembership, isNotFound, isSalons, isServicesHub } from './lib/route';
 import { whenHydrated } from './lib/hydration';
 import { isPrerender, readyLazy, wasPrerendered } from './lib/prerender';
 import { bookingWhatsappHref } from './lib/whatsapp';
@@ -33,6 +33,7 @@ const SalonsPage = readyLazy(() => import('./pages/SalonsPage'));
 const BranchPage = readyLazy(() => import('./pages/BranchPage'));
 const NotFoundPage = readyLazy(() => import('./pages/NotFoundPage'));
 const OffersPage = readyLazy(() => import('./pages/OffersPage'));
+const LegacyOfferPage = readyLazy(() => import('./pages/LegacyOfferPage'));
 // Neither is needed to show a page, so both load later: the booking form on its first use, the offer popup
 // once the page has settled.
 const OfferPopup = lazy(() => import('./components/offers/OfferPopup'));
@@ -54,7 +55,9 @@ async function loadPage() {
     const { preloadBlog } = await import('./pages/blog/BlogRoutes');
     return preloadBlog(blogRoute);
   }
-  const page = isServicePage
+  const page = currentLegacyOffer
+    ? LegacyOfferPage
+    : isServicePage
     ? ServicePage
     : currentCategory
       ? ServiceCategoryPage
@@ -173,7 +176,9 @@ export default function App() {
             placeholder stands in for the hero, instead of a blank page. */}
         <Boundary fallback={<PageSkeleton />}>
           <main id="main">
-            {currentPage ? (
+            {currentLegacyOffer ? (
+              <LegacyOfferPage route={currentLegacyOffer} />
+            ) : currentPage ? (
               <ServicePage page={currentPage} />
             ) : currentCategory ? (
               <ServiceCategoryPage category={currentCategory} />

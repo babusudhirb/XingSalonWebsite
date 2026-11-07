@@ -5,6 +5,8 @@ import { celebrationOffersPath } from './celebrationOffers';
 import { bookingPath } from './bookingLinks';
 import { offersPage } from './offersPage';
 import { offersPath } from './offers';
+import { offerPage } from './offerPages';
+import { legacyOfferRoutes } from './staticOfferPages';
 import { branchPages, salonsPage, type BranchPageContent } from './branchPages';
 import { allFaqs, faqGroups, faqPage } from './faqPage';
 import { faq, faqPath, footer, guidePath, guides, hero, HERO_SIZES, locations, seo, SERVICE_HERO_SIZES, signatureColor, site } from './content';
@@ -181,6 +183,23 @@ const offersMeta: PageMeta = {
     { '@context': 'https://schema.org', '@type': 'CollectionPage', name: 'Xing salon offers in Bangalore', url: abs(offersPath), isPartOf: { '@id': `${site.url}/#website` } },
   ],
 };
+
+/** SEO for the established campaign/GMB offer URLs, now rendered by the shared responsive page. */
+const legacyOfferMetas: PageMeta[] = legacyOfferRoutes.map((route) => {
+  const salon = locations.find((location) => location.id === route.salonId)!;
+  const page = offerPage(route.offerId);
+  const name = `${page.name} at Xing ${salon.name}, Bangalore`;
+  return {
+    path: route.path,
+    title: `${name} | Xing Premium Salon`,
+    description: `Explore current ${page.name.toLowerCase()} at Xing ${salon.name}, Bangalore. Talk to our salon team to confirm the right service, availability and appointment.`,
+    image: OG_IMAGE,
+    jsonLd: [
+      crumbs([['Home', '/'], ['Offers', offersPath], [page.name, route.path]]),
+      { '@context': 'https://schema.org', '@type': 'OfferCatalog', name, url: abs(route.path), itemListElement: page.offers.map((offer, index) => ({ '@type': 'Offer', position: index + 1, name: offer.name, price: offer.price, priceCurrency: 'INR' })) },
+    ],
+  };
+});
 
 const DAY_NAMES: Record<string, string> = {
   Mon: 'Monday',
@@ -492,6 +511,7 @@ function categoryMeta(category: ServiceCategory): PageMeta {
 export const routes: PageMeta[] = [
   home,
   offersMeta,
+  ...legacyOfferMetas,
   servicesHubMeta,
   ...categories.filter((category) => category.hasPage).map(categoryMeta),
   ...Object.values(servicePages).map(serviceMeta),

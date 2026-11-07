@@ -8,13 +8,14 @@ import type { ServicePageContent } from '../data/pages/types';
 import { privacyPath } from '../data/privacy';
 import { offersPath } from '../data/offers';
 import { categoryBySlug, redirects, servicesHubPath } from '../data/services';
-import { staticPages } from '../data/staticOfferPages';
+import { legacyOfferByPath } from '../data/staticOfferPages';
 
 // Pages are separate documents (plain links, full page loads), so the route is fixed for the page's lifetime.
 const path = window.location.pathname.replace(/\/+$/, '') || '/';
 if (path in redirects) window.location.replace(redirects[path]);
-/** One of the salon offer pages (content/offer-pages/), where only the site's header runs (src/embed/siteHeader.tsx). */
-export const isStaticPage = staticPages.includes(path);
+/** One of the historic offer addresses, now served by the shared React offer page. */
+export const currentLegacyOffer = legacyOfferByPath[path];
+export const isStaticPage = !!currentLegacyOffer;
 
 const slug = path.match(/^\/services\/([a-z0-9-]+)$/)?.[1];
 

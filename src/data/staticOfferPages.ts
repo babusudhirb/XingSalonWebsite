@@ -1,6 +1,6 @@
-// The salon offer pages, served exactly as supplied (public/<slug>.html, from _public_html): their own HTML, CSS and
-// scripts. Hosts serve each at its clean address. Each salon has three: hair colour, hair treatment and skin care.
-// "sarjapaura" is the old site's spelling; kept so its links still work.
+// The offer URLs existed before the React site. Keep their exact spellings (including the historic
+// "sarjapaura") so Google, GMB and existing campaign links keep working, but render them through
+// the shared responsive offer experience.
 import type { BranchId } from './offers';
 
 export type OfferPageId = 'hair-colour' | 'hair-treatment' | 'skin-care';
@@ -25,3 +25,16 @@ export const salonOfferPages: Record<BranchId, Record<OfferPageId, string>> = {
 
 /** Every copied page, once. */
 export const staticPages = [...new Set(Object.values(salonOfferPages).flatMap((pages) => Object.values(pages)))];
+
+export interface LegacyOfferRoute {
+  path: string;
+  salonId: BranchId;
+  offerId: OfferPageId;
+}
+
+/** Details for a legacy URL, used by the shared React offer page. */
+export const legacyOfferRoutes: LegacyOfferRoute[] = (Object.entries(salonOfferPages) as Array<[BranchId, Record<OfferPageId, string>]>).flatMap(
+  ([salonId, pages]) => Object.entries(pages).map(([offerId, path]) => ({ path, salonId, offerId: offerId as OfferPageId })),
+).filter((route, index, all) => all.findIndex((candidate) => candidate.path === route.path) === index);
+
+export const legacyOfferByPath = Object.fromEntries(legacyOfferRoutes.map((route) => [route.path, route])) as Record<string, LegacyOfferRoute>;

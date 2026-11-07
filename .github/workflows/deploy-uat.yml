@@ -72,7 +72,9 @@ jobs:
         run: |
           test -n "$HOSTINGER_SMTP_PASSWORD"
           install -m 700 -d ~/.ssh
-          ssh -p 65002 -o StrictHostKeyChecking=accept-new -o PreferredAuthentications=none -o PasswordAuthentication=no -o KbdInteractiveAuthentication=no -o GSSAPIAuthentication=no "$HOSTINGER_USERNAME@$HOSTINGER_HOST" 'true' || true
+          # Hostinger occasionally accepts a TCP connection but stalls during SSH/SCP. Bound every network
+          # operation so a transient server problem fails visibly instead of blocking later UAT releases.
+          timeout 30s ssh -p 65002 -o ConnectTimeout=20 -o ConnectionAttempts=2 -o ServerAliveInterval=15 -o ServerAliveCountMax=2 -o StrictHostKeyChecking=accept-new -o PreferredAuthentications=none -o PasswordAuthentication=no -o KbdInteractiveAuthentication=no -o GSSAPIAuthentication=no "$HOSTINGER_USERNAME@$HOSTINGER_HOST" 'true' || true
           ssh-keygen -lf ~/.ssh/known_hosts -E sha256 | grep -F 'SHA256:XQQLhQE5nX/8jCp35U3StskSjy+r4ncFsnJufIu6QII'
           tar -C dist -czf "$RUNNER_TEMP/xingsalons-uat-build.tar.gz" .
           smtp_password_b64="$(printf %s "$HOSTINGER_SMTP_PASSWORD" | base64 -w0)"
@@ -88,9 +90,9 @@ jobs:
           ];
           EOF
           export SSHPASS="$HOSTINGER_PASSWORD"
-          sshpass -e scp -P 65002 -o StrictHostKeyChecking=yes "$RUNNER_TEMP/xingsalons-uat-build.tar.gz" "$HOSTINGER_USERNAME@$HOSTINGER_HOST:xingsalons-uat-build.tar.gz"
-          sshpass -e scp -P 65002 -o StrictHostKeyChecking=yes "$RUNNER_TEMP/xingsalons-uat-mail-config.php" "$HOSTINGER_USERNAME@$HOSTINGER_HOST:xingsalons-uat-mail-config.php"
-          sshpass -e ssh -p 65002 -o StrictHostKeyChecking=yes "$HOSTINGER_USERNAME@$HOSTINGER_HOST" 'bash -s' <<'REMOTE_SCRIPT'
+          timeout 120s sshpass -e scp -P 65002 -o ConnectTimeout=20 -o ConnectionAttempts=2 -o ServerAliveInterval=15 -o ServerAliveCountMax=2 -o StrictHostKeyChecking=yes "$RUNNER_TEMP/xingsalons-uat-build.tar.gz" "$HOSTINGER_USERNAME@$HOSTINGER_HOST:xingsalons-uat-build.tar.gz"
+          timeout 60s sshpass -e scp -P 65002 -o ConnectTimeout=20 -o ConnectionAttempts=2 -o ServerAliveInterval=15 -o ServerAliveCountMax=2 -o StrictHostKeyChecking=yes "$RUNNER_TEMP/xingsalons-uat-mail-config.php" "$HOSTINGER_USERNAME@$HOSTINGER_HOST:xingsalons-uat-mail-config.php"
+          timeout 180s sshpass -e ssh -p 65002 -o ConnectTimeout=20 -o ConnectionAttempts=2 -o ServerAliveInterval=15 -o ServerAliveCountMax=2 -o StrictHostKeyChecking=yes "$HOSTINGER_USERNAME@$HOSTINGER_HOST" 'bash -s' <<'REMOTE_SCRIPT'
           set -eu
           site_root="$HOME/domains/xingsalons.com"
           deploy_root="$site_root/public_html/uat"

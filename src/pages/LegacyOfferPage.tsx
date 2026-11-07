@@ -67,14 +67,18 @@ export default function LegacyOfferPage({ route }: { route: LegacyOfferRoute }) 
           </div>
           <ul className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
             {page.offers.map((offer) => (
-              <li key={offer.name} className="flex min-h-64 flex-col rounded-card border border-ink/10 bg-white p-5 shadow-soft">
-                <p className="text-sm font-semibold text-berry">Limited-time salon offer</p>
-                <h3 className="mt-3 font-display text-3xl leading-tight text-ink">{offer.name}</h3>
-                <div className="mt-auto pt-6">
+              <li key={offer.name} className="flex overflow-hidden rounded-card border border-ink/10 bg-white shadow-soft sm:flex-col">
+                <Picture image={offer.image} sizes="(min-width:1280px) 22vw, (min-width:640px) 45vw, 42vw" className="aspect-square w-[42%] shrink-0 object-cover sm:w-full" />
+                <div className="flex min-w-0 flex-1 flex-col p-4 sm:p-5">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-berry">{offer.kicker}</p>
+                  <h3 className="mt-2 font-display text-2xl leading-tight text-ink">{offer.name}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted">{offer.description}</p>
+                  <div className="mt-auto pt-5">
                   {offer.was && <p className="text-sm text-muted line-through">Was {formatPrice(offer.was)}</p>}
                   <p className="font-display text-4xl text-berry">{formatPrice(offer.price)}</p>
                   {offer.unit && <p className="mt-1 text-sm text-muted">{offer.unit}</p>}
                   <Button href={`${bookingHref}&offer=${encodeURIComponent(offer.name)}`} className="mt-5 w-full" wrap>Book this offer</Button>
+                  </div>
                 </div>
               </li>
             ))}

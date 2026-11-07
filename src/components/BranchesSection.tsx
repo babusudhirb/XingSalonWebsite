@@ -84,11 +84,11 @@ function BranchCard({ salon, distance, eager = false }: { salon: Salon; distance
           <RatingChip salon={salon} />
         </div>
 
-        <SalonNap salon={salon} className="mt-4" />
+        <SalonNap salon={salon} className="mt-4 min-h-[5.25rem]" />
         {/* Phones: the address and the map are enough; the landmark and the areas served show from 640px and stay
             in the HTML (each salon's page has them in full). */}
         {salon.landmark && (
-          <p className="mt-1.5 flex items-start gap-2.5 text-sm leading-relaxed text-muted max-sm:hidden">
+          <p className="mt-1.5 flex min-h-[3rem] items-start gap-2.5 text-sm leading-relaxed text-muted max-sm:hidden">
             <Landmark aria-hidden className="mt-1 size-4 shrink-0 text-berry" />
             {salon.landmark}
           </p>

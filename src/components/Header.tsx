@@ -332,7 +332,7 @@ export function Header() {
                 const isActive = active === item.id;
                 if (item.id === SERVICES_ID) return <ServicesMegaMenu key={item.id} label={item.label} isActive={isActive} underline={UNDERLINE} />;
                 if (item.id === SALONS_ID) return <SalonsMenu key={item.id} label={item.label} isActive={isActive} />;
-                if (item.id === OFFERS_ID) return <LinksMenu key={item.id} id="offers" label={item.label} isActive={isActive} menu={offersMenu()} />;
+                if (item.id === OFFERS_ID) return <LinksMenu key={item.id} id="offers" label={item.label} href={offersPath} isActive={isActive} menu={offersMenu()} />;
                 return (
                   <li key={item.id}>
                     <a

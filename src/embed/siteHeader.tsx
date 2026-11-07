@@ -31,7 +31,7 @@ if (host && !host.shadowRoot) {
   const style = document.createElement('style');
   // :root and html/body rules can't match inside a shadow root; the variables and base text style go on the host.
   style.textContent = `${css.replaceAll(':root', ':host')}
-:host{display:block;font-family:Poppins,'Poppins Fallback',system-ui,sans-serif;font-weight:400;color:#27151C;line-height:1.5;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}`;
+:host{display:block;position:relative;z-index:1000;font-family:Poppins,'Poppins Fallback',system-ui,sans-serif;font-weight:400;color:#27151C;line-height:1.5;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}`;
   const mount = document.createElement('div');
   shadow.append(style, mount);
   createRoot(mount).render(

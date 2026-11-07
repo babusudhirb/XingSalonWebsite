@@ -290,7 +290,8 @@ function ServiceMenu({ openId, query, scrollTo, onToggle, onQuery }: ServiceMenu
   );
 }
 
-export function Services() {
+/** On the homepage, lead with categories; the complete searchable catalogue belongs on /services. */
+export function Services({ showMenu = false }: { showMenu?: boolean }) {
   const [openId, setOpenId] = useState<string | null>(serviceMenu[0].id);
   const [query, setQuery] = useState('');
   const scrollTo = useRef<string | null>(null);
@@ -324,7 +325,7 @@ export function Services() {
           </ul>
         </div>
 
-        <ServiceMenu openId={openId} query={query} scrollTo={scrollTo} onToggle={toggle} onQuery={search} />
+        {showMenu && <ServiceMenu openId={openId} query={query} scrollTo={scrollTo} onToggle={toggle} onQuery={search} />}
       </div>
     </section>
   );

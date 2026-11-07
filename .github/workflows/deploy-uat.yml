@@ -90,8 +90,11 @@ jobs:
           ];
           EOF
           export SSHPASS="$HOSTINGER_PASSWORD"
-          timeout 120s sshpass -e scp -P 65002 -o ConnectTimeout=20 -o ConnectionAttempts=2 -o ServerAliveInterval=15 -o ServerAliveCountMax=2 -o StrictHostKeyChecking=yes "$RUNNER_TEMP/xingsalons-uat-build.tar.gz" "$HOSTINGER_USERNAME@$HOSTINGER_HOST:xingsalons-uat-build.tar.gz"
-          timeout 60s sshpass -e scp -P 65002 -o ConnectTimeout=20 -o ConnectionAttempts=2 -o ServerAliveInterval=15 -o ServerAliveCountMax=2 -o StrictHostKeyChecking=yes "$RUNNER_TEMP/xingsalons-uat-mail-config.php" "$HOSTINGER_USERNAME@$HOSTINGER_HOST:xingsalons-uat-mail-config.php"
+          # OpenSSH scp uses Hostinger's SFTP subsystem by default. That subsystem timed out above even though
+          # the SSH host and fingerprint are healthy, so copy each file through the regular SSH shell instead.
+          # This preserves encrypted transfer and avoids relying on a second server-side subsystem.
+          timeout 240s sshpass -e ssh -p 65002 -o ConnectTimeout=20 -o ConnectionAttempts=2 -o ServerAliveInterval=15 -o ServerAliveCountMax=2 -o StrictHostKeyChecking=yes "$HOSTINGER_USERNAME@$HOSTINGER_HOST" 'cat > "$HOME/xingsalons-uat-build.tar.gz"' < "$RUNNER_TEMP/xingsalons-uat-build.tar.gz"
+          timeout 60s sshpass -e ssh -p 65002 -o ConnectTimeout=20 -o ConnectionAttempts=2 -o ServerAliveInterval=15 -o ServerAliveCountMax=2 -o StrictHostKeyChecking=yes "$HOSTINGER_USERNAME@$HOSTINGER_HOST" 'cat > "$HOME/xingsalons-uat-mail-config.php"' < "$RUNNER_TEMP/xingsalons-uat-mail-config.php"
           timeout 180s sshpass -e ssh -p 65002 -o ConnectTimeout=20 -o ConnectionAttempts=2 -o ServerAliveInterval=15 -o ServerAliveCountMax=2 -o StrictHostKeyChecking=yes "$HOSTINGER_USERNAME@$HOSTINGER_HOST" 'bash -s' <<'REMOTE_SCRIPT'
           set -eu
           site_root="$HOME/domains/xingsalons.com"

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
 import { m } from 'framer-motion';
 import { ArrowRight, ChevronDown } from 'lucide-react';
-import { categories, type ServiceCategory } from '../../data/services';
+import { categories, servicesHubPath, type ServiceCategory } from '../../data/services';
 import { cn } from '../../lib/cn';
 import { currentPage, serviceHref } from '../../lib/route';
 import { bookingWhatsappHref } from '../../lib/whatsapp';
@@ -175,10 +175,16 @@ export function ServicesMegaMenu({ label, isActive, underline }: { label: string
             </div>
             <div className="border-t border-ink/10">
               <div className="container-site flex items-center justify-between gap-6 py-3.5">
-                <a href={category.path} onClick={close} className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-berry underline-offset-4 hover:underline">
-                  View all {category.title}
-                  <ArrowRight aria-hidden className="size-4" />
-                </a>
+                <div className="flex flex-wrap items-center gap-x-6 gap-y-1">
+                  <a href={servicesHubPath} onClick={close} className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-berry underline-offset-4 hover:underline">
+                    View All Services
+                    <ArrowRight aria-hidden className="size-4" />
+                  </a>
+                  <a href={category.path} onClick={close} className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-berry underline-offset-4 hover:underline">
+                    View all {category.title}
+                    <ArrowRight aria-hidden className="size-4" />
+                  </a>
+                </div>
                 <a
                   href={bookingWhatsappHref}
                   target="_blank"

@@ -2,7 +2,7 @@ import { useEffect, useRef, type ReactNode, type RefObject, type TouchEvent } fr
 import { AnimatePresence, m, useReducedMotion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Phone, X } from 'lucide-react';
 import type { NavMenu } from '../../data/navMenus';
-import { categories, servicesIn } from '../../data/services';
+import { categories, servicesHubPath, servicesIn } from '../../data/services';
 import { cn } from '../../lib/cn';
 import { currentPage, serviceHref } from '../../lib/route';
 import { ICONS } from '../service/icons';
@@ -188,28 +188,35 @@ export function MobileMenu({ items, servicesId, menus, path, onEnter, onUp, onCl
     );
   } else if (depth === 1) {
     body = (
-      <ul className="min-h-0 flex-1 divide-y divide-ink/10 overflow-y-auto overscroll-contain px-4">
-        {categories.map((entry) => {
-          const Icon = ICONS[entry.icon];
-          const count = servicesIn(entry).length;
-          return (
-            <li key={entry.key}>
-              <button type="button" onClick={() => onEnter(entry.key)} className="flex min-h-16 w-full items-center gap-3 py-2 text-left">
-                <span className="grid size-11 shrink-0 place-items-center rounded-full bg-blush text-berry">
-                  <Icon aria-hidden className="size-5" strokeWidth={1.5} />
-                </span>
-                <span className="min-w-0 flex-1">
-                  <span className="block text-lg font-medium text-ink">{entry.title}</span>
-                  <span className="block text-sm text-muted">
-                    {count} {count === 1 ? 'service' : 'services'}
+      <div className="flex min-h-0 flex-1 flex-col">
+        <ul className="min-h-0 flex-1 divide-y divide-ink/10 overflow-y-auto overscroll-contain px-4">
+          {categories.map((entry) => {
+            const Icon = ICONS[entry.icon];
+            const count = servicesIn(entry).length;
+            return (
+              <li key={entry.key}>
+                <button type="button" onClick={() => onEnter(entry.key)} className="flex min-h-16 w-full items-center gap-3 py-2 text-left">
+                  <span className="grid size-11 shrink-0 place-items-center rounded-full bg-blush text-berry">
+                    <Icon aria-hidden className="size-5" strokeWidth={1.5} />
                   </span>
-                </span>
-                <ChevronRight aria-hidden className="size-5 shrink-0 text-berry" />
-              </button>
-            </li>
-          );
-        })}
-      </ul>
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-lg font-medium text-ink">{entry.title}</span>
+                    <span className="block text-sm text-muted">
+                      {count} {count === 1 ? 'service' : 'services'}
+                    </span>
+                  </span>
+                  <ChevronRight aria-hidden className="size-5 shrink-0 text-berry" />
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+        <div className="shrink-0 border-t border-ink/10 bg-cream px-4 pt-4 [padding-bottom:max(1rem,env(safe-area-inset-bottom))]">
+          <a href={servicesHubPath} onClick={onNavigate} className="inline-flex min-h-12 w-full items-center justify-center rounded-full bg-berry px-5 text-base font-semibold text-cream">
+            View All Services
+          </a>
+        </div>
+      </div>
     );
   } else if (category) {
     body = (

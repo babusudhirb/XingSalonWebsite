@@ -39,7 +39,7 @@ export interface ServiceList {
   compact?: boolean;
 }
 
-export type GroupId = 'hair' | 'skin-body' | 'nails' | 'tattoo';
+export type GroupId = 'hair' | 'skin-body' | 'nails';
 
 /** How a service appears in menus, listings and search results. Filled in from `catalogue` below. */
 interface ServiceCatalogue {
@@ -901,47 +901,6 @@ const list: ServiceEntry[] = [
     slug: 'french-nail-art', label: 'French Nail Art', group: 'nails', bookAs: 'Nails',
     lists: [{ title: 'French Nail Art', items: [{ name: 'French Nail Art', icon: 'crown', tags: ['Timeless', 'Elegant'], text: 'Clean French tips in classic white or colours selected for your look.' }] }], notes: [], offers: ['tuesday', 'birthday', 'membership'],
   },
-  {
-    slug: 'tattoo',
-    label: 'Tattoo Studio',
-    group: 'tattoo',
-    bookAs: 'Tattoo',
-    lists: [
-      {
-        title: 'Tattoo Styles',
-        compact: true,
-        items: [
-          {
-            name: 'Black & Grey Tattoos', icon: 'brush', tags: ['Timeless', 'Shading', 'Detail'],
-            text: 'Classic black and grey work, from fine linework to rich shading and portraits.',
-          },
-          { name: 'Colour Tattoos', icon: 'palette', tags: ['Vibrant', 'Bold'], text: 'Bright, saturated colour tattoos that make a statement.' },
-          {
-            name: '3D & Photo-Realistic Tattoos', icon: 'layers', tags: ['Realism', 'Depth'],
-            text: 'Lifelike 3D-style and photo-realistic tattoos with depth and detail.',
-          },
-          {
-            name: 'Custom Designs', icon: 'sparkles', tags: ['Your story', 'One-of-a-kind'],
-            text: 'Original artwork designed around your idea, placement and size.',
-          },
-          // The cards below come from xingtattoo.in (checked 7 Oct 2026), reworded; owner to approve.
-          { name: 'Portrait Tattoos', icon: 'smile', tags: ['Likeness', 'Detail'], text: 'A face that matters to you, rendered with care and fine detail.' },
-          {
-            name: 'Minimalist & Fine-Line', icon: 'wind', tags: ['Subtle', 'Delicate'],
-            text: 'Small, clean, understated pieces with precise lines. A popular first tattoo.',
-          },
-          { name: 'Geometric & Mandala', icon: 'star', tags: ['Symmetry', 'Pattern'], text: 'Balanced shapes and patterns built with crisp, exact linework.' },
-          { name: 'Indian Traditional', icon: 'crown', tags: ['Heritage', 'Meaning'], text: 'Designs rooted in faith, culture and heritage, drawn for you.' },
-          {
-            name: 'Cover-ups & Rework', icon: 'shield', tags: ['Refresh', 'Rework'],
-            text: 'Give an old or faded tattoo new life with a rework or a new design over it.',
-          },
-        ],
-      },
-    ],
-    notes: [],
-    offers: [],
-  },
 ];
 
 const LOCALITIES = 'Xing Sarjapur Road, HSR Layout & Brookfield';
@@ -1144,8 +1103,6 @@ const catalogue: Record<string, ServiceCatalogue> = {
   'cat-eye-nail-art': { menuLabel: 'Cat Eye Nail Art', blurb: 'Magnetic shimmer and depth that moves with the light.', metaTitle: 'Cat Eye Nail Art in Bangalore – Xing Salon', metaDesc: `Cat-eye magnetic nail art at ${LOCALITIES}.` },
   'marble-nail-art': { menuLabel: 'Marble Nail Art', blurb: 'Elegant stone-inspired swirls for a luxe nail design.', metaTitle: 'Marble Nail Art in Bangalore – Xing Salon', metaDesc: `Marble nail art at ${LOCALITIES}.` },
   'french-nail-art': { menuLabel: 'French Nail Art', blurb: 'Timeless French tips in classic or custom colours.', metaTitle: 'French Nail Art in Bangalore – Xing Salon', metaDesc: `French-tip nail art at ${LOCALITIES}.` },
-  // Tattoo: unchanged.
-  tattoo: { menuLabel: 'Tattoo Studio', blurb: 'Custom, fine-line and realistic tattoos at our Brookfield studio.' },
 };
 
 /** "Balayage Hair Colour in Bangalore" from "Balayage Hair Colour in Bangalore – Xing Salon". */
@@ -1163,7 +1120,7 @@ export const services: Record<string, Service> = Object.fromEntries(
 
 export interface ServiceGroup {
   key: string;
-  /** Null for a category shown as one plain list (Skin & Body, Nail Care, Tattoo). */
+  /** Null for a category shown as one plain list. */
   title: string | null;
   /** Shorter name on the category page's chip bar; defaults to `title`. */
   chip?: string;
@@ -1183,7 +1140,7 @@ export interface ServiceCategory {
   metaDesc: string;
   icon: IconKey;
   groups: ServiceGroup[];
-  /** False when the category is a single service with its own page (Tattoo): `path` is that page. */
+  /** Whether this category has its own listing page. */
   hasPage: boolean;
 }
 
@@ -1241,22 +1198,10 @@ export const categories: ServiceCategory[] = [
       { key: 'nail-art', title: 'Nail Art', services: pick('nail-art', 'cat-eye-nail-art', 'marble-nail-art', 'french-nail-art') },
     ],
   },
-  {
-    key: 'tattoo',
-    title: 'Tattoo',
-    slug: 'tattoo',
-    // The studio is one service with its own page, which doubles as the category page.
-    path: '/services/tattoo',
-    intro: 'Custom, fine-line, realistic and cover-up tattoos by experienced artists at Xing Premium Tattoo Studio in Brookfield.',
-    metaDesc: 'Custom, fine-line, realistic and cover-up tattoos at Xing Premium Tattoo Studio, Brookfield, Bangalore.',
-    icon: 'flame',
-    hasPage: false,
-    groups: [{ key: 'tattoo', title: null, services: pick('tattoo') }],
-  },
 ];
 
-/** Categories exposed through the salon Services navigation. The tattoo studio keeps its direct page. */
-export const visibleCategories = categories.filter((category) => category.key !== 'tattoo');
+/** Categories exposed through the salon Services navigation. */
+export const visibleCategories = categories;
 
 export const categoryBySlug = (slug: string) => categories.find((category) => category.slug === slug && category.hasPage);
 export const categoryOf = (service: Pick<Service, 'group'>) => categories.find((category) => category.key === service.group)!;
@@ -1265,6 +1210,8 @@ export const servicesIn = (category: ServiceCategory) => category.groups.flatMap
 
 /** Retired URLs and the page that replaced them. The server answers each with a 301; the site also redirects. */
 export const redirects: Record<string, string> = {
+  // Tattoo offers now live on the tattoo studio's own site.
+  '/services/tattoo': 'https://www.xingtattoo.in/offer',
   // Blow dry, ironing and curls live on the women's haircut page, so only one page targets those searches.
   '/services/hair-styling': '/services/womens-haircut-styling',
   // Category addresses people may guess.

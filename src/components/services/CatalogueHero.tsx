@@ -69,7 +69,7 @@ export function CategoryHero({ category }: { category: ServiceCategory }) {
 
 const HUB_COPY = {
   title: 'Salon Services in Bangalore',
-  text: 'Hair care, skin & body, nail care and tattoo at Xing Sarjapur Road, HSR Layout and Brookfield — with a free consultation and the price confirmed before we start.',
+  text: 'Hair care, skin & body and nail care at Xing Sarjapur Road, HSR Layout and Brookfield — with a free consultation and the price confirmed before we start.',
 };
 
 export function HubHero() {

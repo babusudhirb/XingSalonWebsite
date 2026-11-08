@@ -570,7 +570,7 @@ export const aboutMeta: PageMeta = {
       foundingDate: String(about.founded),
       sameAs: footer.socials.map((social) => social.href),
       // No prices and no ratings: only who and where each business is.
-      subOrganization: [...locations.map((loc) => salonNode(loc)), venueNode(servicePages.tattoo, abs('/services/tattoo'))],
+      subOrganization: locations.map((loc) => salonNode(loc)),
     },
     {
       '@context': 'https://schema.org',

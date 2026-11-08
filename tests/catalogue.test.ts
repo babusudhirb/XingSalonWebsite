@@ -7,8 +7,8 @@ import { categories, redirects, services, servicesIn } from '../src/data/service
 const PRICE = /₹|\bINR\b|\bRs\.?\s?\d/;
 
 describe('service catalogue', () => {
-  it('has the four categories in order, with Hair Care in four groups', () => {
-    expect(categories.map((category) => category.title)).toEqual(['Hair Care', 'Skin & Body', 'Nail Care', 'Tattoo']);
+  it('has the three categories in order, with Hair Care in four groups', () => {
+    expect(categories.map((category) => category.title)).toEqual(['Hair Care', 'Skin & Body', 'Nail Care']);
     const hair = categories[0];
     expect(hair.groups.map((group) => group.title)).toEqual(['Haircuts & Styling', 'Hair Colour', 'Hair Treatments', 'Hair Spa']);
     expect(hair.groups[0].services.map((service) => service.slug)).toEqual(['womens-haircut-styling', 'blow-drying-styling', 'mens-haircut-beard-grooming', 'kids-haircut']);
@@ -61,6 +61,7 @@ describe('service catalogue', () => {
     // The salon offer pages (public/) and the home page's offers are live too.
     const live = new Set(['/services/hair-care', '/services/nail-care', '/services/skin-body', ...Object.keys(servicePages).map((slug) => `/services/${slug}`), ...posts, ...staticPages, '/#offers']);
     for (const [from, to] of Object.entries(redirects)) {
+      if (to.startsWith('http')) continue;
       expect(live.has(to), `${from} → ${to}`).toBe(true);
       expect(live.has(from), `${from} is still live`).toBe(false);
     }

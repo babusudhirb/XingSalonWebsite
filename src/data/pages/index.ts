@@ -1,5 +1,4 @@
 import { bodyPolish } from './body-polish';
-import { tattoo } from './tattoo';
 import { threadingDetan } from './threading-detan';
 import { waxing } from './waxing';
 import { facialCleanup } from './facial-cleanup';
@@ -72,7 +71,6 @@ export const servicePages: Record<string, ServicePageContent> = Object.fromEntri
     nailCuttingFiling,
     nailPolish,
     quickNailCare,
-    tattoo,
   ].map((page) => [page.slug, page]),
 );
 

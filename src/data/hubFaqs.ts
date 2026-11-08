@@ -1,7 +1,7 @@
 // Questions for /services and the category pages: the same words on the page and in the schema.
 // Only facts already on these pages. Keep this file free of React/asset imports: vite.config.ts reads it.
 export const hubFaqs = [
-  { q: 'What services does Xing offer in Bangalore?', a: 'Xing offers hair care, skin and body care, nail care and tattoo in Bangalore. Hair, skin and nail services are available at our Sarjapur Road, HSR Layout and Brookfield salons, and the tattoo studio is in Brookfield. Each service has its own page.' },
+  { q: 'What services does Xing offer in Bangalore?', a: 'Xing offers hair care, skin and body care and nail care in Bangalore at our Sarjapur Road, HSR Layout and Brookfield salons. Xing Premium Tattoo Studio is a separate outlet in Brookfield.' },
   { q: 'Is the consultation at Xing free?', a: 'Yes. Your Xing stylist starts with a free consultation, talking through your hair or skin and what you want. The price is confirmed before we start, so you know what you will pay before any service begins at the salon.' },
   { q: 'How do I book a service at Xing?', a: 'You can book a Xing service on WhatsApp, by calling your nearest salon, or through the booking form on this site. Walk-ins are welcome at all three salons, though booking ahead helps for longer services such as colour or keratin.' },
   { q: 'Is Xing a unisex salon?', a: 'Yes. Xing is a unisex salon, offering haircuts, colour, treatments and grooming for women and men, as well as kids’ haircuts. Services are available at our Sarjapur Road, HSR Layout and Brookfield salons in Bangalore, so choose whichever is closest.' },

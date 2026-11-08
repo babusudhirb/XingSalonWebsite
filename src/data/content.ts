@@ -909,7 +909,6 @@ export const footer = {
         { label: 'Hair Care', href: '/services/hair-care' },
         { label: 'Skin & Body', href: '/services/skin-body' },
         { label: 'Nail Care', href: '/services/nail-care' },
-        { label: 'Tattoo', href: '/services/tattoo' },
         { label: 'All Services', href: '/services' },
       ],
     },

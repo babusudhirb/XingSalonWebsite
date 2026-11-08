@@ -67,7 +67,7 @@ export default function AboutPage() {
           </ul>
           <p className="mt-4 text-sm text-muted">
             {about.finder.tattoo}{' '}
-            <a href={serviceHref('tattoo')} className="inline-flex min-h-11 items-center gap-1 font-medium text-berry underline-offset-4 hover:underline">
+            <a href={studio.website} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-1 font-medium text-berry underline-offset-4 hover:underline">
               {studio.name}, Brookfield
               <ArrowRight aria-hidden className="size-4" />
             </a>
@@ -94,7 +94,7 @@ export default function AboutPage() {
             ))}
             <tr>
               <th scope="row" className="py-2 pr-3 align-top font-semibold text-ink">Services</th>
-              <td className="py-2 text-muted">{Object.keys(servicePages).length} service pages across hair, skin, nails and tattoo</td>
+              <td className="py-2 text-muted">{Object.keys(servicePages).length} service pages across hair, skin and nails</td>
             </tr>
             <tr>
               <th scope="row" className="py-2 pr-3 align-top font-semibold text-ink">Google rating</th>

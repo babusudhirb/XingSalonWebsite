@@ -19,7 +19,7 @@ export const isStaticPage = !!currentLegacyOffer;
 
 const slug = path.match(/^\/services\/([a-z0-9-]+)$/)?.[1];
 
-/** /services/hair-care and the other category pages. Tattoo has none: its category link is the studio's own page. */
+/** /services/hair-care and the other category pages. */
 export const currentCategory = slug ? categoryBySlug(slug) : undefined;
 
 export const hasPage = (serviceSlug: string) => __SERVICE_PAGE_SLUGS__.includes(serviceSlug);

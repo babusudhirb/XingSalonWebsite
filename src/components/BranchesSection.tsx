@@ -9,7 +9,6 @@ import { useMediaQuery } from '../hooks/useMediaQuery';
 import { onTabKeyDown } from '../lib/a11y';
 import { branchFromHash, setBranch, useBranch } from '../lib/branch';
 import { cn } from '../lib/cn';
-import { serviceHref } from '../lib/route';
 import { whatsappLink } from '../lib/whatsapp';
 import { RatingChip, StatusChip } from './branch/StatusChip';
 import { SectionHeader } from './service/SectionHeader';
@@ -292,6 +291,7 @@ export function BranchesSection({ id = 'branches', className, children, header }
 export function SisterBusinesses({ intro }: { intro?: string }) {
   return (
     <div className="mt-8">
+      <p className="mb-3 text-eyebrow font-medium uppercase text-berry">Other Outlets</p>
       {intro && <p className="mb-4 font-display text-xl font-medium text-ink sm:text-2xl">{intro}</p>}
       <Reveal>
         <div className="svc-card flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
@@ -304,8 +304,9 @@ export function SisterBusinesses({ intro }: { intro?: string }) {
             </div>
           </div>
           <div className="flex flex-col gap-3 sm:flex-row">
-            <Button variant="outline" href={serviceHref('tattoo')}>
-              Tattoo Studio
+            <Button variant="outline" href="https://www.xingtattoo.in/offer" external rel="noopener" arrow={false}>
+              Tattoo Offers
+              <ArrowUpRight aria-hidden className="size-4" />
             </Button>
             <Button variant="outline" href={studio.website} external rel="noopener" arrow={false}>
               xingtattoo.in

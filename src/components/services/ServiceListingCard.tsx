@@ -38,23 +38,23 @@ function CardImage({ service, priority }: { service: Service; priority: boolean 
  * A service on /services/<category>: photo, name, one line, "View details" and a WhatsApp booking button. Every
  * service in the catalogue has a page (tests/catalogue.test.ts checks), so the link goes straight to it.
  */
-export function ServiceListingCard({ service, priority = false }: { service: Service; priority?: boolean }) {
+export function ServiceListingCard({ service, priority = false, compact = false }: { service: Service; priority?: boolean; compact?: boolean }) {
   const badge = service.badge ?? (service.isNew ? 'New' : undefined);
   return (
-    <article className="flex h-full flex-col overflow-hidden rounded-3xl border border-berry/10 bg-white shadow-soft">
+    <article className={`flex h-full flex-col overflow-hidden border border-berry/10 bg-white shadow-soft ${compact ? 'rounded-2xl' : 'rounded-3xl'}`}>
       <div className="relative">
         <CardImage service={service} priority={priority} />
         {badge && (
           <p className="absolute left-3 top-3 inline-flex min-h-7 items-center rounded-full bg-gold px-3 text-xs font-semibold text-ink">{badge}</p>
         )}
       </div>
-      <div className="flex flex-1 flex-col p-5">
-        <h3 className="text-balance font-display text-2xl font-medium leading-tight text-ink">{service.label}</h3>
-        <p className="mt-2 flex-1 text-base text-muted">{service.blurb}</p>
-        <div className="mt-4 flex items-center justify-between gap-3">
+      <div className={`flex flex-1 flex-col ${compact ? 'p-4' : 'p-5'}`}>
+        <h3 className={`text-balance font-display font-medium leading-tight text-ink ${compact ? 'text-xl' : 'text-2xl'}`}>{service.label}</h3>
+        <p className={`flex-1 text-muted ${compact ? 'mt-1.5 text-sm leading-snug' : 'mt-2 text-base'}`}>{service.blurb}</p>
+        <div className={`flex items-center justify-between gap-3 ${compact ? 'mt-2' : 'mt-4'}`}>
           <a
             href={`/services/${service.slug}`}
-            className="inline-flex min-h-11 items-center gap-1.5 text-base font-semibold text-berry underline-offset-4 hover:underline md:text-sm"
+            className={`inline-flex min-h-10 items-center gap-1.5 font-semibold text-berry underline-offset-4 hover:underline ${compact ? 'text-sm' : 'text-base md:text-sm'}`}
           >
             View details
             <span className="sr-only"> of {service.label}</span>
@@ -65,7 +65,7 @@ export function ServiceListingCard({ service, priority = false }: { service: Ser
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`Book ${service.label} on WhatsApp`}
-            className="grid size-11 shrink-0 place-items-center rounded-full bg-whatsapp text-white transition hover:brightness-110"
+            className={`grid shrink-0 place-items-center rounded-full bg-whatsapp text-white transition hover:brightness-110 ${compact ? 'size-10' : 'size-11'}`}
           >
             <WhatsAppIcon className="size-5" />
           </a>

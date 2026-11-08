@@ -94,17 +94,6 @@ export const blowDryingStyling = createHairCarePage({
   related: [{ slug: 'womens-haircut-styling', text: 'Haircuts, layers and complete styling.' }, { slug: 'keratin-treatment', text: 'Frizz control and glossy manageability.' }],
 });
 
-export const rootTouchUp = createHairCarePage({
-  slug: 'root-touch-up', label: 'Root Touch-up', eyebrow: 'Hair Colour',
-  sub: 'Refresh visible regrowth and grey roots while keeping your colour looking even and polished.',
-  introTitle: 'Root Touch-ups in Sarjapur Road, HSR Layout & Brookfield',
-  intro: 'A root touch-up focuses colour on the new growth, making it a practical way to refresh grey coverage or blend regrowth between global colour appointments.',
-  menuTitle: 'Root Touch-up Services', concern: 'visible regrowth or grey coverage',
-  heroImage: img('color-global', 'Global hair colour and root touch-up at Xing Salon Bangalore', 640, 480),
-  benefits: [{ icon: 'palette', title: 'Even-looking colour' }, { icon: 'shield', title: 'Ammonia-free option' }, { icon: 'clock', title: 'Focused colour refresh' }],
-  related: [{ slug: 'global-hair-color', text: 'One rich, even shade from roots to ends.' }, { slug: 'highlights', text: 'Dimension and brightness with highlights.' }],
-});
-
 export const olaplexBondRepair = createHairCarePage({
   slug: 'olaplex-bond-repair', label: 'Olaplex Bond Repair', eyebrow: 'Hair Treatments',
   sub: 'Bond-building care for hair affected by colouring, bleaching, heat styling or dryness.',

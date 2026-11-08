@@ -299,31 +299,11 @@ const list: ServiceEntry[] = [
             tags: ['Gentler formula', 'Even tone'],
             text: 'Full, even colour with an ammonia-free formula, a popular choice if you prefer a gentler option.',
           },
-          {
-            name: 'Root Touch-up',
-            icon: 'brush',
-            tags: ['Regrowth', 'Greys', 'Quick refresh'],
-            text: 'Colours new growth at the roots to blend with your existing shade and cover greys.',
-          },
-          {
-            name: 'Ammonia-Free Root Touch-up',
-            icon: 'heart',
-            tags: ['Gentle', 'Regrowth'],
-            text: 'Root regrowth coverage with an ammonia-free formula.',
-          },
         ],
       },
     ],
     notes: [],
     offers: ['colourOffer', 'tuesday', 'birthday', 'membership'],
-  },
-  {
-    slug: 'root-touch-up', label: 'Root Touch-up', group: 'hair', bookAs: 'Global Hair Colour',
-    lists: [{ title: 'Root Touch-up', allLengths: true, items: [
-      { name: 'Root Touch-up', icon: 'palette', tags: ['Grey coverage', 'Regrowth'], text: 'A colour refresh focused on new growth to keep your shade looking even.' },
-      { name: 'Ammonia-Free Root Touch-up', icon: 'shield', tags: ['Gentler formula'], text: 'A gentler root refresh with ammonia-free colour, subject to consultation.' },
-    ] }],
-    notes: [], offers: ['tuesday', 'birthday', 'membership'],
   },
   {
     slug: 'highlights',
@@ -980,12 +960,6 @@ const catalogue: Record<string, ServiceCatalogue> = {
     keywords: ['fashion hair colour Bangalore', 'crazy hair colour Bangalore'],
     isNew: true,
   },
-  'root-touch-up': {
-    menuLabel: 'Root Touch-up', blurb: 'Refresh new growth and cover visible regrowth between colour visits.',
-    metaTitle: 'Root Touch-up in Bangalore – Xing Salon',
-    metaDesc: `Root touch-ups and ammonia-free grey coverage at ${LOCALITIES}. Colour consultation included before we start.`,
-    keywords: ['root touch-up Bangalore', 'grey coverage Bangalore'], isNew: true,
-  },
   'blow-drying-styling': {
     menuLabel: 'Blow Drying & Styling', blurb: 'Smooth blow dries, sleek ironing, soft curls and event-ready styling.',
     metaTitle: 'Blow Dry & Hair Styling in Bangalore – Xing Salon',
@@ -1001,9 +975,9 @@ const catalogue: Record<string, ServiceCatalogue> = {
     keywords: ['keratin treatment HSR Layout', 'keratin treatment Bangalore'],
   },
   'hair-smoothening': {
-    menuLabel: 'Hair Straightening & Smoothening',
+    menuLabel: 'Straightening / Smoothening',
     blurb: 'Smoothening and straightening options tailored to your hair.',
-    metaTitle: 'Hair Straightening & Smoothening in Bangalore – Xing Salon',
+    metaTitle: 'Straightening / Smoothening in Bangalore – Xing Salon',
     metaDesc: 'Hair straightening and smoothening for sleek, frizz-free hair at Xing salons in Sarjapur Road, HSR Layout & Brookfield. Free consultation.',
     keywords: ['hair smoothening Bangalore', 'hair straightening Bangalore'],
     isNew: true,
@@ -1172,7 +1146,7 @@ export const categories: ServiceCategory[] = [
     hasPage: true,
     groups: [
       { key: 'haircuts', title: 'Haircuts & Styling', chip: 'Haircuts', services: pick('mens-haircut-beard-grooming', 'womens-haircut-styling', 'kids-haircut', 'blow-drying-styling') },
-      { key: 'hair-color', title: 'Hair Colour', services: pick('balayage', 'highlights', 'global-hair-color', 'fashion-color', 'root-touch-up') },
+      { key: 'hair-color', title: 'Hair Colour', services: pick('balayage', 'highlights', 'global-hair-color', 'fashion-color') },
       { key: 'treatments', title: 'Hair Treatments', chip: 'Treatments', services: pick('keratin-treatment', 'nanoplastia', 'olaplex-bond-repair', 'hair-smoothening') },
       { key: 'hair-spa', title: 'Hair Spa', services: pick('anti-dandruff-hair-spa', 'anti-hairfall-hair-spa', 'moroccan-hair-spa', 'tribond-hair-spa') },
     ],
@@ -1255,6 +1229,7 @@ export const redirects: Record<string, string> = {
   '/services/cysteine': '/services/hair-smoothening',
   '/services/hair-straightening': '/services/hair-smoothening',
   '/services/hair-spa': '/services/hair-care',
+  '/services/root-touch-up': '/services/global-hair-color',
   '/blog/hair-botox-vs-keratin': '/blog/what-is-nanoplastia',
   // Its main search term was "manicure"; the manicure page links straight to pedicure.
   '/services/manicure-pedicure': '/services/manicure',

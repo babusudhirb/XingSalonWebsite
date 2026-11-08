@@ -10,7 +10,7 @@ const compare = (current: string): ServicePageContent['compare'] => ({
   columns: ['Treatment', 'Finish', 'Best for', 'How it wears', 'Maintenance'],
   rows: [
     { name: 'Keratin', slug: 'keratin-treatment', cells: ['Smooth with natural volume', 'Frizzy hair, keeping volume', 'Gradually softens over time', 'Repeat as it wears off'] },
-    { name: 'Straightening & Smoothening', slug: 'hair-smoothening', cells: ['Soft smoothening or a sleeker straight finish', 'Wavy, frizzy or curly hair', 'Treated lengths stay changed; regrowth shows natural texture', 'Touch-up as hair grows'] },
+    { name: 'Straightening / Smoothening', slug: 'hair-smoothening', cells: ['Soft smoothening or a sleeker straight finish', 'Wavy, frizzy or curly hair', 'Treated lengths stay changed; regrowth shows natural texture', 'Touch-up as hair grows'] },
   ].map((row) => ({ ...row, current: row.slug === current })),
 });
 
@@ -95,7 +95,7 @@ export const keratinTreatment: ServicePageContent = {
     title: 'Professional Keratin Treatment',
     text: 'Available for all hair lengths, for women and men.',
     askText: 'Not sure keratin is right for your hair? Send us a photo on WhatsApp.',
-    moreLink: { slug: 'hair-smoothening', text: 'Want a straighter finish than keratin gives?', label: 'Straightening & Smoothening' },
+    moreLink: { slug: 'hair-smoothening', text: 'Want a straighter finish than keratin gives?', label: 'Straightening / Smoothening' },
   },
   audience: {
     title: 'Who Keratin Is For',
@@ -156,22 +156,22 @@ export const hairSmoothening: ServicePageContent = {
   },
   whatsappText: 'Hi, I’d like a hair straightening and smoothening consultation at Xing',
   intro: {
-    eyebrow: 'Straightening & Smoothening',
-    title: 'Hair Straightening & Smoothening in Sarjapur Road, HSR Layout & Brookfield',
+    eyebrow: 'Straightening / Smoothening',
+    title: 'Straightening / Smoothening in Sarjapur Road, HSR Layout & Brookfield',
     paragraphs: [
       'Straightening and smoothening in Bangalore relax waves, curls and frizz into hair that is easier to style. Smoothening gives a soft, natural fall, while straightening creates a sleeker finish. Your stylist will help you choose the result that suits your texture, desired look and hair history.',
       'At our Sarjapur Road, HSR Layout and Brookfield salons, every appointment starts with a consultation and hair analysis. Your stylist checks your texture, density and chemical history, then recommends smoothening or straightening and the right strength for your hair. A complimentary Acai oil treatment is included, and we confirm the price before we start. Your appointment includes tailored aftercare advice to help the chosen finish stay glossy and manageable. Clients come from Koramangala, Bellandur, Whitefield and Marathahalli.',
     ],
   },
   menu: {
-    eyebrow: 'Straightening & Smoothening',
-    title: 'Professional Straightening & Smoothening',
+    eyebrow: 'Straightening / Smoothening',
+    title: 'Professional Straightening / Smoothening',
     text: 'Available for all hair lengths, for women and men.',
     askText: 'Not sure whether to straighten or smoothen? Send us a photo on WhatsApp.',
     moreLink: { slug: 'keratin-treatment', text: 'Want frizz control but more volume?', label: 'Keratin Treatment' },
   },
   audience: {
-    title: 'Who Straightening & Smoothening Is For',
+    title: 'Who Straightening / Smoothening Is For',
     items: ['Wavy or frizzy hair that takes too long to blow dry', 'Anyone who wants straighter hair that still moves naturally', 'Thick hair that feels heavy, puffy or hard to manage'],
     note: 'Recently coloured, bleached or pregnant? Tell your stylist before your appointment.',
   },
@@ -185,8 +185,8 @@ export const hairSmoothening: ServicePageContent = {
       { title: 'Neutralise, finish & aftercare guidance' },
     ],
   },
-  locationsTitle: 'Hair Straightening & Smoothening Near You in Bangalore',
-  faqTitle: 'Hair Straightening & Smoothening FAQs',
+  locationsTitle: 'Straightening / Smoothening Near You in Bangalore',
+  faqTitle: 'Straightening / Smoothening FAQs',
   faqs: [
     {
       q: 'What is the difference between smoothening and keratin?',

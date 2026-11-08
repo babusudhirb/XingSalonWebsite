@@ -25,6 +25,7 @@ const CHIP_OFF = 'border-ink/15 bg-white text-ink hover:border-berry';
 export function CategoryBody({ category }: { category: ServiceCategory }) {
   const grouped = category.groups.length > 1;
   const others = categories.filter((entry) => entry.key !== category.key);
+  const compactCards = category.key === 'hair';
   return (
     <>
       {grouped && (
@@ -44,16 +45,16 @@ export function CategoryBody({ category }: { category: ServiceCategory }) {
 
       {category.groups.map((group, i) => (
         // scroll-mt: room for the chip bar, on top of the header's own room, when a chip jumps here.
-        <section key={group.key} id={group.key} aria-labelledby={`${group.key}-title`} className={cn('scroll-mt-16 py-12 lg:py-16', i % 2 === 0 ? 'bg-cream' : 'bg-blush')}>
+        <section key={group.key} id={group.key} aria-labelledby={`${group.key}-title`} className={cn('scroll-mt-16', compactCards ? 'py-8 lg:py-10' : 'py-12 lg:py-16', i % 2 === 0 ? 'bg-cream' : 'bg-blush')}>
           <div className="container-site">
             <h2 id={`${group.key}-title`} className="heading text-balance text-ink">
               {group.title ?? `All ${category.title} Services`}
             </h2>
-            <ul className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <ul className={cn('grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4', compactCards ? 'mt-4 gap-3' : 'mt-6 gap-5')}>
               {group.services.map((service, j) => (
                 <li key={service.slug}>
                   {/* The first card's photo can show on the first screen, so it loads straight away. */}
-                  <ServiceListingCard service={service} priority={i === 0 && j === 0} />
+                  <ServiceListingCard service={service} priority={i === 0 && j === 0} compact={compactCards} />
                 </li>
               ))}
             </ul>

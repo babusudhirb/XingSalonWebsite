@@ -20,7 +20,6 @@ import {
   blowDryingStyling,
   moroccanHairSpa,
   olaplexBondRepair,
-  rootTouchUp,
   tribondHairSpa,
 } from './hairCareAddons';
 
@@ -32,7 +31,6 @@ export const servicePages: Record<string, ServicePageContent> = Object.fromEntri
     kidsHaircut,
     blowDryingStyling,
     globalHairColor,
-    rootTouchUp,
     highlights,
     balayage,
     fashionColor,

@@ -21,7 +21,12 @@ describe('service catalogue', () => {
     expect(skin.groups[1].services.map((service) => service.slug)).toEqual(['ultra-premium-facial', 'hydra-facial', 'premium-facial', 'express-facial']);
     expect(skin.groups[2].services.map((service) => service.slug)).toEqual(['body-polish', 'arms-legs-body-polish']);
     expect(skin.groups[3].services.map((service) => service.slug)).toEqual(['pedicure', 'alga-mani-pedi', 'manicure', 'crystal-mani-pedi']);
-    expect(servicesIn(categories[2])).toHaveLength(5);
+    const nails = categories[2];
+    expect(nails.groups.map((group) => group.title)).toEqual(['File & Polish', 'Extensions', 'Overlays', 'Nail Art']);
+    expect(nails.groups[0].services.map((service) => service.slug)).toEqual(['nail-cutting-filing', 'nail-polish', 'quick-nail-care']);
+    expect(nails.groups[1].services.map((service) => service.slug)).toEqual(['nail-extensions', 'temporary-nail-extensions', 'uv-builder-extensions', 'hard-gel-extensions', 'extension-removal']);
+    expect(nails.groups[2].services.map((service) => service.slug)).toEqual(['uv-builder-overlay', 'hard-gel-overlay', 'nail-refilling', 'poly-gel-overlay']);
+    expect(nails.groups[3].services.map((service) => service.slug)).toEqual(['nail-art', 'cat-eye-nail-art', 'marble-nail-art', 'french-nail-art']);
   });
 
   it('lists every service exactly once, each with a published page', () => {

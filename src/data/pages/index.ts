@@ -8,8 +8,7 @@ import { balayage, fashionColor, globalHairColor, highlights } from './hair-colo
 import { hydraFacial } from './hydra-facial';
 import { kidsHaircut } from './kids-haircut';
 import { nailCuttingFiling, nailPolish, quickNailCare } from './nail-care';
-import { nailArt } from './nail-art';
-import { nailExtensions } from './nail-extensions';
+import { acrylicGelPolish, catEyeNailArt, chromeNailArt, extensionRemoval, frenchNailArt, hardGelExtensions, hardGelOverlay, marbleNailArt, nailRefilling, polyGelOverlay, temporaryNailExtensions, uvBuilderExtensions, uvBuilderOverlay } from './nailAddons';
 import { mensHaircutBeardGrooming } from './mens-haircut-beard-grooming';
 import { hairSmoothening, keratinTreatment } from './smoothing';
 import type { ServicePageContent } from './types';
@@ -57,8 +56,19 @@ export const servicePages: Record<string, ServicePageContent> = Object.fromEntri
     heelPeelTreatment,
     algaManiPedi,
     crystalManiPedi,
-    nailExtensions,
-    nailArt,
+    acrylicGelPolish,
+    chromeNailArt,
+    temporaryNailExtensions,
+    uvBuilderExtensions,
+    hardGelExtensions,
+    extensionRemoval,
+    uvBuilderOverlay,
+    hardGelOverlay,
+    nailRefilling,
+    polyGelOverlay,
+    catEyeNailArt,
+    marbleNailArt,
+    frenchNailArt,
     nailCuttingFiling,
     nailPolish,
     quickNailCare,

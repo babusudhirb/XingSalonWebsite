@@ -697,7 +697,7 @@ const list: ServiceEntry[] = [
   },
   {
     slug: 'nail-extensions',
-    label: 'Nail Extensions & Overlays',
+    label: 'Acrylic with Gel Polish',
     group: 'nails',
     bookAs: 'Nails',
     lists: [
@@ -761,7 +761,7 @@ const list: ServiceEntry[] = [
   },
   {
     slug: 'nail-art',
-    label: 'Nail Art',
+    label: 'Chrome Nail Art',
     group: 'nails',
     bookAs: 'Nails',
     lists: [
@@ -812,7 +812,7 @@ const list: ServiceEntry[] = [
   },
   {
     slug: 'nail-cutting-filing',
-    label: 'Nail Cutting & Filing',
+    label: 'Cut & File',
     group: 'nails',
     bookAs: 'Nails',
     lists: [
@@ -827,7 +827,7 @@ const list: ServiceEntry[] = [
   },
   {
     slug: 'nail-polish',
-    label: 'Nail Polish (Regular)',
+    label: 'Normal Polish',
     group: 'nails',
     bookAs: 'Nails',
     lists: [
@@ -842,7 +842,7 @@ const list: ServiceEntry[] = [
   },
   {
     slug: 'quick-nail-care',
-    label: 'Quick Nail Care (Cut, File & Polish)',
+    label: 'Cut, File & Polish',
     group: 'nails',
     // No duration is on record for this combo, so the badge says "Combo" rather than a time.
     badge: 'Combo',
@@ -856,6 +856,50 @@ const list: ServiceEntry[] = [
     ],
     notes: [],
     offers: ['tuesday', 'birthday', 'membership'],
+  },
+  {
+    slug: 'temporary-nail-extensions', label: 'Temporary Nail Extensions', group: 'nails', bookAs: 'Nails',
+    lists: [{ title: 'Temporary Nail Extensions', items: [{ name: 'Temporary Nail Extensions', icon: 'calendar', tags: ['Event-ready', 'Short term'], text: 'A short-term extension option for a party, wedding or first extension experience.' }] }], notes: [], offers: ['tempExtensions', 'tuesday', 'birthday', 'membership'],
+  },
+  {
+    slug: 'uv-builder-extensions', label: 'UV Builder Extensions', group: 'nails', bookAs: 'Nails',
+    lists: [{ title: 'UV Builder Extensions', items: [{ name: 'UV Builder Extensions', icon: 'sun', tags: ['Strength', 'Gloss'], text: 'Lamp-cured builder-gel extensions for a glossy, natural-looking finish.' }] }], notes: [], offers: ['tuesday', 'birthday', 'membership'],
+  },
+  {
+    slug: 'hard-gel-extensions', label: 'Hard Gel Extensions', group: 'nails', bookAs: 'Nails',
+    lists: [{ title: 'Hard Gel Extensions', items: [{ name: 'Hard Gel Extensions', icon: 'shield', tags: ['Strong', 'Durable'], text: 'Structured hard-gel extensions for strength, length and a refined finish.' }] }], notes: [], offers: ['tuesday', 'birthday', 'membership'],
+  },
+  {
+    slug: 'extension-removal', label: 'Extension Removal', group: 'nails', bookAs: 'Nails',
+    lists: [{ title: 'Extension Removal', items: [{ name: 'Extension Removal', icon: 'heart', tags: ['Gentle', 'Nail care'], text: 'Professional removal of extensions or overlays to help protect natural nails.' }] }], notes: [], offers: ['tuesday', 'birthday', 'membership'],
+  },
+  {
+    slug: 'uv-builder-overlay', label: 'UV Builder Overlay', group: 'nails', bookAs: 'Nails',
+    lists: [{ title: 'UV Builder Overlay', items: [{ name: 'UV Builder Overlay', icon: 'sparkles', tags: ['Strength', 'Natural nails'], text: 'A protective builder-gel layer over natural nails for strength and shine.' }] }], notes: [], offers: ['tuesday', 'birthday', 'membership'],
+  },
+  {
+    slug: 'hard-gel-overlay', label: 'Hard Gel Overlay', group: 'nails', bookAs: 'Nails',
+    lists: [{ title: 'Hard Gel Overlay', items: [{ name: 'Hard Gel Overlay', icon: 'shield', tags: ['Strong', 'Natural nails'], text: 'A structured hard-gel overlay for durable support without extra length.' }] }], notes: [], offers: ['tuesday', 'birthday', 'membership'],
+  },
+  {
+    slug: 'nail-refilling', label: 'Nail Refilling', group: 'nails', bookAs: 'Nails',
+    lists: [{ title: 'Nail Refilling', items: [{ name: 'Nail Refilling', icon: 'layers', tags: ['Fresh set', 'Regrowth'], text: 'A refill to refresh grown-out extensions or overlays and keep the set looking neat.' }] }], notes: [], offers: ['tuesday', 'birthday', 'membership'],
+  },
+  {
+    slug: 'poly-gel-overlay', label: 'Poly Gel Overlay', group: 'nails', bookAs: 'Nails',
+    lists: [{ title: 'Poly Gel Overlay', items: [{ name: 'Poly Gel Overlay', icon: 'wind', tags: ['Lightweight', 'Strength'], text: 'A lightweight reinforcement layer for natural nails that need extra support.' }] }], notes: [], offers: ['tuesday', 'birthday', 'membership'],
+  },
+  {
+    slug: 'cat-eye-nail-art', label: 'Cat Eye Nail Art', group: 'nails', bookAs: 'Nails',
+    lists: [{ title: 'Cat Eye Nail Art', items: [{ name: 'Cat Eye Nail Art', icon: 'star', tags: ['Magnetic shimmer', 'Depth'], text: 'A magnetic shimmer effect that moves with the light for a glowing finish.' }] }], notes: [], offers: ['tuesday', 'birthday', 'membership'],
+  },
+  {
+    slug: 'marble-nail-art', label: 'Marble Nail Art', group: 'nails', bookAs: 'Nails',
+    lists: [{ title: 'Marble Nail Art', items: [{ name: 'Marble Nail Art', icon: 'waves', tags: ['Luxe', 'Stone effect'], text: 'Elegant marble swirls for a sophisticated, stone-inspired nail design.' }] }], notes: [], offers: ['tuesday', 'birthday', 'membership'],
+  },
+  {
+    slug: 'french-nail-art', label: 'French Nail Art', group: 'nails', bookAs: 'Nails',
+    lists: [{ title: 'French Nail Art', items: [{ name: 'French Nail Art', icon: 'crown', tags: ['Timeless', 'Elegant'], text: 'Clean French tips in classic white or colours selected for your look.' }] }], notes: [], offers: ['tuesday', 'birthday', 'membership'],
   },
   {
     slug: 'tattoo',
@@ -1052,21 +1096,21 @@ const catalogue: Record<string, ServiceCatalogue> = {
     isNew: true,
   },
   'nail-extensions': {
-    menuLabel: 'Nail Extensions',
+    menuLabel: 'Acrylic with Gel Polish',
     blurb: 'Gel and acrylic extensions in the length and shape you love.',
     metaTitle: 'Nail Extensions in Bangalore – Xing Salon',
     metaDesc: `Gel, acrylic and polygel nail extensions by trained nail artists at ${LOCALITIES}. Book now.`,
     keywords: ['nail extensions Bangalore'],
   },
   'nail-art': {
-    menuLabel: 'Nail Art',
+    menuLabel: 'Chrome Nail Art',
     blurb: 'Custom designs, chrome, French tips and 3D art.',
     metaTitle: 'Nail Art in Bangalore – Xing Salon',
     metaDesc: 'Custom nail art, French tips, chrome and bridal nail designs at Xing salons in Sarjapur Road, HSR Layout & Brookfield.',
     keywords: ['nail art HSR Layout', 'nail art Bangalore'],
   },
   'nail-cutting-filing': {
-    menuLabel: 'Nail Cutting & Filing',
+    menuLabel: 'Cut & File',
     blurb: 'Neat trimming and shaping in minutes.',
     metaTitle: 'Nail Cutting & Filing in Bangalore – Xing Salon',
     metaDesc: `Quick, hygienic nail cutting and shaping at ${LOCALITIES}. Walk-ins welcome.`,
@@ -1074,7 +1118,7 @@ const catalogue: Record<string, ServiceCatalogue> = {
     isNew: true,
   },
   'nail-polish': {
-    menuLabel: 'Nail Polish (Regular)',
+    menuLabel: 'Normal Polish',
     blurb: 'A fresh coat of colour, neatly applied.',
     metaTitle: 'Nail Polish Application in Bangalore – Xing Salon',
     metaDesc: 'Neat regular nail polish application in your favourite shade at Xing salons in Sarjapur Road, HSR Layout & Brookfield.',
@@ -1082,13 +1126,24 @@ const catalogue: Record<string, ServiceCatalogue> = {
     isNew: true,
   },
   'quick-nail-care': {
-    menuLabel: 'Quick Nail Care Combo',
+    menuLabel: 'Cut, File & Polish',
     blurb: 'Cut, file and polish in one quick session.',
     metaTitle: 'Quick Nail Care in Bangalore | Cut & Polish – Xing Salon',
     metaDesc: `Cut, file and polish in one quick session — perfect between appointments. ${LOCALITIES}. Walk-ins welcome.`,
     keywords: ['quick nail care Bangalore'],
     isNew: true,
   },
+  'temporary-nail-extensions': { menuLabel: 'Temporary Nail Extensions', blurb: 'Short-term extensions for events, celebrations or trying a new look.', metaTitle: 'Temporary Nail Extensions in Bangalore – Xing Salon', metaDesc: `Temporary nail extensions for events at ${LOCALITIES}.` },
+  'uv-builder-extensions': { menuLabel: 'UV Builder Extensions', blurb: 'Glossy, builder-gel extensions with flexible-looking strength.', metaTitle: 'UV Builder Extensions in Bangalore – Xing Salon', metaDesc: `UV builder-gel extensions at ${LOCALITIES}.` },
+  'hard-gel-extensions': { menuLabel: 'Hard Gel Extensions', blurb: 'Structured hard-gel extensions for durable length and strength.', metaTitle: 'Hard Gel Extensions in Bangalore – Xing Salon', metaDesc: `Hard-gel nail extensions at ${LOCALITIES}.` },
+  'extension-removal': { menuLabel: 'Extension Removal', blurb: 'Professional, gentle removal to help protect natural nails.', metaTitle: 'Nail Extension Removal in Bangalore – Xing Salon', metaDesc: `Professional nail extension removal at ${LOCALITIES}.` },
+  'uv-builder-overlay': { menuLabel: 'UV Builder Overlay', blurb: 'A protective builder-gel layer for strength and shine.', metaTitle: 'UV Builder Overlay in Bangalore – Xing Salon', metaDesc: `UV builder-gel overlays at ${LOCALITIES}.` },
+  'hard-gel-overlay': { menuLabel: 'Hard Gel Overlay', blurb: 'Durable hard-gel support over your natural nails.', metaTitle: 'Hard Gel Overlay in Bangalore – Xing Salon', metaDesc: `Hard-gel nail overlays at ${LOCALITIES}.` },
+  'nail-refilling': { menuLabel: 'Nail Refilling', blurb: 'Refresh grown-out extensions or overlays for a neat-looking set.', metaTitle: 'Nail Refilling in Bangalore – Xing Salon', metaDesc: `Nail refilling for extensions and overlays at ${LOCALITIES}.` },
+  'poly-gel-overlay': { menuLabel: 'Poly Gel Overlay', blurb: 'Lightweight reinforcement for natural nails that need support.', metaTitle: 'Poly Gel Overlay in Bangalore – Xing Salon', metaDesc: `Poly-gel overlays at ${LOCALITIES}.` },
+  'cat-eye-nail-art': { menuLabel: 'Cat Eye Nail Art', blurb: 'Magnetic shimmer and depth that moves with the light.', metaTitle: 'Cat Eye Nail Art in Bangalore – Xing Salon', metaDesc: `Cat-eye magnetic nail art at ${LOCALITIES}.` },
+  'marble-nail-art': { menuLabel: 'Marble Nail Art', blurb: 'Elegant stone-inspired swirls for a luxe nail design.', metaTitle: 'Marble Nail Art in Bangalore – Xing Salon', metaDesc: `Marble nail art at ${LOCALITIES}.` },
+  'french-nail-art': { menuLabel: 'French Nail Art', blurb: 'Timeless French tips in classic or custom colours.', metaTitle: 'French Nail Art in Bangalore – Xing Salon', metaDesc: `French-tip nail art at ${LOCALITIES}.` },
   // Tattoo: unchanged.
   tattoo: { menuLabel: 'Tattoo Studio', blurb: 'Custom, fine-line and realistic tattoos at our Brookfield studio.' },
 };
@@ -1175,16 +1230,15 @@ export const categories: ServiceCategory[] = [
     title: 'Nail Care',
     slug: 'nail-care',
     path: '/services/nail-care',
-    intro: 'Manicures, pedicures, extensions and nail art with hygienic, sterilised tools at all three Xing salons in Bangalore.',
-    metaDesc: 'Manicures, pedicures, nail extensions, nail art and quick nail care with hygienic, sterilised tools at Xing Sarjapur Road, HSR Layout & Brookfield.',
+    intro: 'File and polish, extensions, overlays and nail art by Xing nail artists at Sarjapur Road, HSR Layout and Brookfield.',
+    metaDesc: 'Nail file and polish, extensions, overlays and nail art at Xing Sarjapur Road, HSR Layout & Brookfield.',
     icon: 'nail-almond',
     hasPage: true,
     groups: [
-      {
-        key: 'nails',
-        title: null,
-        services: pick('nail-extensions', 'nail-art', 'nail-cutting-filing', 'nail-polish', 'quick-nail-care'),
-      },
+      { key: 'file-polish', title: 'File & Polish', services: pick('nail-cutting-filing', 'nail-polish', 'quick-nail-care') },
+      { key: 'extensions', title: 'Extensions', services: pick('nail-extensions', 'temporary-nail-extensions', 'uv-builder-extensions', 'hard-gel-extensions', 'extension-removal') },
+      { key: 'overlays', title: 'Overlays', services: pick('uv-builder-overlay', 'hard-gel-overlay', 'nail-refilling', 'poly-gel-overlay') },
+      { key: 'nail-art', title: 'Nail Art', services: pick('nail-art', 'cat-eye-nail-art', 'marble-nail-art', 'french-nail-art') },
     ],
   },
   {

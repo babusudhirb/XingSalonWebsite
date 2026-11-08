@@ -13,6 +13,8 @@ const PANEL_ID = 'services-menu';
 /** Pointer leaving the item: wait this long before closing, so a diagonal move to the panel doesn't close it. */
 const CLOSE_DELAY_MS = 150;
 
+const categoryLinkLabel = (title: string) => (title === 'Tattoo' ? 'All Tattoos' : `All ${title}`);
+
 /** The category the visitor is browsing, so the menu opens on it; Hair Care otherwise. */
 const startTab = Math.max(
   0,
@@ -180,10 +182,11 @@ export function ServicesMegaMenu({ label, isActive, underline }: { label: string
                     View All Services
                     <ArrowRight aria-hidden className="size-4" />
                   </a>
-                  <a href={category.path} onClick={close} className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-berry underline-offset-4 hover:underline">
-                    View all {category.title}
-                    <ArrowRight aria-hidden className="size-4" />
-                  </a>
+                  {categories.map((entry) => (
+                    <a key={entry.key} href={entry.path} onClick={close} className="inline-flex min-h-11 items-center text-sm font-medium text-ink underline-offset-4 hover:text-berry hover:underline">
+                      {categoryLinkLabel(entry.title)}
+                    </a>
+                  ))}
                 </div>
                 <a
                   href={bookingWhatsappHref}

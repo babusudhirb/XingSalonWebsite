@@ -38,6 +38,7 @@ interface MobileMenuProps {
 
 const SWIPE_PX = 60;
 const SLIDE_S = 0.22;
+const categoryLinkLabel = (title: string) => (title === 'Tattoo' ? 'All Tattoos' : `All ${title}`);
 
 /** A level's top row: Back (or the logo), its title, and Close. Stays put while the level scrolls under it. */
 function LevelHeader({ title, back, onBack, onClose, headingRef }: { title: string; back?: string; onBack?: () => void; onClose: () => void; headingRef: RefObject<HTMLHeadingElement> }) {
@@ -212,9 +213,16 @@ export function MobileMenu({ items, servicesId, menus, path, onEnter, onUp, onCl
           })}
         </ul>
         <div className="shrink-0 border-t border-ink/10 bg-cream px-4 pt-4 [padding-bottom:max(1rem,env(safe-area-inset-bottom))]">
-          <a href={servicesHubPath} onClick={onNavigate} className="inline-flex min-h-12 w-full items-center justify-center rounded-full bg-berry px-5 text-base font-semibold text-cream">
-            View All Services
-          </a>
+          <div className="flex flex-wrap gap-x-4 gap-y-1">
+            <a href={servicesHubPath} onClick={onNavigate} className="inline-flex min-h-11 items-center text-sm font-semibold text-berry underline-offset-4 hover:underline">
+              View All Services
+            </a>
+            {categories.map((entry) => (
+              <a key={entry.key} href={entry.path} onClick={onNavigate} className="inline-flex min-h-11 items-center text-sm font-medium text-ink underline-offset-4 hover:text-berry hover:underline">
+                {categoryLinkLabel(entry.title)}
+              </a>
+            ))}
+          </div>
         </div>
       </div>
     );

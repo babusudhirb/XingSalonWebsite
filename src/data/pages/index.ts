@@ -7,13 +7,14 @@ import { nanoplastia } from './nanoplastia';
 import { balayage, fashionColor, globalHairColor, highlights } from './hair-color';
 import { hydraFacial } from './hydra-facial';
 import { kidsHaircut } from './kids-haircut';
-import { manicure, nailCuttingFiling, nailPolish, pedicure, quickNailCare } from './nail-care';
+import { nailCuttingFiling, nailPolish, quickNailCare } from './nail-care';
 import { nailArt } from './nail-art';
 import { nailExtensions } from './nail-extensions';
 import { mensHaircutBeardGrooming } from './mens-haircut-beard-grooming';
 import { hairSmoothening, keratinTreatment } from './smoothing';
 import type { ServicePageContent } from './types';
 import { womensHaircutStyling } from './womens-haircut-styling';
+import { algaManiPedi, armsLegsBodyPolish, crystalManiPedi, deTan, deluxeManiPedi, expressFacial, heelPeelTreatment, premiumFacial, ultraPremiumFacial } from './skinBodyAddons';
 import {
   antiDandruffHairSpa,
   antiHairfallHairSpa,
@@ -44,11 +45,18 @@ export const servicePages: Record<string, ServicePageContent> = Object.fromEntri
     nanoplastia,
     hydraFacial,
     facialCleanup,
+    deTan,
+    ultraPremiumFacial,
+    premiumFacial,
+    expressFacial,
     bodyPolish,
+    armsLegsBodyPolish,
     waxing,
     threadingDetan,
-    manicure,
-    pedicure,
+    deluxeManiPedi,
+    heelPeelTreatment,
+    algaManiPedi,
+    crystalManiPedi,
     nailExtensions,
     nailArt,
     nailCuttingFiling,

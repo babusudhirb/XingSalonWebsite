@@ -15,7 +15,13 @@ describe('service catalogue', () => {
     expect(hair.groups[1].services.map((service) => service.slug)).toEqual(['balayage', 'highlights', 'global-hair-color', 'fashion-color']);
     expect(hair.groups[2].services.map((service) => service.slug)).toEqual(['keratin-treatment', 'hair-smoothening', 'nanoplastia', 'olaplex-bond-repair']);
     expect(hair.groups[3].services.map((service) => service.slug)).toEqual(['moroccan-hair-spa', 'tribond-hair-spa', 'anti-dandruff-hair-spa', 'anti-hairfall-hair-spa']);
-    expect(servicesIn(categories[2])).toHaveLength(7);
+    const skin = categories[1];
+    expect(skin.groups.map((group) => group.title)).toEqual(['Monthly Essentials', 'Facials', 'Body Polish', 'Manicure & Pedicure']);
+    expect(skin.groups[0].services.map((service) => service.slug)).toEqual(['de-tan', 'waxing', 'facial-cleanup', 'threading-detan']);
+    expect(skin.groups[1].services.map((service) => service.slug)).toEqual(['ultra-premium-facial', 'hydra-facial', 'premium-facial', 'express-facial']);
+    expect(skin.groups[2].services.map((service) => service.slug)).toEqual(['body-polish', 'arms-legs-body-polish']);
+    expect(skin.groups[3].services.map((service) => service.slug)).toEqual(['pedicure', 'alga-mani-pedi', 'manicure', 'crystal-mani-pedi']);
+    expect(servicesIn(categories[2])).toHaveLength(5);
   });
 
   it('lists every service exactly once, each with a published page', () => {
@@ -56,7 +62,7 @@ describe('service catalogue', () => {
   });
 
   it('gives each new page 4 FAQs of 40–55 words and an intro of 120–160 words', () => {
-    const fresh = ['global-hair-color', 'highlights', 'balayage', 'fashion-color', 'keratin-treatment', 'hair-smoothening', 'nanoplastia', 'manicure', 'pedicure', 'nail-cutting-filing', 'nail-polish', 'quick-nail-care'];
+    const fresh = ['global-hair-color', 'highlights', 'balayage', 'fashion-color', 'keratin-treatment', 'hair-smoothening', 'nanoplastia', 'nail-cutting-filing', 'nail-polish', 'quick-nail-care'];
     const words = (text: string) => text.split(/\s+/).filter(Boolean).length;
     for (const slug of fresh) {
       const page = servicePages[slug];

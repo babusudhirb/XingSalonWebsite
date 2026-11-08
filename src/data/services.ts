@@ -73,33 +73,6 @@ export interface Service extends ServiceCatalogue {
   offers: OfferId[];
 }
 
-/** The five hand-and-foot rituals, named for the manicure or the pedicure page ("D-Lux Manicure"). */
-const rituals = (kind: 'Manicure' | 'Pedicure'): ServiceItem[] => {
-  const part = kind === 'Manicure' ? 'hands' : 'feet';
-  return [
-    {
-      name: `D-Lux ${kind}`, icon: 'sparkles', tags: ['Classic care', 'Quick refresh'],
-      text: `Our classic ritual: nail shaping, cuticle care, exfoliation, massage and polish for neat, refreshed ${part}.`,
-    },
-    {
-      name: `Crystal ${kind}`, icon: 'droplets', tags: ['Extra pampering', 'Softness'],
-      text: 'A step up, with extra exfoliation and nourishment for visibly softer, smoother skin.',
-    },
-    {
-      name: `Alga ${kind}`, icon: 'waves', tags: ['Rejuvenating', 'Deep nourishment'],
-      text: 'A rejuvenating ritual with deeper nourishment and a longer, relaxing massage.',
-    },
-    {
-      name: `Tango ${kind}`, icon: 'crown', tags: ['Indulgent', 'Premium'],
-      text: `An indulgent, premium ritual for complete relaxation and beautifully cared-for ${part}.`,
-    },
-    {
-      name: `Detox ${kind}`, icon: 'wind', tags: ['Deep-cleansing', 'Refreshing'],
-      text: `A deep-cleansing, refreshing ritual for tired, dull-looking ${part}.`,
-    },
-  ];
-};
-
 type ServiceEntry = Omit<Service, keyof ServiceCatalogue>;
 
 const list: ServiceEntry[] = [
@@ -462,7 +435,7 @@ const list: ServiceEntry[] = [
   },
   {
     slug: 'facial-cleanup',
-    label: 'Facials & Clean-ups',
+    label: 'Clean-up',
     group: 'skin-body',
     bookAs: 'Skin & Facial',
     // OWNER: confirm with the owner what each tier includes; the descriptions present them as increasing levels of care.
@@ -522,7 +495,7 @@ const list: ServiceEntry[] = [
   },
   {
     slug: 'body-polish',
-    label: 'Body Polish',
+    label: 'Full Body Polish',
     group: 'skin-body',
     tag: 'Women only',
     bookAs: 'Body Polish',
@@ -616,7 +589,7 @@ const list: ServiceEntry[] = [
   },
   {
     slug: 'threading-detan',
-    label: 'Threading & De‑tan',
+    label: 'Threading',
     group: 'skin-body',
     bookAs: 'Threading & De-tan',
     lists: [
@@ -665,34 +638,59 @@ const list: ServiceEntry[] = [
     notes: [],
     offers: ['threadingCombos', 'tuesday', 'birthday', 'membership'],
   },
+  {
+    slug: 'de-tan', label: 'De-tan', group: 'skin-body', bookAs: 'Threading & De-tan',
+    lists: [{ title: 'De-tan', items: [{ name: 'Face & Neck De-tan', icon: 'sparkles', tags: ['Even tone', 'Fresh look'], text: 'A targeted refresh for the appearance of tan on the face and neck.' }, { name: 'Arms & Legs De-tan', icon: 'sun', tags: ['Sun-exposed skin'], text: 'Care for the look of tan on arms and legs after regular sun exposure.' }] }],
+    notes: [], offers: ['threadingCombos', 'tuesday', 'birthday', 'membership'],
+  },
+  {
+    slug: 'ultra-premium-facial', label: 'Ultra Premium Facial', group: 'skin-body', bookAs: 'Skin & Facial',
+    lists: [{ title: 'Ultra Premium Facial', items: [{ name: 'Ultra Premium Facial', icon: 'crown', tags: ['Intensive care', 'Radiance'], text: 'An indulgent facial ritual for deep care, relaxation and a refreshed-looking complexion.' }] }],
+    notes: [], offers: ['tuesday', 'birthday', 'membership'],
+  },
+  {
+    slug: 'premium-facial', label: 'Premium Facial', group: 'skin-body', bookAs: 'Skin & Facial',
+    lists: [{ title: 'Premium Facial', items: [{ name: 'Premium Facial', icon: 'heart', tags: ['Nourish', 'Radiance'], text: 'A complete facial with deeper nourishment and a relaxing massage.' }] }],
+    notes: [], offers: ['tuesday', 'birthday', 'membership'],
+  },
+  {
+    slug: 'express-facial', label: 'Express Facial', group: 'skin-body', bookAs: 'Skin & Facial',
+    lists: [{ title: 'Express Facial', items: [{ name: 'Express Facial', icon: 'clock', tags: ['Quick glow', 'Busy days'], text: 'A shorter facial to cleanse, nourish and brighten when time is limited.' }] }],
+    notes: [], offers: ['tuesday', 'birthday', 'membership'],
+  },
+  {
+    slug: 'arms-legs-body-polish', label: 'Arms & Legs Body Polish', group: 'skin-body', bookAs: 'Body Polish',
+    lists: [{ title: 'Arms & Legs Body Polish', items: [{ name: 'Arms & Legs Body Polish', icon: 'sparkles', tags: ['Smooth skin', 'Even glow'], text: 'Focused exfoliation and polish for soft, smooth arms and legs.' }] }],
+    notes: ['Body polish is available for female clients only.'], offers: ['polishMassage', 'tuesday', 'birthday', 'membership'],
+  },
+  {
+    slug: 'alga-mani-pedi', label: 'Alga Mani & Pedi', group: 'skin-body', bookAs: 'Manicure & Pedicure',
+    lists: [{ title: 'Alga Mani & Pedi', items: [{ name: 'Alga Manicure & Pedicure', icon: 'waves', tags: ['Deep nourishment', 'Hands & feet'], text: 'A rejuvenating hand-and-foot ritual with deeper nourishment and a longer massage.' }] }],
+    notes: [], offers: ['manipediCombos', 'tuesday', 'birthday', 'membership'],
+  },
+  {
+    slug: 'crystal-mani-pedi', label: 'Crystal Mani & Pedi', group: 'skin-body', bookAs: 'Manicure & Pedicure',
+    lists: [{ title: 'Crystal Mani & Pedi', items: [{ name: 'Crystal Manicure & Pedicure', icon: 'droplets', tags: ['Extra softness', 'Hands & feet'], text: 'An elevated manicure and pedicure with extra exfoliation and nourishment.' }] }],
+    notes: [], offers: ['manipediCombos', 'tuesday', 'birthday', 'membership'],
+  },
   // ---------- Nail care (manicure, pedicure and the quick services were one "Manicure & Pedicure" page).
   // OWNER: confirm with the owner what each ritual includes; the descriptions present them as increasing levels of care.
   {
     slug: 'manicure',
-    label: 'Manicure',
-    group: 'nails',
+    label: 'Deluxe Mani & Pedi',
+    group: 'skin-body',
     bookAs: 'Manicure & Pedicure',
-    lists: [{ title: 'Manicure Rituals', items: rituals('Manicure') }],
+    lists: [{ title: 'Deluxe Mani & Pedi', items: [{ name: 'Deluxe Manicure & Pedicure', icon: 'sparkles', tags: ['Classic care', 'Hands & feet'], text: 'A complete manicure and pedicure ritual with shaping, cuticle care, exfoliation, massage and polish.' }] }],
     notes: [],
     offers: ['manipediCombos', 'tuesday', 'birthday', 'membership'],
   },
   {
     slug: 'pedicure',
-    label: 'Pedicure',
-    group: 'nails',
+    label: 'Heel Peel Treatment',
+    group: 'skin-body',
     bookAs: 'Manicure & Pedicure',
     lists: [
-      { title: 'Pedicure Rituals', items: rituals('Pedicure') },
-      {
-        title: 'Foot Treatments',
-        items: [
-          {
-            name: 'Heel Peel Treatment', icon: 'layers', tags: ['Rough heels', 'Smoother feet'],
-            text: 'A targeted treatment that helps soften and smooth rough, dry or cracked-looking heels.',
-          },
-          { name: 'Foot Massage', icon: 'smile', tags: ['Relax', 'Unwind'], text: 'A soothing foot massage that relieves tired feet after a long day.' },
-        ],
-      },
+      { title: 'Heel Peel Treatment', items: [{ name: 'Heel Peel Treatment', icon: 'layers', tags: ['Rough heels', 'Smoother feet'], text: 'A targeted treatment that helps soften and smooth rough, dry or cracked-looking heels.' }] },
     ],
     notes: [],
     offers: ['manipediCombos', 'tuesday', 'birthday', 'membership'],
@@ -1026,26 +1024,31 @@ const catalogue: Record<string, ServiceCatalogue> = {
     metaDesc: `Nanoplastia smoothing for frizzy, wavy or curly hair at ${LOCALITIES}. Hair analysis and free consultation.`,
     keywords: ['nanoplastia Bangalore'],
   },
-  // Skin & body: names and order unchanged.
+  // Skin & body
   'hydra-facial': { menuLabel: 'Hydra Facial', blurb: 'A 7-step deep-cleansing, hydrating facial for instant glow.' },
-  'facial-cleanup': { menuLabel: 'Facials & Clean-ups', blurb: 'Clean-ups and facials for fresh, clear, radiant skin.' },
-  'body-polish': { menuLabel: 'Body Polish', blurb: 'Full-body scrub and polish for soft, glowing skin.' },
+  'facial-cleanup': { menuLabel: 'Clean-up', blurb: 'A thorough cleanse for fresh, clear, refreshed-looking skin.' },
+  'body-polish': { menuLabel: 'Full Body Polish', blurb: 'Head-to-toe exfoliation and polish for soft, glowing skin.' },
   waxing: { menuLabel: 'Waxing', blurb: 'Flavoured, roll-on and stripless wax for face, body and bikini.' },
-  'threading-detan': { menuLabel: 'Threading & De-tan', blurb: 'Brow shaping, face threading and de-tan for even skin.' },
+  'threading-detan': { menuLabel: 'Threading', blurb: 'Precise brow shaping and facial threading for clean definition.' },
+  'de-tan': { menuLabel: 'De-tan', blurb: 'Targeted care for a fresher, more even-looking complexion.', metaTitle: 'De-tan in Bangalore – Xing Salon', metaDesc: `Face, neck, arms and legs de-tan at ${LOCALITIES}. Consultation included before we start.` },
+  'ultra-premium-facial': { menuLabel: 'Ultra Premium Facial', blurb: 'Our most indulgent facial for intensive care and radiant skin.', metaTitle: 'Ultra Premium Facial in Bangalore – Xing Salon', metaDesc: `An indulgent facial for deep care and a refreshed glow at ${LOCALITIES}.` },
+  'premium-facial': { menuLabel: 'Premium Facial', blurb: 'Deep nourishment and relaxation for soft, radiant-looking skin.', metaTitle: 'Premium Facial in Bangalore – Xing Salon', metaDesc: `A nourishing premium facial at ${LOCALITIES}, tailored to your skin.` },
+  'express-facial': { menuLabel: 'Express Facial', blurb: 'A quick cleanse, nourish and glow ritual for busy days.', metaTitle: 'Express Facial in Bangalore – Xing Salon', metaDesc: `A quick facial for fresh-looking skin at ${LOCALITIES}.` },
+  'arms-legs-body-polish': { menuLabel: 'Arms & Legs Body Polish', blurb: 'Focused exfoliation and polish for smooth, glowing arms and legs.', metaTitle: 'Arms & Legs Body Polish in Bangalore – Xing Salon', metaDesc: `Targeted body polish for soft, smooth arms and legs at ${LOCALITIES}.` },
+  'alga-mani-pedi': { menuLabel: 'Alga Mani & Pedi', blurb: 'Deep nourishment and a longer massage for hands and feet.', metaTitle: 'Alga Mani & Pedi in Bangalore – Xing Salon', metaDesc: `A rejuvenating Alga manicure and pedicure at ${LOCALITIES}.` },
+  'crystal-mani-pedi': { menuLabel: 'Crystal Mani & Pedi', blurb: 'Extra exfoliation and nourishment for soft hands and feet.', metaTitle: 'Crystal Mani & Pedi in Bangalore – Xing Salon', metaDesc: `A Crystal manicure and pedicure at ${LOCALITIES}.` },
   // Nail care
   manicure: {
-    menuLabel: 'Manicure',
-    blurb: 'Clean, shaped, nourished hands with a flawless finish.',
-    metaTitle: 'Manicure in Bangalore – Xing Salon',
-    metaDesc: `Classic, spa and gel manicures with hygienic, sterilised tools at ${LOCALITIES}. Walk-ins welcome.`,
-    keywords: ['manicure Bangalore', 'manicure pedicure Brookfield'],
+    menuLabel: 'Deluxe Mani & Pedi',
+    blurb: 'A complete classic care ritual for neat, refreshed hands and feet.',
+    metaTitle: 'Deluxe Mani & Pedi in Bangalore – Xing Salon',
+    metaDesc: `A complete deluxe manicure and pedicure at ${LOCALITIES}.`,
   },
   pedicure: {
-    menuLabel: 'Pedicure',
-    blurb: 'Relaxing foot care that softens, cleans and refreshes.',
-    metaTitle: 'Pedicure in Bangalore – Xing Salon',
-    metaDesc: `Spa and classic pedicures in our relaxing pedicure lounge at ${LOCALITIES}. Hygienic and safe.`,
-    keywords: ['pedicure Bangalore', 'manicure pedicure Brookfield'],
+    menuLabel: 'Heel Peel Treatment',
+    blurb: 'Targeted care to soften and smooth rough, dry-looking heels.',
+    metaTitle: 'Heel Peel Treatment in Bangalore – Xing Salon',
+    metaDesc: `A heel peel treatment for smoother-feeling feet at ${LOCALITIES}.`,
     isNew: true,
   },
   'nail-extensions': {
@@ -1156,11 +1159,16 @@ export const categories: ServiceCategory[] = [
     title: 'Skin & Body',
     slug: 'skin-body',
     path: '/services/skin-body',
-    intro: 'Hydra facials, clean-ups, body polish, waxing, threading and de-tan by expert therapists at Xing Sarjapur Road, HSR Layout and Brookfield.',
-    metaDesc: 'Hydra facials, clean-ups, body polish, waxing, threading and de-tan at Xing Sarjapur Road, HSR Layout & Brookfield. Free skin consultation.',
+    intro: 'Essential skin care, facials, body polish and manicure-pedicure rituals by expert therapists at Xing Sarjapur Road, HSR Layout and Brookfield.',
+    metaDesc: 'Skin care, facials, body polish, waxing, threading and mani-pedi rituals at Xing Sarjapur Road, HSR Layout & Brookfield. Free consultation.',
     icon: 'sparkles',
     hasPage: true,
-    groups: [{ key: 'skin-body', title: null, services: pick('hydra-facial', 'facial-cleanup', 'body-polish', 'waxing', 'threading-detan') }],
+    groups: [
+      { key: 'monthly-essentials', title: 'Monthly Essentials', services: pick('de-tan', 'waxing', 'facial-cleanup', 'threading-detan') },
+      { key: 'facials', title: 'Facials', services: pick('ultra-premium-facial', 'hydra-facial', 'premium-facial', 'express-facial') },
+      { key: 'body-polish', title: 'Body Polish', services: pick('body-polish', 'arms-legs-body-polish') },
+      { key: 'manicure-pedicure', title: 'Manicure & Pedicure', services: pick('pedicure', 'alga-mani-pedi', 'manicure', 'crystal-mani-pedi') },
+    ],
   },
   {
     key: 'nails',
@@ -1175,7 +1183,7 @@ export const categories: ServiceCategory[] = [
       {
         key: 'nails',
         title: null,
-        services: pick('manicure', 'pedicure', 'nail-extensions', 'nail-art', 'nail-cutting-filing', 'nail-polish', 'quick-nail-care'),
+        services: pick('nail-extensions', 'nail-art', 'nail-cutting-filing', 'nail-polish', 'quick-nail-care'),
       },
     ],
   },

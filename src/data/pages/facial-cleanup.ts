@@ -96,7 +96,7 @@ export const facialCleanup: ServicePageContent = {
       { goal: 'Quick refresh', service: 'Masque Clean-up' },
       { goal: 'Congested, tired skin', service: 'Premium Clean-up' },
       { goal: 'Targeted mature-skin care', service: 'Anti-Aging Facial' },
-      { goal: 'Brightening care', service: 'Skin Brightening / Vitamin E Facial' },
+      { goal: 'Brightening care', service: 'Skin Brightening / Vit E Facial' },
       { goal: 'Ultimate indulgence', service: 'Ultra Facial' },
       { goal: 'Maximum hydration', service: 'Hydra Facial', slug: 'hydra-facial' },
     ],
@@ -136,7 +136,7 @@ export const facialCleanup: ServicePageContent = {
     },
     {
       q: 'Which facial is best for glowing skin?',
-      a: 'For targeted mature-skin care, choose our Anti-Aging Facial. For brightening nourishment, try the Skin Brightening / Vitamin E Facial. For maximum hydration and radiance, our bestselling 7-Step Hydra Facial is the top choice.',
+      a: 'For targeted mature-skin care, choose our Anti-Aging Facial. For brightening nourishment, try the Skin Brightening / Vit E Facial. For maximum hydration and radiance, our bestselling 7-Step Hydra Facial is the top choice.',
     },
     {
       q: 'How often should I get a facial?',

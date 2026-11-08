@@ -467,7 +467,7 @@ const list: ServiceEntry[] = [
             text: 'A time-saving facial that cleanses, nourishes and brightens. Perfect when you want a glow without a long session.',
           },
           {
-            name: 'Skin Brightening / Vitamin E Facial',
+            name: 'Skin Brightening / Vit E Facial',
             icon: 'heart',
             tags: ['Nourish', 'Relax', 'Radiance'],
             text: 'A complete facial with deeper nourishment and a relaxing massage for soft, radiant-looking skin.',
@@ -649,8 +649,8 @@ const list: ServiceEntry[] = [
     notes: [], offers: ['tuesday', 'birthday', 'membership'],
   },
   {
-    slug: 'premium-facial', label: 'Skin Brightening / Vitamin E Facial', group: 'skin-body', bookAs: 'Skin & Facial',
-    lists: [{ title: 'Skin Brightening / Vitamin E Facial', items: [{ name: 'Skin Brightening / Vitamin E Facial', icon: 'heart', tags: ['Nourish', 'Radiance'], text: 'A complete facial with deeper nourishment and a relaxing massage.' }] }],
+    slug: 'premium-facial', label: 'Skin Brightening / Vit E Facial', group: 'skin-body', bookAs: 'Skin & Facial',
+    lists: [{ title: 'Skin Brightening / Vit E Facial', items: [{ name: 'Skin Brightening / Vit E Facial', icon: 'heart', tags: ['Nourish', 'Radiance'], text: 'A complete facial with deeper nourishment and a relaxing massage.' }] }],
     notes: [], offers: ['tuesday', 'birthday', 'membership'],
   },
   {
@@ -1031,7 +1031,7 @@ const catalogue: Record<string, ServiceCatalogue> = {
   'threading-detan': { menuLabel: 'Threading', blurb: 'Precise brow shaping and facial threading for clean definition.' },
   'de-tan': { menuLabel: 'De-tan', blurb: 'Targeted care for a fresher, more even-looking complexion.', metaTitle: 'De-tan in Bangalore – Xing Salon', metaDesc: `Face, neck, arms and legs de-tan at ${LOCALITIES}. Consultation included before we start.` },
   'ultra-premium-facial': { menuLabel: 'Ultra Premium Facial', blurb: 'Our most indulgent facial for intensive care and radiant skin.', metaTitle: 'Ultra Premium Facial in Bangalore – Xing Salon', metaDesc: `An indulgent facial for deep care and a refreshed glow at ${LOCALITIES}.` },
-  'premium-facial': { menuLabel: 'Skin Brightening / Vitamin E Facial', blurb: 'Nourishing Vitamin E care for soft, radiant-looking skin.', metaTitle: 'Skin Brightening Vitamin E Facial in Bangalore – Xing Salon', metaDesc: `A nourishing Vitamin E facial for brighter-looking skin at ${LOCALITIES}.` },
+  'premium-facial': { menuLabel: 'Skin Brightening / Vit E Facial', blurb: 'Nourishing Vitamin E care for soft, radiant-looking skin.', metaTitle: 'Skin Brightening Vitamin E Facial in Bangalore – Xing Salon', metaDesc: `A nourishing Vitamin E facial for brighter-looking skin at ${LOCALITIES}.` },
   'express-facial': { menuLabel: 'Anti-Aging Facial', blurb: 'Targeted facial care for refreshed, radiant-looking skin.', metaTitle: 'Anti-Aging Facial in Bangalore – Xing Salon', metaDesc: `A targeted anti-aging facial for refreshed-looking skin at ${LOCALITIES}.` },
   'arms-legs-body-polish': { menuLabel: 'Arms & Legs Body Polish', blurb: 'Focused exfoliation and polish for smooth, glowing arms and legs.', metaTitle: 'Arms & Legs Body Polish in Bangalore – Xing Salon', metaDesc: `Targeted body polish for soft, smooth arms and legs at ${LOCALITIES}.` },
   'alga-mani-pedi': { menuLabel: 'Alga Mani & Pedi', blurb: 'Deep nourishment and a longer massage for hands and feet.', metaTitle: 'Alga Mani & Pedi in Bangalore – Xing Salon', metaDesc: `A rejuvenating Alga manicure and pedicure at ${LOCALITIES}.` },

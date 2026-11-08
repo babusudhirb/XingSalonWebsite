@@ -11,7 +11,8 @@ import { WhatsAppIcon } from '../ui/Decor';
 const NAV_LINK = 'relative whitespace-nowrap py-2 text-sm transition-colors hover:text-berry';
 const PANEL_ID = 'services-menu';
 /** Pointer leaving the item: wait this long before closing, so a diagonal move to the panel doesn't close it. */
-const CLOSE_DELAY_MS = 150;
+// Gives visitors enough time to move from the header to the panel without losing it.
+const CLOSE_DELAY_MS = 350;
 
 const categoryLinkLabel = (title: string) => (title === 'Tattoo' ? 'All Tattoos' : `All ${title}`);
 
@@ -138,6 +139,7 @@ export function ServicesMegaMenu({ label, isActive, underline }: { label: string
           <div aria-hidden onClick={close} onMouseEnter={hideSoon} className="absolute inset-x-0 top-full h-screen bg-ink/30" />
           <m.div
             id={PANEL_ID}
+            onMouseEnter={show}
             initial={{ opacity: 0, y: -6 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.18, ease: 'easeOut' }}

@@ -74,7 +74,8 @@ jobs:
           # timing out. This mirror is deliberately confined to the UAT document root; production is never named.
           # The mail configuration was installed outside public_html by the earlier successful UAT deployment and
           # is not touched here.
-          timeout 240s lftp -u "$HOSTINGER_USERNAME","$HOSTINGER_PASSWORD" "ftps://$HOSTINGER_HOST:21" -e '
+          # Hostinger uses explicit FTPS on port 21: plain FTP negotiation, immediately upgraded to TLS.
+          timeout 240s lftp -u "$HOSTINGER_USERNAME","$HOSTINGER_PASSWORD" "ftp://$HOSTINGER_HOST:21" -e '
             set cmd:fail-exit yes
             set net:max-retries 2
             set net:timeout 20

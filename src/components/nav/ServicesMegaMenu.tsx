@@ -180,6 +180,10 @@ export function ServicesMegaMenu({ label, isActive, underline }: { label: string
                     View All Services
                     <ArrowRight aria-hidden className="size-4" />
                   </a>
+                  <a href="/menu/xing-salons-menu-catalog-2026.pdf" target="_blank" rel="noopener noreferrer" onClick={close} className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-berry underline-offset-4 hover:underline">
+                    Explore Our Full Salon Menu
+                    <ArrowRight aria-hidden className="size-4" />
+                  </a>
                   {visibleCategories.map((entry) => (
                     <a key={entry.key} href={entry.path} onClick={close} className="inline-flex min-h-11 items-center text-sm font-medium text-ink underline-offset-4 hover:text-berry hover:underline">
                       {categoryLinkLabel(entry.title)}

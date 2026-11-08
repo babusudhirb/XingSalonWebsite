@@ -217,6 +217,9 @@ export function MobileMenu({ items, servicesId, menus, path, onEnter, onUp, onCl
             <a href={servicesHubPath} onClick={onNavigate} className="inline-flex min-h-11 items-center text-sm font-semibold text-berry underline-offset-4 hover:underline">
               View All Services
             </a>
+            <a href="/menu/xing-salons-menu-catalog-2026.pdf" target="_blank" rel="noopener noreferrer" onClick={onNavigate} className="inline-flex min-h-11 items-center text-sm font-semibold text-berry underline-offset-4 hover:underline">
+              Explore Our Full Salon Menu
+            </a>
             {visibleCategories.map((entry) => (
               <a key={entry.key} href={entry.path} onClick={onNavigate} className="inline-flex min-h-11 items-center text-sm font-medium text-ink underline-offset-4 hover:text-berry hover:underline">
                 {categoryLinkLabel(entry.title)}

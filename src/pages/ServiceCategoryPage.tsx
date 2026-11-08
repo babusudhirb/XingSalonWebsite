@@ -6,7 +6,7 @@ import { StaticFaq } from '../components/services/StaticFaq';
 import type { OfferPageId } from '../data/offerPages';
 import { categoryFaqs } from '../data/hubFaqs';
 import { useEffect, useMemo } from 'react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, BookOpen } from 'lucide-react';
 import { CategoryHero } from '../components/services/CatalogueHero';
 import { ServiceListingCard } from '../components/services/ServiceListingCard';
 import { type ServiceCategory, visibleCategories } from '../data/services';
@@ -63,6 +63,20 @@ export function CategoryBody({ category }: { category: ServiceCategory }) {
       ))}
 
       {CATEGORY_OFFERS[category.slug] && <OfferPagesSection only={CATEGORY_OFFERS[category.slug]} />}
+
+      <section aria-labelledby="full-salon-menu" className="bg-blush py-12">
+        <div className="container-site flex flex-col items-start justify-between gap-5 rounded-card border border-berry/10 bg-white p-6 shadow-soft sm:flex-row sm:items-center sm:p-8">
+          <div>
+            <p className="text-eyebrow font-medium uppercase text-berry">Complete catalogue</p>
+            <h2 id="full-salon-menu" className="mt-2 font-display text-2xl font-medium text-ink">Explore Our Full Salon Menu</h2>
+            <p className="mt-2 text-sm leading-relaxed text-muted">View the complete Xing Salons menu as a PDF.</p>
+          </div>
+          <a href="/menu/xing-salons-menu-catalog-2026.pdf" target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 shrink-0 items-center justify-center gap-2 rounded-full bg-berry px-5 text-sm font-semibold text-cream transition hover:bg-berrydark">
+            <BookOpen aria-hidden className="size-4" />
+            Open Salon Menu PDF
+          </a>
+        </div>
+      </section>
 
       <section aria-labelledby="more-categories" className="bg-cream py-12">
         <div className="container-site">

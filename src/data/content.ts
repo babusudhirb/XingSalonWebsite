@@ -122,7 +122,7 @@ export const services = {
       image: img('svc-hair', 'Styling stations with round lit mirrors at Xing HSR Layout', 640, 480),
     },
     {
-      title: 'Skin & Body',
+      title: 'Skin Care',
       text: 'Facials, clean-ups, body polish, waxing, threading and de-tan.',
       href: '/services/skin-body',
       // Shown over the card photo.
@@ -907,7 +907,7 @@ export const footer = {
       title: 'Our Services',
       links: [
         { label: 'Hair Care', href: '/services/hair-care' },
-        { label: 'Skin & Body', href: '/services/skin-body' },
+        { label: 'Skin Care', href: '/services/skin-body' },
         { label: 'Nail Care', href: '/services/nail-care' },
         { label: 'All Services', href: '/services' },
       ],

@@ -17,7 +17,7 @@ export const hydraFacial: ServicePageContent = {
     areaServed: ['Bengaluru', 'Sarjapur Road', 'HSR Layout', 'Brookfield'],
   },
   hero: {
-    eyebrow: 'Skin & Body · Bestseller',
+    eyebrow: 'Skin Care · Bestseller',
     h1: '7-Step Hydra Facial in Bangalore for Instantly Glowing Skin',
     sub: 'Deep cleansing, gentle exfoliation and intense hydration in one relaxing session, for skin that looks fresh, plump and glowing from the very first visit.',
     cta: 'Book Hydra Facial on WhatsApp',

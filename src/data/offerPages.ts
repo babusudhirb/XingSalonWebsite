@@ -53,7 +53,7 @@ export const offerPages: OfferPage[] = [
       { name: 'Hydra Facial', price: 3499, was: 5499, image: photo('hydra-facial', 'Hydra facial offer at Xing Salon'), kicker: 'Deep cleanse. Hydrate. Radiate.', description: 'A six-step facial focused on deep cleansing, hydration and fresh glow.' },
       { name: 'Body Polish', price: 4999, was: 7999, image: photo('body-polish', 'Body polish offer at Xing Salon'), kicker: 'Smooth. Radiant. Refreshing.', description: 'A full-body polishing ritual for exfoliation and refreshed-looking skin.' },
       { name: 'Hair Spa 2+1', price: 1999, image: photo('hair-spa', 'Hair spa offer at Xing Salon'), kicker: 'Relax. Repair. Rejuvenate.', description: 'Nourishing care to condition, strengthen and restore softness.' },
-      { name: 'Express Facial', price: 2499, image: photo('express-facial', 'Express facial offer at Xing Salon'), kicker: 'Cleanse. Hydrate. Glow.', description: 'A complete facial for cleansing, hydration and a visibly fresh finish.' },
+      { name: 'Anti-Aging Facial', price: 2499, image: photo('express-facial', 'Anti-aging facial offer at Xing Salon'), kicker: 'Nourish. Smooth. Refresh.', description: 'A targeted facial for nourishment and a visibly refreshed finish.' },
     ],
     image: photo('hydra-facial', 'Skin care offers at Xing Premium Unisex Salon, Bangalore'),
   },

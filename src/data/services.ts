@@ -461,13 +461,13 @@ const list: ServiceEntry[] = [
         title: 'Facials',
         items: [
           {
-            name: 'Express Facial',
+            name: 'Anti-Aging Facial',
             icon: 'clock',
             tags: ['Fast glow', 'Busy days'],
             text: 'A time-saving facial that cleanses, nourishes and brightens. Perfect when you want a glow without a long session.',
           },
           {
-            name: 'Premium Facial',
+            name: 'Skin Brightening / Vitamin E Facial',
             icon: 'heart',
             tags: ['Nourish', 'Relax', 'Radiance'],
             text: 'A complete facial with deeper nourishment and a relaxing massage for soft, radiant-looking skin.',
@@ -649,13 +649,13 @@ const list: ServiceEntry[] = [
     notes: [], offers: ['tuesday', 'birthday', 'membership'],
   },
   {
-    slug: 'premium-facial', label: 'Premium Facial', group: 'skin-body', bookAs: 'Skin & Facial',
-    lists: [{ title: 'Premium Facial', items: [{ name: 'Premium Facial', icon: 'heart', tags: ['Nourish', 'Radiance'], text: 'A complete facial with deeper nourishment and a relaxing massage.' }] }],
+    slug: 'premium-facial', label: 'Skin Brightening / Vitamin E Facial', group: 'skin-body', bookAs: 'Skin & Facial',
+    lists: [{ title: 'Skin Brightening / Vitamin E Facial', items: [{ name: 'Skin Brightening / Vitamin E Facial', icon: 'heart', tags: ['Nourish', 'Radiance'], text: 'A complete facial with deeper nourishment and a relaxing massage.' }] }],
     notes: [], offers: ['tuesday', 'birthday', 'membership'],
   },
   {
-    slug: 'express-facial', label: 'Express Facial', group: 'skin-body', bookAs: 'Skin & Facial',
-    lists: [{ title: 'Express Facial', items: [{ name: 'Express Facial', icon: 'clock', tags: ['Quick glow', 'Busy days'], text: 'A shorter facial to cleanse, nourish and brighten when time is limited.' }] }],
+    slug: 'express-facial', label: 'Anti-Aging Facial', group: 'skin-body', bookAs: 'Skin & Facial',
+    lists: [{ title: 'Anti-Aging Facial', items: [{ name: 'Anti-Aging Facial', icon: 'clock', tags: ['Targeted care', 'Radiance'], text: 'A targeted facial to nourish, smooth and refresh mature-looking skin.' }] }],
     notes: [], offers: ['tuesday', 'birthday', 'membership'],
   },
   {
@@ -862,10 +862,6 @@ const list: ServiceEntry[] = [
     lists: [{ title: 'Temporary Nail Extensions', items: [{ name: 'Temporary Nail Extensions', icon: 'calendar', tags: ['Event-ready', 'Short term'], text: 'A short-term extension option for a party, wedding or first extension experience.' }] }], notes: [], offers: ['tempExtensions', 'tuesday', 'birthday', 'membership'],
   },
   {
-    slug: 'uv-builder-extensions', label: 'UV Builder Extensions', group: 'nails', bookAs: 'Nails',
-    lists: [{ title: 'UV Builder Extensions', items: [{ name: 'UV Builder Extensions', icon: 'sun', tags: ['Strength', 'Gloss'], text: 'Lamp-cured builder-gel extensions for a glossy, natural-looking finish.' }] }], notes: [], offers: ['tuesday', 'birthday', 'membership'],
-  },
-  {
     slug: 'hard-gel-extensions', label: 'Hard Gel Extensions', group: 'nails', bookAs: 'Nails',
     lists: [{ title: 'Hard Gel Extensions', items: [{ name: 'Hard Gel Extensions', icon: 'shield', tags: ['Strong', 'Durable'], text: 'Structured hard-gel extensions for strength, length and a refined finish.' }] }], notes: [], offers: ['tuesday', 'birthday', 'membership'],
   },
@@ -1035,8 +1031,8 @@ const catalogue: Record<string, ServiceCatalogue> = {
   'threading-detan': { menuLabel: 'Threading', blurb: 'Precise brow shaping and facial threading for clean definition.' },
   'de-tan': { menuLabel: 'De-tan', blurb: 'Targeted care for a fresher, more even-looking complexion.', metaTitle: 'De-tan in Bangalore – Xing Salon', metaDesc: `Face, neck, arms and legs de-tan at ${LOCALITIES}. Consultation included before we start.` },
   'ultra-premium-facial': { menuLabel: 'Ultra Premium Facial', blurb: 'Our most indulgent facial for intensive care and radiant skin.', metaTitle: 'Ultra Premium Facial in Bangalore – Xing Salon', metaDesc: `An indulgent facial for deep care and a refreshed glow at ${LOCALITIES}.` },
-  'premium-facial': { menuLabel: 'Premium Facial', blurb: 'Deep nourishment and relaxation for soft, radiant-looking skin.', metaTitle: 'Premium Facial in Bangalore – Xing Salon', metaDesc: `A nourishing premium facial at ${LOCALITIES}, tailored to your skin.` },
-  'express-facial': { menuLabel: 'Express Facial', blurb: 'A quick cleanse, nourish and glow ritual for busy days.', metaTitle: 'Express Facial in Bangalore – Xing Salon', metaDesc: `A quick facial for fresh-looking skin at ${LOCALITIES}.` },
+  'premium-facial': { menuLabel: 'Skin Brightening / Vitamin E Facial', blurb: 'Nourishing Vitamin E care for soft, radiant-looking skin.', metaTitle: 'Skin Brightening Vitamin E Facial in Bangalore – Xing Salon', metaDesc: `A nourishing Vitamin E facial for brighter-looking skin at ${LOCALITIES}.` },
+  'express-facial': { menuLabel: 'Anti-Aging Facial', blurb: 'Targeted facial care for refreshed, radiant-looking skin.', metaTitle: 'Anti-Aging Facial in Bangalore – Xing Salon', metaDesc: `A targeted anti-aging facial for refreshed-looking skin at ${LOCALITIES}.` },
   'arms-legs-body-polish': { menuLabel: 'Arms & Legs Body Polish', blurb: 'Focused exfoliation and polish for smooth, glowing arms and legs.', metaTitle: 'Arms & Legs Body Polish in Bangalore – Xing Salon', metaDesc: `Targeted body polish for soft, smooth arms and legs at ${LOCALITIES}.` },
   'alga-mani-pedi': { menuLabel: 'Alga Mani & Pedi', blurb: 'Deep nourishment and a longer massage for hands and feet.', metaTitle: 'Alga Mani & Pedi in Bangalore – Xing Salon', metaDesc: `A rejuvenating Alga manicure and pedicure at ${LOCALITIES}.` },
   'crystal-mani-pedi': { menuLabel: 'Crystal Mani & Pedi', blurb: 'Extra exfoliation and nourishment for soft hands and feet.', metaTitle: 'Crystal Mani & Pedi in Bangalore – Xing Salon', metaDesc: `A Crystal manicure and pedicure at ${LOCALITIES}.` },
@@ -1093,7 +1089,6 @@ const catalogue: Record<string, ServiceCatalogue> = {
     isNew: true,
   },
   'temporary-nail-extensions': { menuLabel: 'Temporary Nail Extensions', blurb: 'Short-term extensions for events, celebrations or trying a new look.', metaTitle: 'Temporary Nail Extensions in Bangalore – Xing Salon', metaDesc: `Temporary nail extensions for events at ${LOCALITIES}.` },
-  'uv-builder-extensions': { menuLabel: 'UV Builder Extensions', blurb: 'Glossy, builder-gel extensions with flexible-looking strength.', metaTitle: 'UV Builder Extensions in Bangalore – Xing Salon', metaDesc: `UV builder-gel extensions at ${LOCALITIES}.` },
   'hard-gel-extensions': { menuLabel: 'Hard Gel Extensions', blurb: 'Structured hard-gel extensions for durable length and strength.', metaTitle: 'Hard Gel Extensions in Bangalore – Xing Salon', metaDesc: `Hard-gel nail extensions at ${LOCALITIES}.` },
   'extension-removal': { menuLabel: 'Extension Removal', blurb: 'Professional, gentle removal to help protect natural nails.', metaTitle: 'Nail Extension Removal in Bangalore – Xing Salon', metaDesc: `Professional nail extension removal at ${LOCALITIES}.` },
   'uv-builder-overlay': { menuLabel: 'UV Builder Overlay', blurb: 'A protective builder-gel layer for strength and shine.', metaTitle: 'UV Builder Overlay in Bangalore – Xing Salon', metaDesc: `UV builder-gel overlays at ${LOCALITIES}.` },
@@ -1168,7 +1163,7 @@ export const categories: ServiceCategory[] = [
   },
   {
     key: 'skin-body',
-    title: 'Skin & Body',
+    title: 'Skin Care',
     slug: 'skin-body',
     path: '/services/skin-body',
     intro: 'Essential skin care, facials, body polish and manicure-pedicure rituals by expert therapists at Xing Sarjapur Road, HSR Layout and Brookfield.',
@@ -1193,7 +1188,7 @@ export const categories: ServiceCategory[] = [
     hasPage: true,
     groups: [
       { key: 'file-polish', title: 'File & Polish', services: pick('nail-cutting-filing', 'nail-polish', 'quick-nail-care') },
-      { key: 'extensions', title: 'Extensions', services: pick('nail-extensions', 'temporary-nail-extensions', 'uv-builder-extensions', 'hard-gel-extensions', 'extension-removal') },
+      { key: 'extensions', title: 'Extensions', services: pick('nail-extensions', 'temporary-nail-extensions', 'hard-gel-extensions', 'extension-removal') },
       { key: 'overlays', title: 'Overlays', services: pick('uv-builder-overlay', 'hard-gel-overlay', 'nail-refilling', 'poly-gel-overlay') },
       { key: 'nail-art', title: 'Nail Art', services: pick('nail-art', 'cat-eye-nail-art', 'marble-nail-art', 'french-nail-art') },
     ],
@@ -1212,6 +1207,7 @@ export const servicesIn = (category: ServiceCategory) => category.groups.flatMap
 export const redirects: Record<string, string> = {
   // Tattoo offers now live on the tattoo studio's own site.
   '/services/tattoo': 'https://www.xingtattoo.in/offer',
+  '/services/uv-builder-extensions': '/services/nail-care',
   // Blow dry, ironing and curls live on the women's haircut page, so only one page targets those searches.
   '/services/hair-styling': '/services/womens-haircut-styling',
   // Category addresses people may guess.

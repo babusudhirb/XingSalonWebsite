@@ -38,7 +38,7 @@ export const threadingDetan: ServicePageContent = {
     ],
   },
   hero: {
-    eyebrow: 'Skin & Body',
+    eyebrow: 'Skin Care',
     // Headings use a non-breaking hyphen (U+2011) so "De-tan" never splits across lines.
     h1: 'Eyebrow Threading & De‑tan Treatment in Bangalore',
     sub: 'Perfectly shaped brows, smooth facial skin and a brighter, more even-looking glow with quick threading and de-tan treatments.',

@@ -24,7 +24,7 @@ export const bodyPolish: ServicePageContent = {
     providerType: 'BeautySalon',
   },
   hero: {
-    eyebrow: 'Skin & Body · Women Only',
+    eyebrow: 'Skin Care · Women Only',
     h1: 'Body Polishing in Bangalore for Soft, Glowing Skin',
     sub: 'A full-body refresh of shower, scrub, polish and nourishing lotion that leaves your skin soft, smooth and glowing from head to toe.',
     cta: 'Book Body Polish on WhatsApp',

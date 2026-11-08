@@ -8,7 +8,7 @@ const PRICE = /₹|\bINR\b|\bRs\.?\s?\d/;
 
 describe('service catalogue', () => {
   it('has the three categories in order, with Hair Care in four groups', () => {
-    expect(categories.map((category) => category.title)).toEqual(['Hair Care', 'Skin & Body', 'Nail Care']);
+    expect(categories.map((category) => category.title)).toEqual(['Hair Care', 'Skin Care', 'Nail Care']);
     const hair = categories[0];
     expect(hair.groups.map((group) => group.title)).toEqual(['Haircuts & Styling', 'Hair Colour', 'Hair Treatments', 'Hair Spa']);
     expect(hair.groups[0].services.map((service) => service.slug)).toEqual(['womens-haircut-styling', 'blow-drying-styling', 'mens-haircut-beard-grooming', 'kids-haircut']);
@@ -24,7 +24,7 @@ describe('service catalogue', () => {
     const nails = categories[2];
     expect(nails.groups.map((group) => group.title)).toEqual(['File & Polish', 'Extensions', 'Overlays', 'Nail Art']);
     expect(nails.groups[0].services.map((service) => service.slug)).toEqual(['nail-cutting-filing', 'nail-polish', 'quick-nail-care']);
-    expect(nails.groups[1].services.map((service) => service.slug)).toEqual(['nail-extensions', 'temporary-nail-extensions', 'uv-builder-extensions', 'hard-gel-extensions', 'extension-removal']);
+    expect(nails.groups[1].services.map((service) => service.slug)).toEqual(['nail-extensions', 'temporary-nail-extensions', 'hard-gel-extensions', 'extension-removal']);
     expect(nails.groups[2].services.map((service) => service.slug)).toEqual(['uv-builder-overlay', 'hard-gel-overlay', 'nail-refilling', 'poly-gel-overlay']);
     expect(nails.groups[3].services.map((service) => service.slug)).toEqual(['nail-art', 'cat-eye-nail-art', 'marble-nail-art', 'french-nail-art']);
   });

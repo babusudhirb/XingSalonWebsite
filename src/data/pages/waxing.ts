@@ -22,7 +22,7 @@ export const waxing: ServicePageContent = {
     providerType: 'BeautySalon',
   },
   hero: {
-    eyebrow: 'Skin & Body',
+    eyebrow: 'Skin Care',
     h1: 'Waxing Services in Bangalore for Smooth, Hair-Free Skin',
     sub: 'Smooth, hair-free skin from face to toe with flavored, roll-on cartridge and gentle stripless waxing, done quickly and comfortably by trained therapists.',
     cta: 'Book Waxing on WhatsApp',

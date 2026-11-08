@@ -2,7 +2,7 @@ import { useEffect, useRef, type ReactNode, type RefObject, type TouchEvent } fr
 import { AnimatePresence, m, useReducedMotion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Phone, X } from 'lucide-react';
 import type { NavMenu } from '../../data/navMenus';
-import { categories, servicesHubPath, servicesIn } from '../../data/services';
+import { servicesHubPath, servicesIn, visibleCategories } from '../../data/services';
 import { cn } from '../../lib/cn';
 import { currentPage, serviceHref } from '../../lib/route';
 import { ICONS } from '../service/icons';
@@ -72,7 +72,7 @@ export function MobileMenu({ items, servicesId, menus, path, onEnter, onUp, onCl
   const depth = path.length;
   const previousDepth = useRef(depth);
   const forward = depth >= previousDepth.current;
-  const category = depth === 2 ? categories.find((entry) => entry.key === path[1]) : undefined;
+  const category = depth === 2 ? visibleCategories.find((entry) => entry.key === path[1]) : undefined;
   const menu = depth === 1 ? menus[path[0]] : undefined;
   const parentMenu = depth === 2 ? menus[path[0]] : undefined;
   const menuItem = parentMenu?.items.find((item) => item.label === path[1]);
@@ -191,7 +191,7 @@ export function MobileMenu({ items, servicesId, menus, path, onEnter, onUp, onCl
     body = (
       <div className="flex min-h-0 flex-1 flex-col">
         <ul className="min-h-0 flex-1 divide-y divide-ink/10 overflow-y-auto overscroll-contain px-4">
-          {categories.map((entry) => {
+          {visibleCategories.map((entry) => {
             const Icon = ICONS[entry.icon];
             const count = servicesIn(entry).length;
             return (
@@ -217,7 +217,7 @@ export function MobileMenu({ items, servicesId, menus, path, onEnter, onUp, onCl
             <a href={servicesHubPath} onClick={onNavigate} className="inline-flex min-h-11 items-center text-sm font-semibold text-berry underline-offset-4 hover:underline">
               View All Services
             </a>
-            {categories.map((entry) => (
+            {visibleCategories.map((entry) => (
               <a key={entry.key} href={entry.path} onClick={onNavigate} className="inline-flex min-h-11 items-center text-sm font-medium text-ink underline-offset-4 hover:text-berry hover:underline">
                 {categoryLinkLabel(entry.title)}
               </a>

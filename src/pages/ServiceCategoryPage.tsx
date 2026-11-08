@@ -9,7 +9,7 @@ import { useEffect, useMemo } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { CategoryHero } from '../components/services/CatalogueHero';
 import { ServiceListingCard } from '../components/services/ServiceListingCard';
-import { categories, type ServiceCategory } from '../data/services';
+import { type ServiceCategory, visibleCategories } from '../data/services';
 import { useHasShell } from '../hooks/useHasShell';
 import { useScrollSpy } from '../hooks/useScrollSpy';
 import { cn } from '../lib/cn';
@@ -24,7 +24,7 @@ const CHIP_OFF = 'border-ink/15 bg-white text-ink hover:border-berry';
 /** Everything below the hero: the chip bar (for a category with several groups), each group's cards, and links on. */
 export function CategoryBody({ category }: { category: ServiceCategory }) {
   const grouped = category.groups.length > 1;
-  const others = categories.filter((entry) => entry.key !== category.key);
+  const others = visibleCategories.filter((entry) => entry.key !== category.key);
   const compactCards = category.key === 'hair';
   return (
     <>

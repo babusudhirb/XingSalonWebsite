@@ -1255,6 +1255,9 @@ export const categories: ServiceCategory[] = [
   },
 ];
 
+/** Categories exposed through the salon Services navigation. The tattoo studio keeps its direct page. */
+export const visibleCategories = categories.filter((category) => category.key !== 'tattoo');
+
 export const categoryBySlug = (slug: string) => categories.find((category) => category.slug === slug && category.hasPage);
 export const categoryOf = (service: Pick<Service, 'group'>) => categories.find((category) => category.key === service.group)!;
 /** Every service in a category, in menu order. */

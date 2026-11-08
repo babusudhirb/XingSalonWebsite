@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
 import { m } from 'framer-motion';
 import { ArrowRight, ChevronDown } from 'lucide-react';
-import { categories, servicesHubPath, type ServiceCategory } from '../../data/services';
+import { servicesHubPath, type ServiceCategory, visibleCategories } from '../../data/services';
 import { cn } from '../../lib/cn';
 import { currentPage, serviceHref } from '../../lib/route';
 import { bookingWhatsappHref } from '../../lib/whatsapp';
@@ -19,7 +19,7 @@ const categoryLinkLabel = (title: string) => (title === 'Tattoo' ? 'All Tattoos'
 /** The category the visitor is browsing, so the menu opens on it; Hair Care otherwise. */
 const startTab = Math.max(
   0,
-  categories.findIndex((category) => category.groups.some((group) => group.services.some((service) => service.slug === currentPage?.slug))),
+  visibleCategories.findIndex((category) => category.groups.some((group) => group.services.some((service) => service.slug === currentPage?.slug))),
 );
 
 function ServiceLinks({ category, onNavigate }: { category: ServiceCategory; onNavigate: () => void }) {
@@ -59,7 +59,7 @@ export function ServicesMegaMenu({ label, isActive, underline }: { label: string
   const root = useRef<HTMLLIElement>(null);
   const button = useRef<HTMLButtonElement>(null);
   const closeTimer = useRef(0);
-  const category = categories[tab];
+  const category = visibleCategories[tab];
 
   const show = () => {
     window.clearTimeout(closeTimer.current);
@@ -104,10 +104,10 @@ export function ServicesMegaMenu({ label, isActive, underline }: { label: string
   };
 
   const onTabKey = (e: KeyboardEvent<HTMLButtonElement>, index: number) => {
-    const next = e.key === 'ArrowDown' ? index + 1 : e.key === 'ArrowUp' ? index - 1 : e.key === 'Home' ? 0 : e.key === 'End' ? categories.length - 1 : null;
+    const next = e.key === 'ArrowDown' ? index + 1 : e.key === 'ArrowUp' ? index - 1 : e.key === 'Home' ? 0 : e.key === 'End' ? visibleCategories.length - 1 : null;
     if (next === null) return;
     e.preventDefault();
-    const wrapped = (next + categories.length) % categories.length;
+    const wrapped = (next + visibleCategories.length) % visibleCategories.length;
     setTab(wrapped);
     focusTab(wrapped);
   };
@@ -143,7 +143,7 @@ export function ServicesMegaMenu({ label, isActive, underline }: { label: string
           >
             <div className="container-site grid max-h-[80vh] grid-cols-[13rem_1fr] gap-8 overflow-y-auto py-6">
               <div role="tablist" aria-orientation="vertical" aria-label="Service categories" className="flex flex-col gap-1 border-r border-ink/10 pr-6">
-                {categories.map((entry, i) => {
+                {visibleCategories.map((entry, i) => {
                   const Icon = ICONS[entry.icon];
                   const selected = i === tab;
                   return (
@@ -180,7 +180,7 @@ export function ServicesMegaMenu({ label, isActive, underline }: { label: string
                     View All Services
                     <ArrowRight aria-hidden className="size-4" />
                   </a>
-                  {categories.map((entry) => (
+                  {visibleCategories.map((entry) => (
                     <a key={entry.key} href={entry.path} onClick={close} className="inline-flex min-h-11 items-center text-sm font-medium text-ink underline-offset-4 hover:text-berry hover:underline">
                       {categoryLinkLabel(entry.title)}
                     </a>

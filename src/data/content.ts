@@ -2,7 +2,6 @@
 // Keep this file free of React/asset imports: vite.config.ts also reads it to build SEO tags.
 import { CTA } from './style';
 import { allHoursText, bookingSlots, locations as salons, ratingHeadline, SALON_HOURS, topRating, totalReviewsLabel, totalReviewsRounded } from './branches';
-import { tattooWork } from './media';
 import type { BranchId } from './offers';
 import { salonOfferPages } from './staticOfferPages';
 import type { IconKey } from './pages/types';
@@ -135,12 +134,6 @@ export const services = {
       text: 'Manicure, pedicure, extensions, nail art and quick nail care.',
       href: '/services/nail-care',
       image: img('svc-nails', 'The Nail Bar with neon signs at Xing HSR Layout', 640, 480),
-    },
-    {
-      title: 'Tattoo',
-      text: 'Custom, fine-line, realistic and cover-up tattoos in Brookfield.',
-      href: '/services/tattoo',
-      image: tattooWork,
     },
   ],
 };
@@ -334,14 +327,6 @@ export const serviceMenu = [
       { title: 'Beard', items: ['Beard Shave', 'Beard Trim', 'Beard Styling', 'Beard Colour'] },
       { title: 'Colour', items: ['Global Colour', 'Global Colour (Ammonia Free)', 'Crazy Fashion Colour', 'Highlights'] },
     ],
-  },
-  {
-    id: 'tattoo',
-    label: 'Tattoo',
-    bookAs: 'Tattoo',
-    page: 'tattoo',
-    note: '',
-    sections: [{ title: '', items: ['Black & Grey Tattoo', 'Coloured Tattoo'] }],
   },
 ];
 

@@ -1,0 +1,47 @@
+name: Publish UAT static site
+
+on:
+  push:
+    branches: [UAT]
+  workflow_dispatch:
+
+# This workflow creates a deployable static branch. Hostinger's Git deployment
+# service pulls this branch directly, avoiding unreliable inbound SSH/FTPS uploads.
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out UAT source
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install pre-rendering browser
+        run: npx playwright install --with-deps chromium
+
+      - name: Build the noindex UAT site
+        run: VITE_DEPLOY_ENV=uat npm run build && node scripts/mark-uat-build.mjs
+
+      - name: Publish compiled files to the UAT static branch
+        run: |
+          test -f dist/index.html
+          test -d dist/assets
+          grep -q 'noindex, nofollow' dist/index.html
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git checkout --orphan uat-static
+          git rm -rf .
+          cp -a dist/. .
+          git add -A
+          git commit -m "Publish UAT static site for ${GITHUB_SHA}"
+          git push --force origin HEAD:uat-static

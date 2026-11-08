@@ -1,8 +1,8 @@
 name: Deploy UAT build to Hostinger
 
 on:
-  push:
-    branches: [UAT]
+  # Kept as a manual emergency fallback only. Normal UAT releases are built
+  # into the uat-static branch and pulled directly by Hostinger.
   workflow_dispatch:
 
 # UAT lives inside production public_html/uat, so serialize it with the

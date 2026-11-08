@@ -50,7 +50,7 @@ export function CategoryBody({ category }: { category: ServiceCategory }) {
             <h2 id={`${group.key}-title`} className="heading text-balance text-ink">
               {group.title ?? `All ${category.title} Services`}
             </h2>
-            <ul className={cn('grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4', compactCards ? 'mt-4 gap-3' : 'mt-6 gap-5')}>
+            <ul className={cn('grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4', compactCards ? 'mt-4 gap-2' : 'mt-6 gap-5')}>
               {group.services.map((service, j) => (
                 <li key={service.slug}>
                   {/* The first card's photo can show on the first screen, so it loads straight away. */}

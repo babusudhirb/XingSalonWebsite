@@ -75,7 +75,10 @@ jobs:
           # The mail configuration was installed outside public_html by the earlier successful UAT deployment and
           # is not touched here.
           # Hostinger uses explicit FTPS on port 21: plain FTP negotiation, immediately upgraded to TLS.
-          timeout 240s lftp -u "$HOSTINGER_USERNAME","$HOSTINGER_PASSWORD" "ftp://$HOSTINGER_HOST:21" -e '
+          # A full UAT release includes the image catalogue. Hostinger accepts the encrypted
+          # connection but can transfer that catalogue slowly, so retain a firm 15-minute
+          # ceiling rather than terminating an otherwise healthy upload after four minutes.
+          timeout 900s lftp -u "$HOSTINGER_USERNAME","$HOSTINGER_PASSWORD" "ftp://$HOSTINGER_HOST:21" -e '
             set cmd:fail-exit yes
             set net:max-retries 2
             set net:timeout 20

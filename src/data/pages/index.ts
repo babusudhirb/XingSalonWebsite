@@ -16,6 +16,15 @@ import { mensHaircutBeardGrooming } from './mens-haircut-beard-grooming';
 import { hairSmoothening, hairStraightening, keratinTreatment } from './smoothing';
 import type { ServicePageContent } from './types';
 import { womensHaircutStyling } from './womens-haircut-styling';
+import {
+  antiDandruffHairSpa,
+  antiHairfallHairSpa,
+  blowDryingStyling,
+  moroccanHairSpa,
+  olaplexBondRepair,
+  rootTouchUp,
+  tribondHairSpa,
+} from './hairCareAddons';
 
 /** Published service pages, keyed by slug. A service without an entry here has no page yet. */
 export const servicePages: Record<string, ServicePageContent> = Object.fromEntries(
@@ -23,7 +32,9 @@ export const servicePages: Record<string, ServicePageContent> = Object.fromEntri
     mensHaircutBeardGrooming,
     womensHaircutStyling,
     kidsHaircut,
+    blowDryingStyling,
     globalHairColor,
+    rootTouchUp,
     highlights,
     balayage,
     fashionColor,
@@ -31,6 +42,11 @@ export const servicePages: Record<string, ServicePageContent> = Object.fromEntri
     hairSmoothening,
     hairStraightening,
     hairSpa,
+    olaplexBondRepair,
+    antiDandruffHairSpa,
+    antiHairfallHairSpa,
+    moroccanHairSpa,
+    tribondHairSpa,
     nanoplastia,
     cysteine,
     hydraFacial,

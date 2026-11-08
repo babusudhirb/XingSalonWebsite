@@ -10,10 +10,11 @@ describe('service catalogue', () => {
   it('has the four categories in order, with Hair Care in four groups', () => {
     expect(categories.map((category) => category.title)).toEqual(['Hair Care', 'Skin & Body', 'Nail Care', 'Tattoo']);
     const hair = categories[0];
-    expect(hair.groups.map((group) => group.title)).toEqual(['Haircuts & Styling', 'Hair Colour', 'Smoothing & Straightening', 'Hair Treatments']);
-    expect(hair.groups[1].services.map((service) => service.slug)).toEqual(['global-hair-color', 'highlights', 'balayage', 'fashion-color']);
-    expect(hair.groups[2].services.map((service) => service.slug)).toEqual(['keratin-treatment', 'hair-smoothening', 'hair-straightening']);
-    expect(hair.groups[3].services.map((service) => service.slug)).toEqual(['hair-spa', 'nanoplastia', 'cysteine']);
+    expect(hair.groups.map((group) => group.title)).toEqual(['Haircuts & Styling', 'Hair Colour', 'Hair Treatments', 'Hair Spa']);
+    expect(hair.groups[0].services.map((service) => service.slug)).toEqual(['mens-haircut-beard-grooming', 'womens-haircut-styling', 'kids-haircut', 'blow-drying-styling']);
+    expect(hair.groups[1].services.map((service) => service.slug)).toEqual(['balayage', 'highlights', 'global-hair-color', 'fashion-color', 'root-touch-up']);
+    expect(hair.groups[2].services.map((service) => service.slug)).toEqual(['keratin-treatment', 'nanoplastia', 'olaplex-bond-repair', 'hair-straightening', 'hair-smoothening', 'cysteine']);
+    expect(hair.groups[3].services.map((service) => service.slug)).toEqual(['hair-spa', 'anti-dandruff-hair-spa', 'anti-hairfall-hair-spa', 'moroccan-hair-spa', 'tribond-hair-spa']);
     expect(servicesIn(categories[2])).toHaveLength(7);
   });
 

@@ -240,6 +240,19 @@ const list: ServiceEntry[] = [
     offers: ['kidsFree'],
   },
   {
+    slug: 'blow-drying-styling', label: 'Blow Drying & Styling', group: 'hair', bookAs: 'Haircut & Styling',
+    lists: [{
+      title: 'Blow Drying & Styling', allLengths: true,
+      items: [
+        { name: 'Wash & Blast Dry', icon: 'wind', tags: ['Natural', 'Quick'], text: 'A fresh wash and quick dry with natural movement.' },
+        { name: 'Wash & Blow Dry', icon: 'sun', tags: ['Smooth', 'Volume'], text: 'A smooth, bouncy round-brush finish with salon volume.' },
+        { name: 'Moroccan / Defabulous Blow Dry', icon: 'droplets', tags: ['Shine', 'Frizz control'], text: 'A nourishing blow dry for soft, glossy, more manageable hair.' },
+        { name: 'Ironing, Curls & Waves', icon: 'waves', tags: ['Sleek', 'Event-ready'], text: 'Sleek straightening, soft waves or defined curls for any occasion.' },
+      ],
+    }],
+    notes: [], offers: ['tuesday', 'birthday', 'membership'],
+  },
+  {
     slug: 'hair-spa',
     label: 'Hair Spa',
     group: 'hair',
@@ -317,6 +330,31 @@ const list: ServiceEntry[] = [
     notes: [],
     offers: ['spa3plus1', 'tuesday', 'birthday'],
   },
+  {
+    slug: 'olaplex-bond-repair', label: 'Olaplex Bond Repair', group: 'hair', bookAs: 'Hair Treatment',
+    lists: [{ title: 'Olaplex Bond Repair', allLengths: true, items: [{ name: 'Olaplex Bond Repair Treatment', icon: 'layers', tags: ['Colour-treated', 'Heat damage'], text: 'Bond-building care for hair stressed by colouring, bleaching or heat styling.' }] }],
+    notes: [], offers: ['tuesday', 'birthday', 'membership'],
+  },
+  {
+    slug: 'anti-dandruff-hair-spa', label: 'Anti-Dandruff Hair Spa', group: 'hair', bookAs: 'Hair Spa',
+    lists: [{ title: 'Anti-Dandruff Hair Spa', allLengths: true, items: [{ name: 'Anti-Dandruff Hair Spa', icon: 'wind', tags: ['Flaky scalp', 'Fresh feel'], text: 'A clarifying scalp-focused spa for flakes, itchiness and a refreshed scalp feel.' }] }],
+    notes: [], offers: ['spa3plus1', 'tuesday', 'birthday'],
+  },
+  {
+    slug: 'anti-hairfall-hair-spa', label: 'Anti-Hairfall Hair Spa', group: 'hair', bookAs: 'Hair Spa',
+    lists: [{ title: 'Anti-Hairfall Hair Spa', allLengths: true, items: [{ name: 'Anti-Hairfall Hair Spa', icon: 'heart', tags: ['Root care', 'Breakage'], text: 'A nourishing scalp spa for hair that feels weak or is prone to breakage.' }] }],
+    notes: [], offers: ['spa3plus1', 'tuesday', 'birthday'],
+  },
+  {
+    slug: 'moroccan-hair-spa', label: 'Moroccan Hair Spa', group: 'hair', bookAs: 'Hair Spa',
+    lists: [{ title: 'Moroccan Hair Spa', allLengths: true, items: [{ name: 'Moroccan Hair Spa', icon: 'sparkles', tags: ['Frizz control', 'Glossy finish'], text: 'An indulgent spa to soften dry lengths, tame frizz and add silky shine.' }] }],
+    notes: [], offers: ['spa3plus1', 'tuesday', 'birthday'],
+  },
+  {
+    slug: 'tribond-hair-spa', label: 'Tribond Hair Spa', group: 'hair', bookAs: 'Hair Spa',
+    lists: [{ title: 'Tribond Hair Spa', allLengths: true, items: [{ name: 'Tribond Hair Spa', icon: 'shield', tags: ['Strength', 'Weak hair'], text: 'A strengthening spa for weak, brittle or over-styled hair that needs extra care.' }] }],
+    notes: [], offers: ['spa3plus1', 'tuesday', 'birthday'],
+  },
   // ---------- Hair colour: one page per technique (these were one "Hair Colour, Highlights & Balayage" page).
   {
     slug: 'global-hair-color',
@@ -356,6 +394,14 @@ const list: ServiceEntry[] = [
     ],
     notes: [],
     offers: ['colourOffer', 'tuesday', 'birthday', 'membership'],
+  },
+  {
+    slug: 'root-touch-up', label: 'Root Touch-up', group: 'hair', bookAs: 'Global Hair Colour',
+    lists: [{ title: 'Root Touch-up', allLengths: true, items: [
+      { name: 'Root Touch-up', icon: 'palette', tags: ['Grey coverage', 'Regrowth'], text: 'A colour refresh focused on new growth to keep your shade looking even.' },
+      { name: 'Ammonia-Free Root Touch-up', icon: 'shield', tags: ['Gentler formula'], text: 'A gentler root refresh with ammonia-free colour, subject to consultation.' },
+    ] }],
+    notes: [], offers: ['tuesday', 'birthday', 'membership'],
   },
   {
     slug: 'highlights',
@@ -1054,6 +1100,18 @@ const catalogue: Record<string, ServiceCatalogue> = {
     keywords: ['fashion hair colour Bangalore', 'crazy hair colour Bangalore'],
     isNew: true,
   },
+  'root-touch-up': {
+    menuLabel: 'Root Touch-up', blurb: 'Refresh new growth and cover visible regrowth between colour visits.',
+    metaTitle: 'Root Touch-up in Bangalore – Xing Salon',
+    metaDesc: `Root touch-ups and ammonia-free grey coverage at ${LOCALITIES}. Colour consultation included before we start.`,
+    keywords: ['root touch-up Bangalore', 'grey coverage Bangalore'], isNew: true,
+  },
+  'blow-drying-styling': {
+    menuLabel: 'Blow Drying & Styling', blurb: 'Smooth blow dries, sleek ironing, soft curls and event-ready styling.',
+    metaTitle: 'Blow Dry & Hair Styling in Bangalore – Xing Salon',
+    metaDesc: `Professional blow dries, curls, ironing and event hair styling at ${LOCALITIES}. Walk-ins welcome.`,
+    keywords: ['blow dry Bangalore', 'hair styling Bangalore'], isNew: true,
+  },
   // Smoothing & straightening
   'keratin-treatment': {
     menuLabel: 'Keratin Treatment',
@@ -1082,6 +1140,36 @@ const catalogue: Record<string, ServiceCatalogue> = {
   'hair-spa': {
     menuLabel: 'Hair Spa',
     blurb: 'Nourishing, anti-dandruff, anti-hairfall and Olaplex repair spas.',
+  },
+  'olaplex-bond-repair': {
+    menuLabel: 'Olaplex Bond Repair', blurb: 'Bond repair for colour-treated, bleached or heat-stressed hair.',
+    metaTitle: 'Olaplex Bond Repair in Bangalore – Xing Salon',
+    metaDesc: `Olaplex bond repair for colour-treated and damaged hair at ${LOCALITIES}. Free hair consultation.`,
+    keywords: ['Olaplex bond repair Bangalore', 'Olaplex treatment Bangalore'], isNew: true,
+  },
+  'anti-dandruff-hair-spa': {
+    menuLabel: 'Anti-Dandruff Hair Spa', blurb: 'A clarifying scalp spa for flakes, itchiness and a fresher feel.',
+    metaTitle: 'Anti-Dandruff Hair Spa in Bangalore – Xing Salon',
+    metaDesc: `Anti-dandruff hair spa for a fresh, cared-for scalp at ${LOCALITIES}. Consultation before every visit.`,
+    keywords: ['anti dandruff hair spa Bangalore'], isNew: true,
+  },
+  'anti-hairfall-hair-spa': {
+    menuLabel: 'Anti-Hairfall Hair Spa', blurb: 'A root-care spa for weak hair and breakage-related hair fall.',
+    metaTitle: 'Anti-Hairfall Hair Spa in Bangalore – Xing Salon',
+    metaDesc: `Anti-hairfall hair spa for weak, breakage-prone hair at ${LOCALITIES}. Free scalp consultation.`,
+    keywords: ['anti hairfall hair spa Bangalore'], isNew: true,
+  },
+  'moroccan-hair-spa': {
+    menuLabel: 'Moroccan Hair Spa', blurb: 'A nourishing spa for softer, smoother, glossier hair.',
+    metaTitle: 'Moroccan Hair Spa in Bangalore – Xing Salon',
+    metaDesc: `Moroccan hair spa for dry, frizzy hair at ${LOCALITIES}. Consultation and price confirmation first.`,
+    keywords: ['Moroccan hair spa Bangalore'], isNew: true,
+  },
+  'tribond-hair-spa': {
+    menuLabel: 'Tribond Hair Spa', blurb: 'A strengthening spa for weak, brittle or over-styled hair.',
+    metaTitle: 'Tribond Hair Spa in Bangalore – Xing Salon',
+    metaDesc: `Tribond hair spa for weak, brittle and stressed hair at ${LOCALITIES}. Free consultation at Xing.`,
+    keywords: ['Tribond hair spa Bangalore'], isNew: true,
   },
   nanoplastia: {
     menuLabel: 'Nanoplastia',
@@ -1216,11 +1304,10 @@ export const categories: ServiceCategory[] = [
     icon: 'scissors',
     hasPage: true,
     groups: [
-      // Kids Haircut was already in the menu; it stays here with the other haircuts.
-      { key: 'haircuts', title: 'Haircuts & Styling', chip: 'Haircuts', services: pick('mens-haircut-beard-grooming', 'womens-haircut-styling', 'kids-haircut') },
-      { key: 'hair-color', title: 'Hair Colour', services: pick('global-hair-color', 'highlights', 'balayage', 'fashion-color') },
-      { key: 'smoothing', title: 'Smoothing & Straightening', services: pick('keratin-treatment', 'hair-smoothening', 'hair-straightening') },
-      { key: 'treatments', title: 'Hair Treatments', chip: 'Treatments', services: pick('hair-spa', 'nanoplastia', 'cysteine') },
+      { key: 'haircuts', title: 'Haircuts & Styling', chip: 'Haircuts', services: pick('mens-haircut-beard-grooming', 'womens-haircut-styling', 'kids-haircut', 'blow-drying-styling') },
+      { key: 'hair-color', title: 'Hair Colour', services: pick('balayage', 'highlights', 'global-hair-color', 'fashion-color', 'root-touch-up') },
+      { key: 'treatments', title: 'Hair Treatments', chip: 'Treatments', services: pick('keratin-treatment', 'nanoplastia', 'olaplex-bond-repair', 'hair-straightening', 'hair-smoothening', 'cysteine') },
+      { key: 'hair-spa', title: 'Hair Spa', services: pick('hair-spa', 'anti-dandruff-hair-spa', 'anti-hairfall-hair-spa', 'moroccan-hair-spa', 'tribond-hair-spa') },
     ],
   },
   {

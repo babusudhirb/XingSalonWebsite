@@ -1145,10 +1145,10 @@ export const categories: ServiceCategory[] = [
     icon: 'scissors',
     hasPage: true,
     groups: [
-      { key: 'haircuts', title: 'Haircuts & Styling', chip: 'Haircuts', services: pick('mens-haircut-beard-grooming', 'womens-haircut-styling', 'kids-haircut', 'blow-drying-styling') },
+      { key: 'haircuts', title: 'Haircuts & Styling', chip: 'Haircuts', services: pick('womens-haircut-styling', 'blow-drying-styling', 'mens-haircut-beard-grooming', 'kids-haircut') },
       { key: 'hair-color', title: 'Hair Colour', services: pick('balayage', 'highlights', 'global-hair-color', 'fashion-color') },
-      { key: 'treatments', title: 'Hair Treatments', chip: 'Treatments', services: pick('keratin-treatment', 'nanoplastia', 'olaplex-bond-repair', 'hair-smoothening') },
-      { key: 'hair-spa', title: 'Hair Spa', services: pick('anti-dandruff-hair-spa', 'anti-hairfall-hair-spa', 'moroccan-hair-spa', 'tribond-hair-spa') },
+      { key: 'treatments', title: 'Hair Treatments', chip: 'Treatments', services: pick('keratin-treatment', 'hair-smoothening', 'nanoplastia', 'olaplex-bond-repair') },
+      { key: 'hair-spa', title: 'Hair Spa', services: pick('moroccan-hair-spa', 'tribond-hair-spa', 'anti-dandruff-hair-spa', 'anti-hairfall-hair-spa') },
     ],
   },
   {

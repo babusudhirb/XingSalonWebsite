@@ -38,7 +38,7 @@ function ServiceLinks({ category, onNavigate }: { category: ServiceCategory; onN
                   aria-current={currentPage?.slug === service.slug ? 'page' : undefined}
                   className="block rounded-md px-1.5 py-1 transition-colors hover:bg-blush focus-visible:bg-blush"
                 >
-                  <span className={cn('flex items-center gap-1.5 text-[13px] leading-5', currentPage?.slug === service.slug ? 'font-semibold text-berry' : 'font-medium text-ink')}>
+                  <span className={cn('flex items-center gap-1.5 whitespace-nowrap text-[13px] leading-5', currentPage?.slug === service.slug ? 'font-semibold text-berry' : 'font-medium text-ink')}>
                     {service.menuLabel}
                     {service.badge && <span className="rounded-full bg-gold px-2 py-0.5 text-xs font-semibold text-ink">{service.badge}</span>}
                   </span>

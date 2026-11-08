@@ -39,10 +39,10 @@ export const hsrLayout: BranchPageContent = {
       { slug: 'nail-extensions', label: 'Nail Bar: Extensions & Art', text: 'Extensions, overlays and nail art at our dedicated Nail Bar.' },
       { slug: 'manicure', label: 'Manicure & Pedicure', text: 'Relaxing mani-pedis in the pedicure lounge, from D-Lux to Detox.' },
       { slug: 'global-hair-color', label: 'Hair Colour & Balayage', text: 'Root touch-ups to full balayage, with a free colour consultation.' },
-      { slug: 'keratin-treatment', label: 'Keratin & Smoothing', text: 'Keratin, cysteine and smoothening for frizz-free, glossy hair.' },
+      { slug: 'keratin-treatment', label: 'Keratin & Smoothing', text: 'Keratin, smoothening and straightening for frizz-free, glossy hair.' },
       { slug: 'nanoplastia', label: 'Nanoplastia', text: 'Smoothing for softer, silkier, straighter hair.' },
-      { slug: 'cysteine', label: 'Cysteine', text: 'Gentler smoothing for softer, natural-looking hair.' },
-      { slug: 'hair-spa', label: 'Hair Spa', text: 'Scalp and hair spas for dryness, dandruff and hair fall.' },
+      { slug: 'hair-smoothening', label: 'Straightening & Smoothening', text: 'A tailored smoother or straighter finish for your hair.' },
+      { slug: 'anti-dandruff-hair-spa', label: 'Hair Spa Rituals', text: 'Targeted spas for dryness, dandruff and hair fall.' },
       { slug: 'kids-haircut', label: 'Kids’ Haircuts', text: 'Gentle, patient haircuts for children up to 10, near our kids’ corner.' },
       { slug: 'mens-haircut-beard-grooming', label: 'Men’s Salon', text: 'Fades, crops, beard shaping and men’s colour.' },
     ],
@@ -114,7 +114,7 @@ export const hsrLayout: BranchPageContent = {
     },
     {
       q: 'Which smoothing treatments do you offer in HSR Layout?',
-      a: 'Keratin, nanoplastia, cysteine, smoothening and straightening. Your stylist checks your hair’s condition first and recommends the one that suits it.',
+      a: 'Keratin, nanoplastia, smoothening and straightening. Your stylist checks your hair’s condition first and recommends the one that suits it.',
     },
     {
       q: 'Is Xing HSR Layout a men’s salon too?',

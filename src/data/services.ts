@@ -253,84 +253,6 @@ const list: ServiceEntry[] = [
     notes: [], offers: ['tuesday', 'birthday', 'membership'],
   },
   {
-    slug: 'hair-spa',
-    label: 'Hair Spa',
-    group: 'hair',
-    bookAs: 'Hair Spa',
-    lists: [
-      {
-        title: 'Nourish & Shine',
-        items: [
-          {
-            name: 'Nourishing Hair Spa',
-            icon: 'droplets',
-            tags: ['Dry hair', 'Softness', 'Shine'],
-            text: 'A deep-conditioning ritual that replenishes moisture and leaves dull, dry hair soft and glossy.',
-          },
-          {
-            name: 'Moroccan Hair Spa',
-            icon: 'sparkles',
-            tags: ['Frizz control', 'Glossy finish'],
-            text: 'An indulgent spa that helps tame frizz and adds silky shine and smoothness.',
-          },
-          {
-            name: 'Tribond Hair Spa',
-            icon: 'shield',
-            tags: ['Strength', 'Weak hair'],
-            text: 'A strengthening spa for weak, brittle or over-styled hair that needs extra care.',
-          },
-        ],
-      },
-      {
-        title: 'Scalp Care',
-        items: [
-          {
-            name: 'Anti-Dandruff Hair Spa',
-            icon: 'wind',
-            tags: ['Flaky scalp', 'Fresh feel'],
-            text: 'A clarifying scalp treatment that helps reduce flakes and itchiness and leaves your scalp feeling clean and balanced.',
-          },
-          {
-            name: 'Anti-Hairfall Hair Spa',
-            icon: 'heart',
-            tags: ['Root care', 'Breakage'],
-            text: 'A scalp-focused spa that nourishes the roots and helps reduce breakage-related hair fall.',
-          },
-        ],
-      },
-      {
-        title: 'Bond Repair',
-        items: [
-          {
-            name: 'Olaplex Hair Spa',
-            icon: 'layers',
-            tags: ['Damage repair', 'Colour-treated'],
-            text: 'Olaplex bond-building care that helps repair and strengthen hair damaged by colouring, bleaching or heat.',
-          },
-          {
-            name: 'Olaplex Add-on',
-            icon: 'zap',
-            tags: ['Boost any spa'],
-            text: 'Add Olaplex to any hair spa for extra repair and protection.',
-          },
-        ],
-      },
-      {
-        title: 'Add-ons',
-        items: [
-          {
-            name: 'Head Massage',
-            icon: 'smile',
-            tags: ['Relax', 'Unwind'],
-            text: 'A calming scalp massage that relieves stress and leaves you refreshed.',
-          },
-        ],
-      },
-    ],
-    notes: [],
-    offers: ['spa3plus1', 'tuesday', 'birthday'],
-  },
-  {
     slug: 'olaplex-bond-repair', label: 'Olaplex Bond Repair', group: 'hair', bookAs: 'Hair Treatment',
     lists: [{ title: 'Olaplex Bond Repair', allLengths: true, items: [{ name: 'Olaplex Bond Repair Treatment', icon: 'layers', tags: ['Colour-treated', 'Heat damage'], text: 'Bond-building care for hair stressed by colouring, bleaching or heat styling.' }] }],
     notes: [], offers: ['tuesday', 'birthday', 'membership'],
@@ -472,7 +394,7 @@ const list: ServiceEntry[] = [
     notes: [],
     offers: ['colourOffer', 'tuesday', 'birthday', 'membership'],
   },
-  // ---------- Smoothing & straightening: one page each (these were one "Keratin, Smoothening & Straightening" page).
+  // ---------- Smoothing & straightening: one combined service page.
   {
     slug: 'keratin-treatment',
     label: 'Keratin Treatment',
@@ -496,18 +418,18 @@ const list: ServiceEntry[] = [
   },
   {
     slug: 'hair-smoothening',
-    label: 'Hair Smoothening',
+    label: 'Hair Straightening & Smoothening',
     group: 'hair',
     bookAs: 'Hair Treatment',
     lists: [
       {
-        title: 'Smoothening',
+        title: 'Straightening & Smoothening',
         items: [
           {
-            name: 'Hair Smoothening',
+            name: 'Hair Straightening & Smoothening',
             icon: 'waves',
             tags: ['Soft straight', 'Frizz-free', 'Easy styling'],
-            text: 'Relaxes curls and waves into smoother, straighter hair with a soft, natural fall. Great for wavy or frizzy hair that takes too long to style.',
+            text: 'Choose a soft, natural smoothening finish or a sleeker straightening result after a consultation tailored to your texture and hair history.',
           },
         ],
       },
@@ -515,28 +437,7 @@ const list: ServiceEntry[] = [
     notes: [],
     offers: ['acaiOil', 'tuesday', 'birthday', 'membership'],
   },
-  {
-    slug: 'hair-straightening',
-    label: 'Hair Straightening',
-    group: 'hair',
-    bookAs: 'Hair Treatment',
-    lists: [
-      {
-        title: 'Straightening',
-        items: [
-          {
-            name: 'Hair Straightening',
-            icon: 'zap',
-            tags: ['Sleek', 'Poker-straight', 'Long-lasting'],
-            text: 'Transforms curly or wavy hair into sleek, straight hair. The straightened section stays straight and new growth comes in with your natural texture.',
-          },
-        ],
-      },
-    ],
-    notes: [],
-    offers: ['acaiOil', 'tuesday', 'birthday', 'membership'],
-  },
-  // ---------- Hair treatments: Nanoplastia and Cysteine have a page each.
+  // ---------- Hair treatments.
   {
     slug: 'nanoplastia',
     label: 'Nanoplastia Treatment',
@@ -551,27 +452,6 @@ const list: ServiceEntry[] = [
             icon: 'waves',
             tags: ['Smooth', 'Straighter', 'Silky'],
             text: 'An advanced smoothing and straightening treatment for frizzy, wavy or curly hair. Gives a silky, straighter, natural-looking finish that’s easy to style.',
-          },
-        ],
-      },
-    ],
-    notes: [],
-    offers: ['acaiOil', 'tuesday', 'birthday', 'membership'],
-  },
-  {
-    slug: 'cysteine',
-    label: 'Cysteine Treatment',
-    group: 'hair',
-    bookAs: 'Hair Treatment',
-    lists: [
-      {
-        title: 'Cysteine',
-        items: [
-          {
-            name: 'Cysteine Treatment',
-            icon: 'wind',
-            tags: ['Smoothing', 'Frizz control', 'Natural look'],
-            text: 'A smoothing treatment that reduces frizz and improves manageability while keeping your hair soft and natural-looking. Popular with people who want smoothness without a stiff, straight finish.',
           },
         ],
       },
@@ -1121,25 +1001,19 @@ const catalogue: Record<string, ServiceCatalogue> = {
     keywords: ['keratin treatment HSR Layout', 'keratin treatment Bangalore'],
   },
   'hair-smoothening': {
-    menuLabel: 'Hair Smoothening',
-    blurb: 'Softer, sleeker hair with natural movement.',
-    metaTitle: 'Hair Smoothening in Bangalore – Xing Salon',
-    metaDesc: 'Sleek, soft, manageable hair with professional smoothening at Xing salons in Sarjapur Road, HSR Layout & Brookfield. Free consultation.',
-    keywords: ['hair smoothening Bangalore'],
+    menuLabel: 'Hair Straightening & Smoothening',
+    blurb: 'Smoothening and straightening options tailored to your hair.',
+    metaTitle: 'Hair Straightening & Smoothening in Bangalore – Xing Salon',
+    metaDesc: 'Hair straightening and smoothening for sleek, frizz-free hair at Xing salons in Sarjapur Road, HSR Layout & Brookfield. Free consultation.',
+    keywords: ['hair smoothening Bangalore', 'hair straightening Bangalore'],
     isNew: true,
   },
+  // Legacy metadata only: this retired URL redirects to the combined treatment page.
   'hair-straightening': {
     menuLabel: 'Hair Straightening',
-    blurb: 'Pin-straight, long-lasting results with care.',
-    metaTitle: 'Hair Straightening in Bangalore – Xing Salon',
-    metaDesc: `Long-lasting permanent hair straightening with expert care at ${LOCALITIES}. Price confirmed before we start.`,
-    keywords: ['hair straightening Bangalore'],
-    isNew: true,
-  },
-  // Hair treatments
-  'hair-spa': {
-    menuLabel: 'Hair Spa',
-    blurb: 'Nourishing, anti-dandruff, anti-hairfall and Olaplex repair spas.',
+    blurb: 'Redirects to our combined straightening and smoothening page.',
+    metaTitle: 'Hair Straightening & Smoothening in Bangalore – Xing Salon',
+    metaDesc: `Hair straightening and smoothening options at ${LOCALITIES}. Consultation and price confirmation first.`,
   },
   'olaplex-bond-repair': {
     menuLabel: 'Olaplex Bond Repair', blurb: 'Bond repair for colour-treated, bleached or heat-stressed hair.',
@@ -1177,13 +1051,6 @@ const catalogue: Record<string, ServiceCatalogue> = {
     metaTitle: 'Nanoplastia Treatment in Bangalore – Xing Salon',
     metaDesc: `Nanoplastia smoothing for frizzy, wavy or curly hair at ${LOCALITIES}. Hair analysis and free consultation.`,
     keywords: ['nanoplastia Bangalore'],
-  },
-  cysteine: {
-    menuLabel: 'Cysteine',
-    blurb: 'Frizz control that keeps hair soft and natural-looking.',
-    metaTitle: 'Cysteine Treatment in Bangalore – Xing Salon',
-    metaDesc: `Cysteine smoothing that tames frizz and keeps hair natural at ${LOCALITIES}. Hair analysis and free consultation.`,
-    keywords: ['cysteine treatment Bangalore'],
   },
   // Skin & body: names and order unchanged.
   'hydra-facial': { menuLabel: 'Hydra Facial', blurb: 'A 7-step deep-cleansing, hydrating facial for instant glow.' },
@@ -1306,8 +1173,8 @@ export const categories: ServiceCategory[] = [
     groups: [
       { key: 'haircuts', title: 'Haircuts & Styling', chip: 'Haircuts', services: pick('mens-haircut-beard-grooming', 'womens-haircut-styling', 'kids-haircut', 'blow-drying-styling') },
       { key: 'hair-color', title: 'Hair Colour', services: pick('balayage', 'highlights', 'global-hair-color', 'fashion-color', 'root-touch-up') },
-      { key: 'treatments', title: 'Hair Treatments', chip: 'Treatments', services: pick('keratin-treatment', 'nanoplastia', 'olaplex-bond-repair', 'hair-straightening', 'hair-smoothening', 'cysteine') },
-      { key: 'hair-spa', title: 'Hair Spa', services: pick('hair-spa', 'anti-dandruff-hair-spa', 'anti-hairfall-hair-spa', 'moroccan-hair-spa', 'tribond-hair-spa') },
+      { key: 'treatments', title: 'Hair Treatments', chip: 'Treatments', services: pick('keratin-treatment', 'nanoplastia', 'olaplex-bond-repair', 'hair-smoothening') },
+      { key: 'hair-spa', title: 'Hair Spa', services: pick('anti-dandruff-hair-spa', 'anti-hairfall-hair-spa', 'moroccan-hair-spa', 'tribond-hair-spa') },
     ],
   },
   {
@@ -1385,6 +1252,9 @@ export const redirects: Record<string, string> = {
   '/services/hair-botox-nanoplastia': '/services/nanoplastia',
   '/services/hair-botox': '/services/nanoplastia',
   '/services/nanoplastia-cysteine': '/services/nanoplastia',
+  '/services/cysteine': '/services/hair-smoothening',
+  '/services/hair-straightening': '/services/hair-smoothening',
+  '/services/hair-spa': '/services/hair-care',
   '/blog/hair-botox-vs-keratin': '/blog/what-is-nanoplastia',
   // Its main search term was "manicure"; the manicure page links straight to pedicure.
   '/services/manicure-pedicure': '/services/manicure',

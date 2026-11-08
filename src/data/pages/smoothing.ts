@@ -1,5 +1,4 @@
-// Smoothing & straightening: Keratin Treatment, Hair Smoothening and Hair Straightening, one page each. They share
-// the gallery, comparison, Acai oil offer and aftercare; each has its own intro, steps and FAQs. No prices.
+// Keratin and the combined straightening & smoothening page share the gallery, comparison, Acai oil offer and aftercare.
 import { footer, img, workPhotos } from '../content';
 import { h1For, seoFor } from './catalogue';
 import type { ServicePageContent } from './types';
@@ -11,12 +10,7 @@ const compare = (current: string): ServicePageContent['compare'] => ({
   columns: ['Treatment', 'Finish', 'Best for', 'How it wears', 'Maintenance'],
   rows: [
     { name: 'Keratin', slug: 'keratin-treatment', cells: ['Smooth with natural volume', 'Frizzy hair, keeping volume', 'Gradually softens over time', 'Repeat as it wears off'] },
-    { name: 'Smoothening', slug: 'hair-smoothening', cells: ['Soft, straight, natural fall', 'Wavy or frizzy hair', 'Lasts longer; regrowth shows natural texture', 'Touch-up as hair grows'] },
-    {
-      name: 'Straightening',
-      slug: 'hair-straightening',
-      cells: ['Sleek, poker-straight', 'Curly or very wavy hair, straightest result', 'Treated hair stays straight; regrowth shows natural texture', 'Touch-up as hair grows'],
-    },
+    { name: 'Straightening & Smoothening', slug: 'hair-smoothening', cells: ['Soft smoothening or a sleeker straight finish', 'Wavy, frizzy or curly hair', 'Treated lengths stay changed; regrowth shows natural texture', 'Touch-up as hair grows'] },
   ].map((row) => ({ ...row, current: row.slug === current })),
 });
 
@@ -101,7 +95,7 @@ export const keratinTreatment: ServicePageContent = {
     title: 'Professional Keratin Treatment',
     text: 'Available for all hair lengths, for women and men.',
     askText: 'Not sure keratin is right for your hair? Send us a photo on WhatsApp.',
-    moreLink: { slug: 'hair-smoothening', text: 'Want straighter hair than keratin gives?', label: 'Hair Smoothening', also: [{ slug: 'hair-straightening', label: 'Hair Straightening' }] },
+    moreLink: { slug: 'hair-smoothening', text: 'Want a straighter finish than keratin gives?', label: 'Straightening & Smoothening' },
   },
   audience: {
     title: 'Who Keratin Is For',
@@ -141,8 +135,7 @@ export const keratinTreatment: ServicePageContent = {
   related: {
     title: 'More Smoothing & Straightening',
     items: [
-      { slug: 'hair-smoothening', text: 'Softer, sleeker hair with natural movement.' },
-      { slug: 'hair-straightening', text: 'Pin-straight, long-lasting results.' },
+      { slug: 'hair-smoothening', text: 'Choose a soft smoothening finish or a sleeker straight result.' },
       { slug: 'nanoplastia', text: 'Silky smoothing with a natural finish.' },
     ],
   },
@@ -156,29 +149,29 @@ export const hairSmoothening: ServicePageContent = {
   hero: {
     eyebrow: 'Hair Care · Smoothing & Straightening',
     h1: h1For('hair-smoothening'),
-    sub: 'Waves and frizz relaxed into softer, sleeker, straighter hair with a natural fall that’s easy to style.',
+    sub: 'Choose soft, natural smoothening or a sleeker straightening finish after an expert consultation for your hair.',
     cta: 'Book a Consultation on WhatsApp',
     chips,
     image: img('work-smoothing-1', 'Sleek, frizz-free lengths at Xing Salon Bangalore', 600, 800),
   },
-  whatsappText: 'Hi, I’d like a hair smoothening consultation at Xing',
+  whatsappText: 'Hi, I’d like a hair straightening and smoothening consultation at Xing',
   intro: {
-    eyebrow: 'Hair Smoothening',
-    title: 'Hair Smoothening in Sarjapur Road, HSR Layout & Brookfield',
+    eyebrow: 'Straightening & Smoothening',
+    title: 'Hair Straightening & Smoothening in Sarjapur Road, HSR Layout & Brookfield',
     paragraphs: [
-      'Hair smoothening in Bangalore relaxes waves, curls and frizz into softer, straighter hair with natural movement. It goes further than keratin, so your hair dries smooth and stays manageable, yet it still falls softly instead of looking stiff. Treated hair stays smooth, and new growth comes in with your natural texture.',
-      'At our Sarjapur Road, HSR Layout and Brookfield salons, every smoothening starts with a consultation and hair analysis. Your stylist checks your texture, density and chemical history, then chooses the right strength for your hair. A complimentary Acai oil treatment is included, and we confirm the price before we start. Bring a photo of the finish you like, and your stylist will tell you honestly whether smoothening or keratin suits you better. Clients come from Koramangala, Bellandur, Whitefield and Marathahalli.',
+      'Straightening and smoothening in Bangalore relax waves, curls and frizz into hair that is easier to style. Smoothening gives a soft, natural fall, while straightening creates a sleeker finish. Your stylist will help you choose the result that suits your texture, desired look and hair history.',
+      'At our Sarjapur Road, HSR Layout and Brookfield salons, every appointment starts with a consultation and hair analysis. Your stylist checks your texture, density and chemical history, then recommends smoothening or straightening and the right strength for your hair. A complimentary Acai oil treatment is included, and we confirm the price before we start. Your appointment includes tailored aftercare advice to help the chosen finish stay glossy and manageable. Clients come from Koramangala, Bellandur, Whitefield and Marathahalli.',
     ],
   },
   menu: {
-    eyebrow: 'Smoothening',
-    title: 'Professional Hair Smoothening',
+    eyebrow: 'Straightening & Smoothening',
+    title: 'Professional Straightening & Smoothening',
     text: 'Available for all hair lengths, for women and men.',
-    askText: 'Not sure smoothening is right for you? Send us a photo on WhatsApp.',
-    moreLink: { slug: 'keratin-treatment', text: 'Want frizz control but more volume?', label: 'Keratin Treatment', also: [{ slug: 'hair-straightening', label: 'Hair Straightening' }] },
+    askText: 'Not sure whether to straighten or smoothen? Send us a photo on WhatsApp.',
+    moreLink: { slug: 'keratin-treatment', text: 'Want frizz control but more volume?', label: 'Keratin Treatment' },
   },
   audience: {
-    title: 'Who Hair Smoothening Is For',
+    title: 'Who Straightening & Smoothening Is For',
     items: ['Wavy or frizzy hair that takes too long to blow dry', 'Anyone who wants straighter hair that still moves naturally', 'Thick hair that feels heavy, puffy or hard to manage'],
     note: 'Recently coloured, bleached or pregnant? Tell your stylist before your appointment.',
   },
@@ -192,8 +185,8 @@ export const hairSmoothening: ServicePageContent = {
       { title: 'Neutralise, finish & aftercare guidance' },
     ],
   },
-  locationsTitle: 'Hair Smoothening Near You in Bangalore',
-  faqTitle: 'Hair Smoothening FAQs',
+  locationsTitle: 'Hair Straightening & Smoothening Near You in Bangalore',
+  faqTitle: 'Hair Straightening & Smoothening FAQs',
   faqs: [
     {
       q: 'What is the difference between smoothening and keratin?',
@@ -216,7 +209,6 @@ export const hairSmoothening: ServicePageContent = {
     title: 'More Smoothing & Straightening',
     items: [
       { slug: 'keratin-treatment', text: 'Frizz-free, glossy hair that keeps its volume.' },
-      { slug: 'hair-straightening', text: 'Pin-straight, long-lasting results.' },
       { slug: 'nanoplastia', text: 'Silky smoothing with a natural finish.' },
     ],
   },
@@ -226,10 +218,16 @@ export const hairSmoothening: ServicePageContent = {
 export const hairStraightening: ServicePageContent = {
   ...shared,
   slug: 'hair-straightening',
-  seo: seoFor('hair-straightening', { serviceType: 'Permanent Hair Straightening' }),
+  // Retained only as source copy; the route redirects to the combined page.
+  seo: {
+    title: 'Hair Straightening & Smoothening in Bangalore – Xing Salon',
+    description: 'Hair straightening and smoothening options at Xing Premium Salon in Bangalore.',
+    keyword: 'hair straightening Bangalore',
+    serviceType: 'Hair Straightening',
+  },
   hero: {
     eyebrow: 'Hair Care · Smoothing & Straightening',
-    h1: h1For('hair-straightening'),
+    h1: 'Hair Straightening in Bangalore',
     sub: 'Curly or very wavy hair transformed into sleek, pin-straight hair that stays straight, with expert care.',
     cta: 'Book a Consultation on WhatsApp',
     chips,

@@ -135,7 +135,7 @@ export const womensHaircutStyling: ServicePageContent = {
   related: {
     title: 'Complete Your Hair Care',
     items: [
-      { slug: 'hair-spa', text: 'Nourishing spas to keep lengths soft and manageable.' },
+      { slug: 'moroccan-hair-spa', text: 'A nourishing spa to keep lengths soft and manageable.' },
       { slug: 'global-hair-color', text: 'Global colour, highlights and balayage.' },
       { slug: 'keratin-treatment', text: 'Keratin, smoothening and straightening for frizz-free hair.' },
       { slug: 'kids-haircut', text: 'Haircuts for boys and girls up to 10 years.' },

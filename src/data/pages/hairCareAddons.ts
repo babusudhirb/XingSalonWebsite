@@ -112,14 +112,14 @@ export const olaplexBondRepair = createHairCarePage({
   intro: 'Olaplex bond repair is designed for hair that feels stressed after chemical colour, bleaching or frequent heat styling. Your stylist will advise whether it works best as a focused treatment or alongside another service.',
   menuTitle: 'Olaplex Bond Repair Treatment', concern: 'colour or heat-stressed hair',
   benefits: [{ icon: 'layers', title: 'Bond-building care' }, { icon: 'shield', title: 'Supports colour-treated hair' }, { icon: 'sparkles', title: 'Softer-feeling lengths' }],
-  related: [{ slug: 'hair-spa', text: 'Nourishing and scalp-care hair spa rituals.' }, { slug: 'global-hair-color', text: 'Global colour with optional bond care.' }],
+  related: [{ slug: 'moroccan-hair-spa', text: 'Nourishing care for dry or frizzy hair.' }, { slug: 'global-hair-color', text: 'Global colour with optional bond care.' }],
 });
 
 const spaPage = (slug: string, label: string, concern: string, intro: string, benefits: HairCarePageConfig['benefits']) =>
   createHairCarePage({
     slug, label, eyebrow: 'Hair Spa', sub: intro, introTitle: `${label} in Sarjapur Road, HSR Layout & Brookfield`, intro,
     menuTitle: label, concern, benefits,
-    related: [{ slug: 'hair-spa', text: 'Explore every Xing hair spa ritual.' }, { slug: 'olaplex-bond-repair', text: 'Bond-building care for stressed hair.' }],
+    related: [{ slug: 'olaplex-bond-repair', text: 'Bond-building care for stressed hair.' }, { slug: 'moroccan-hair-spa', text: 'Nourishing care for dry or frizzy hair.' }],
   });
 
 export const antiDandruffHairSpa = spaPage('anti-dandruff-hair-spa', 'Anti-Dandruff Hair Spa', 'flakes and scalp discomfort', 'A clarifying, scalp-focused hair spa that helps leave flakes and itchiness feeling more cared for.', [{ icon: 'wind', title: 'Fresh-feeling scalp' }, { icon: 'droplets', title: 'Targeted scalp care' }, { icon: 'sparkles', title: 'Clean, refreshed finish' }]);

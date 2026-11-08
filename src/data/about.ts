@@ -64,8 +64,8 @@ export const about = {
     title: 'Our Specialities',
     items: [
       { slug: 'global-hair-color', label: 'Hair Colour & Balayage', text: 'Global colour, highlights and soft balayage.' },
-      { slug: 'keratin-treatment', label: 'Keratin, Nanoplastia & Cysteine', text: 'Smooth, frizz-free, manageable hair.' },
-      { slug: 'hair-spa', label: 'Hair Spa & Olaplex', text: 'Deep conditioning and bond repair.' },
+      { slug: 'keratin-treatment', label: 'Keratin, Nanoplastia & Smoothening', text: 'Smooth, frizz-free, manageable hair.' },
+      { slug: 'moroccan-hair-spa', label: 'Hair Spa Rituals & Olaplex', text: 'Targeted scalp care, nourishment and bond repair.' },
       { slug: 'mens-haircut-beard-grooming', label: 'Men’s Grooming', text: 'Haircuts, beard grooming and colour.' },
       { slug: 'hydra-facial', label: '7-Step Hydra Facial', text: 'Our bestselling facial for instant glow.' },
       { slug: 'nail-art', label: 'Nails & Nail Art', text: 'Extensions, manicures and nail art.' },

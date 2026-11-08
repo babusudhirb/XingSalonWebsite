@@ -116,7 +116,7 @@ export const mensHaircutBeardGrooming: ServicePageContent = {
   related: {
     title: 'Pair It With',
     items: [
-      { slug: 'hair-spa', text: 'Nourishing and scalp-care spas to follow your cut.' },
+      { slug: 'moroccan-hair-spa', text: 'A nourishing spa to follow your cut.' },
       { slug: 'global-hair-color', text: 'Global colour, highlights and balayage.' },
       { slug: 'threading-detan', text: 'Face and neck de-tan to finish the look.', hash: '#detan' },
       { slug: 'kids-haircut', text: 'Haircuts for boys and girls up to 10 years.' },

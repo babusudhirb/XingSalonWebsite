@@ -38,7 +38,7 @@ export const nanoplastia: ServicePageContent = {
     title: 'Nanoplastia Smoothing Treatment',
     text: 'Available for all hair lengths, for women and men.',
     askText: 'Not sure nanoplastia suits you? Send us a photo of your hair on WhatsApp.',
-    moreLink: { slug: 'cysteine', text: 'Want to keep more natural movement?', label: 'Cysteine Treatment' },
+    moreLink: { slug: 'hair-smoothening', text: 'Want to compare smoothening and straightening options?', label: 'Straightening & Smoothening' },
   },
   audience: {
     title: 'Who Nanoplastia Is For',
@@ -74,8 +74,8 @@ export const nanoplastia: ServicePageContent = {
   related: {
     title: 'More Hair Treatments',
     items: [
-      { slug: 'cysteine', text: 'Smoothing that tames frizz and keeps hair natural.' },
-      { slug: 'hair-spa', text: 'Nourishing, anti-dandruff, anti-hairfall and Olaplex spas.' },
+      { slug: 'hair-smoothening', text: 'Smoothening and straightening options tailored to your hair.' },
+      { slug: 'olaplex-bond-repair', text: 'Bond repair for colour-treated or stressed hair.' },
       { slug: 'keratin-treatment', text: 'Frizz-free, glossy hair that keeps its volume.' },
     ],
   },

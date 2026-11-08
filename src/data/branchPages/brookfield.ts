@@ -38,7 +38,7 @@ export const brookfield: BranchPageContent = {
     items: [
       { slug: 'global-hair-color', label: 'Hair Colour & Balayage', text: 'Global colour, highlights and hand-painted balayage, matched to your skin tone.' },
       { slug: 'keratin-treatment', label: 'Keratin & Nanoplastia', text: 'Smooth, frizz-free hair, with the right treatment chosen for your hair type.' },
-      { slug: 'hair-spa', label: 'Hair Spa', text: 'Nourishing, anti-dandruff, anti-hairfall and Olaplex spas for soft, healthy hair.' },
+      { slug: 'moroccan-hair-spa', label: 'Hair Spa Rituals', text: 'Nourishing, anti-dandruff, anti-hairfall and bond-repair spas for soft, healthy hair.' },
       { slug: 'womens-haircut-styling', label: 'Haircuts & Styling', text: 'Layers, face-framing cuts, blow-dries, ironing and curls.' },
       { slug: 'hydra-facial', label: 'Hydra Facial & Skin Care', text: 'Deep cleansing and hydration for fresh, glowing skin.' },
       { slug: 'nail-extensions', label: 'Nail Extensions & Nail Art', text: 'Acrylic, poly gel and builder gel extensions, with chrome, cat-eye and French art.' },
@@ -106,7 +106,7 @@ export const brookfield: BranchPageContent = {
     },
     {
       q: 'Do you offer keratin and nanoplastia near Whitefield?',
-      a: 'Yes. Our Brookfield salon in AECS Layout does keratin, nanoplastia, cysteine, smoothening and straightening. Your stylist checks your hair first and recommends the treatment that suits it.',
+      a: 'Yes. Our Brookfield salon in AECS Layout does keratin, nanoplastia, smoothening and straightening. Your stylist checks your hair first and recommends the treatment that suits it.',
     },
     {
       q: 'Do you have nail extensions and nail art?',

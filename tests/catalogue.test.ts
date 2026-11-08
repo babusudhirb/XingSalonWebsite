@@ -13,8 +13,8 @@ describe('service catalogue', () => {
     expect(hair.groups.map((group) => group.title)).toEqual(['Haircuts & Styling', 'Hair Colour', 'Hair Treatments', 'Hair Spa']);
     expect(hair.groups[0].services.map((service) => service.slug)).toEqual(['mens-haircut-beard-grooming', 'womens-haircut-styling', 'kids-haircut', 'blow-drying-styling']);
     expect(hair.groups[1].services.map((service) => service.slug)).toEqual(['balayage', 'highlights', 'global-hair-color', 'fashion-color', 'root-touch-up']);
-    expect(hair.groups[2].services.map((service) => service.slug)).toEqual(['keratin-treatment', 'nanoplastia', 'olaplex-bond-repair', 'hair-straightening', 'hair-smoothening', 'cysteine']);
-    expect(hair.groups[3].services.map((service) => service.slug)).toEqual(['hair-spa', 'anti-dandruff-hair-spa', 'anti-hairfall-hair-spa', 'moroccan-hair-spa', 'tribond-hair-spa']);
+    expect(hair.groups[2].services.map((service) => service.slug)).toEqual(['keratin-treatment', 'nanoplastia', 'olaplex-bond-repair', 'hair-smoothening']);
+    expect(hair.groups[3].services.map((service) => service.slug)).toEqual(['anti-dandruff-hair-spa', 'anti-hairfall-hair-spa', 'moroccan-hair-spa', 'tribond-hair-spa']);
     expect(servicesIn(categories[2])).toHaveLength(7);
   });
 
@@ -56,7 +56,7 @@ describe('service catalogue', () => {
   });
 
   it('gives each new page 4 FAQs of 40–55 words and an intro of 120–160 words', () => {
-    const fresh = ['global-hair-color', 'highlights', 'balayage', 'fashion-color', 'keratin-treatment', 'hair-smoothening', 'hair-straightening', 'nanoplastia', 'cysteine', 'manicure', 'pedicure', 'nail-cutting-filing', 'nail-polish', 'quick-nail-care'];
+    const fresh = ['global-hair-color', 'highlights', 'balayage', 'fashion-color', 'keratin-treatment', 'hair-smoothening', 'nanoplastia', 'manicure', 'pedicure', 'nail-cutting-filing', 'nail-polish', 'quick-nail-care'];
     const words = (text: string) => text.split(/\s+/).filter(Boolean).length;
     for (const slug of fresh) {
       const page = servicePages[slug];

@@ -40,8 +40,8 @@ export const sarjapurRoad: BranchPageContent = {
       { slug: 'global-hair-color', label: 'Hair Colour & Highlights', text: 'Global colour, highlights and balayage, after a free consultation.' },
       { slug: 'keratin-treatment', label: 'Keratin Treatment', text: 'Frizz-free, manageable hair for months, at a flat offer price for any length.' },
       { slug: 'nanoplastia', label: 'Nanoplastia', text: 'Smoothing that leaves hair silkier and straighter.' },
-      { slug: 'cysteine', label: 'Cysteine', text: 'Gentler smoothing that leaves hair soft and natural-looking.' },
-      { slug: 'hair-spa', label: 'Hair Spa', text: 'Spas for dry, frizzy or falling hair, with an Olaplex option.' },
+      { slug: 'hair-smoothening', label: 'Straightening & Smoothening', text: 'A tailored smoother or straighter finish for your hair.' },
+      { slug: 'moroccan-hair-spa', label: 'Hair Spa Rituals', text: 'Targeted spas for dry, frizzy or falling hair, with bond repair.' },
       { slug: 'mens-haircut-beard-grooming', label: 'Men’s Grooming', text: 'Fades, beard trims and shaves, fitted around the working week.' },
       { slug: 'nail-extensions', label: 'Nail Extensions', text: 'Acrylic, poly gel and builder gel extensions, plus refills.' },
       { slug: 'hydra-facial', label: 'Hydra Facial', text: 'A deep cleanse and hydration that leaves skin fresh and glowing.' },
@@ -106,7 +106,7 @@ export const sarjapurRoad: BranchPageContent = {
     },
     {
       q: 'Do you offer keratin and nanoplastia near Kasavanahalli?',
-      a: 'Yes. We do keratin, nanoplastia, cysteine and smoothening. Your stylist checks your hair first and recommends the right one.',
+      a: 'Yes. We do keratin, nanoplastia, smoothening and straightening. Your stylist checks your hair first and recommends the right one.',
     },
     {
       q: 'Is there a hair spa at the Sarjapur Road salon?',

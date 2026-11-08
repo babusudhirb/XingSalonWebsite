@@ -25,26 +25,22 @@ const startTab = Math.max(
 function ServiceLinks({ category, onNavigate }: { category: ServiceCategory; onNavigate: () => void }) {
   const grouped = category.groups.some((group) => group.title);
   return (
-    <div className={cn('grid gap-x-8 gap-y-6', grouped ? 'grid-cols-4' : 'grid-cols-1')}>
+    <div className={cn('grid gap-x-5 gap-y-4', grouped ? 'grid-cols-4' : 'grid-cols-1')}>
       {category.groups.map((group) => (
-        <div key={group.key} className="min-w-0">
+        <div key={group.key} className={cn('min-w-0', grouped && 'rounded-xl border border-ink/10 bg-white/60 p-3')}>
           {group.title && <p className="text-eyebrow font-medium uppercase text-berry">{group.title}</p>}
-          <ul className={cn('mt-3 space-y-1', !grouped && 'mt-0 grid grid-cols-3 gap-x-8 space-y-0')}>
+          <ul className={cn(grouped ? 'mt-2 space-y-0.5' : 'grid grid-cols-3 gap-x-6 gap-y-1')}>
             {group.services.map((service) => (
               <li key={service.slug}>
                 <a
                   href={serviceHref(service.slug)}
                   onClick={onNavigate}
                   aria-current={currentPage?.slug === service.slug ? 'page' : undefined}
-                  className="group/item -mx-2 block rounded-lg px-2 py-1.5 transition-colors hover:bg-blush focus-visible:bg-blush"
+                  className="block rounded-md px-1.5 py-1 transition-colors hover:bg-blush focus-visible:bg-blush"
                 >
-                  <span className={cn('flex items-center gap-2 text-sm', currentPage?.slug === service.slug ? 'font-semibold text-berry' : 'font-medium text-ink')}>
+                  <span className={cn('flex items-center gap-1.5 text-[13px] leading-5', currentPage?.slug === service.slug ? 'font-semibold text-berry' : 'font-medium text-ink')}>
                     {service.menuLabel}
                     {service.badge && <span className="rounded-full bg-gold px-2 py-0.5 text-xs font-semibold text-ink">{service.badge}</span>}
-                  </span>
-                  {/* Space kept for it, so showing it on hover moves nothing. */}
-                  <span className="block truncate text-xs text-muted opacity-0 transition-opacity duration-150 group-hover/item:opacity-100 group-focus-visible/item:opacity-100 motion-reduce:transition-none">
-                    {service.blurb}
                   </span>
                 </a>
               </li>
@@ -145,7 +141,7 @@ export function ServicesMegaMenu({ label, isActive, underline }: { label: string
             transition={{ duration: 0.18, ease: 'easeOut' }}
             className="absolute inset-x-0 top-full border-t border-ink/10 bg-cream shadow-lift"
           >
-            <div className="container-site grid max-h-[80vh] grid-cols-[13rem_1fr] gap-10 overflow-y-auto py-7">
+            <div className="container-site grid max-h-[80vh] grid-cols-[13rem_1fr] gap-8 overflow-y-auto py-6">
               <div role="tablist" aria-orientation="vertical" aria-label="Service categories" className="flex flex-col gap-1 border-r border-ink/10 pr-6">
                 {categories.map((entry, i) => {
                   const Icon = ICONS[entry.icon];

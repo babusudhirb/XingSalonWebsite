@@ -10,6 +10,12 @@ on:
 permissions:
   contents: write
 
+# A newer UAT commit must supersede an older build. Without this, two builds can
+# finish out of order and the older job can force-push stale files to uat-static.
+concurrency:
+  group: publish-uat-static
+  cancel-in-progress: true
+
 jobs:
   publish:
     runs-on: ubuntu-latest

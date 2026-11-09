@@ -1,8 +1,6 @@
 name: Publish production recovery build
 
 on:
-  push:
-    branches: [UAT]
   workflow_dispatch:
 
 # This temporary recovery workflow reads the current production source exactly

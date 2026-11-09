@@ -43,7 +43,9 @@ export function BeforeAfter({ pair, sizes = '(min-width: 1024px) 400px, (min-wid
     setPosition(Math.min(100, Math.max(0, next)));
   };
 
-  const ratio = { aspectRatio: `${pair.after.width} / ${pair.after.height}` };
+  // A consistent square window matches the nail-extension comparison card. Images stay centred and
+  // cover the frame, so the before/after drag interaction and its visual focus remain intact.
+  const ratio = { aspectRatio: '1 / 1' };
 
   return (
     <figure>

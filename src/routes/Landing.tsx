@@ -17,8 +17,8 @@ export default function Landing() {
     <>
       <Hero />
       <Services />
-      <BranchesSection id="branches" tone="blush" />
       <WhyChoose />
+      <BranchesSection id="branches" tone="blush" />
       <HomepageOffers />
       <Reels />
       <SignatureColor />

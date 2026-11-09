@@ -307,11 +307,11 @@ export function SisterBusinesses({ intro }: { intro?: string }) {
       {intro && <p className="mb-4 font-display text-xl font-medium text-ink sm:text-2xl">{intro}</p>}
       <Reveal>
         <div className="svc-card flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
-          <div className="flex items-start gap-4">
+          <div className="grid min-w-0 grid-cols-[4rem_minmax(0,1fr)] items-center gap-4">
             {/* The studio's own work, not an icon. */}
             <Picture image={tattooWork} sizes="64px" className="size-16 shrink-0 rounded-2xl object-cover" />
-            <div>
-              <a href={tattooGmbSearch} target="_blank" rel="noopener noreferrer" className="font-display text-xl font-medium text-ink transition-colors hover:text-berry">
+            <div className="min-w-0">
+              <a href={tattooGmbSearch} target="_blank" rel="noopener noreferrer" className="block font-display text-xl font-medium text-ink transition-colors hover:text-berry">
                 {tattooOutletName}
               </a>
               <p className="mt-1 text-sm leading-relaxed text-muted">Same building as our Brookfield salon, SV Plaza · {studio.phone}</p>
@@ -332,10 +332,10 @@ export function SisterBusinesses({ intro }: { intro?: string }) {
 
       <Reveal className="mt-4">
         <div className="svc-card flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
-          <div className="flex items-start gap-4">
+          <div className="grid min-w-0 grid-cols-[4rem_minmax(0,1fr)] items-center gap-4">
             <Picture image={fitnessClub} sizes="64px" className="size-16 shrink-0 rounded-2xl object-cover" />
-            <div>
-              <a href={fitnessGmbSearch} target="_blank" rel="noopener noreferrer" className="font-display text-xl font-medium text-ink transition-colors hover:text-berry">
+            <div className="min-w-0">
+              <a href={fitnessGmbSearch} target="_blank" rel="noopener noreferrer" className="block font-display text-xl font-medium text-ink transition-colors hover:text-berry">
                 {fitnessOutletName}
               </a>
               <p className="mt-1 text-sm leading-relaxed text-muted">

@@ -522,7 +522,7 @@ export const hairColor = {
       description:
         'Lighter strands woven through your hair with foils, or painted freehand, so your natural base still shows through. Go full, or add a few face-framing pieces.',
       idealFor: 'Brightness and movement without a full colour change',
-      // No duration: the highlights page doesn't give one.
+      duration: '2 – 3 hours',
       maintenance: 'Refresh every 2–3 months',
       bookAs: 'Highlights',
       image: img('work-highlights-1', 'Hair highlights at Xing Salon Bangalore', 640, 480),

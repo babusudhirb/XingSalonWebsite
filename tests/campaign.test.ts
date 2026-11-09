@@ -100,7 +100,7 @@ describe('claiming', () => {
   });
 
   it('keeps salons in order on the strip', () => {
-    expect(locations.map((loc) => loc.name)).toEqual(['Sarjapur Road', 'HSR Layout', 'Brookfield']);
+    expect(locations.map((loc) => loc.name)).toEqual(['Sarjapura Road', 'HSR Layout', 'Brookfield']);
     expect(novemberCampaign.branches).toEqual(['sarjapur-road', 'hsr-layout', 'brookfield']);
   });
 });
@@ -108,7 +108,7 @@ describe('claiming', () => {
 describe('nav', () => {
   it('opens Offers as a menu of the three salons, then membership and gift cards', () => {
     const menu = offersMenu();
-    expect(menu.items.map((item) => item.label)).toEqual(['Xing Sarjapur Road', 'Xing HSR Layout', 'Xing Brookfield', 'Membership Offers', 'Gift Cards']);
+    expect(menu.items.map((item) => item.label)).toEqual(['Xing Sarjapura Road', 'Xing HSR Layout', 'Xing Brookfield', 'Membership Offers', 'Gift Cards']);
     expect(menu.items.slice(0, 3).map((item) => item.href)).toEqual(['/sarjapaurahaircoloroffers', '/hsrhaircoloroffers', '/hsrhaircoloroffers']);
     expect(menu.items[0].links?.map((link) => link.href)).toEqual(['/sarjapaurahaircoloroffers', '/sarjapurahairtreatmentoffers', '/sarjapuraskincareoffers']);
     expect(menu.viewAll).toBeUndefined();

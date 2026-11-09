@@ -146,7 +146,7 @@ export const bySalonOrder = (a: { id: string }, b: { id: string }) =>
 export const locations = [
   salon({
     id: 'sarjapur-road',
-    name: 'Sarjapur Road',
+    name: 'Sarjapura Road',
     fullName: 'Xing Premium Unisex Salon - Kasavanahalli, Sarjapura Road',
     area: 'Kasavanahalli',
     street: '1st Floor, Samvit Greens, 71/1A, Sarjapur - Marathahalli Rd, Kasavanahalli, Kaikondrahalli',
@@ -157,7 +157,7 @@ export const locations = [
     plusCode: 'WM7H+8H',
     email: 'xing.sarjapura@gmail.com',
     mapUrl: 'https://www.google.com/maps?cid=2447554241101026298',
-    areasServed: ['Sarjapur Road', 'Kasavanahalli', 'Kaikondrahalli', 'Sarjapur–Marathahalli Road'],
+    areasServed: ['Sarjapur Road', 'Kasavanahalli', 'Kaikondanahalli', 'Sarjapur–Marathahalli Road', 'Harlur', 'Bellandur', 'Sarjapura', 'Doddanekundi'],
     lat: 12.9133092,
     lng: 77.6789381,
     // OWNER: when Google shows 4.9 here, change only this value; the whole site follows.
@@ -187,14 +187,14 @@ export const locations = [
     street: '1st Floor, 150/3, GSR Arcade, 9th Cross, 24th Main Rd',
     postalCode: '560102',
     phone: '9380812348',
-    hours: { opens: '10:00', closes: '22:00' },
+    hours: { opens: '09:00', closes: '21:30' },
     gbpCategory: 'Hairdresser',
     plusCode: 'WJ9X+FM',
     email: 'hsrxing@gmail.com',
     mapUrl: 'https://www.google.com/maps?cid=17729263556490350929',
     // With the full address Google shows several salons; the name alone pins this one.
     mapQuery: 'Xing Premium Unisex Salon HSR Layout',
-    areasServed: ['HSR Layout Sector 1', 'Sector 2', 'Sector 3', 'Sector 4', 'Sector 6'],
+    areasServed: ['HSR Layout Sector 1', 'Sector 2', 'Sector 3', 'Sector 4', 'Sector 6', 'Bommanahalli', 'Kudlu Gate', 'BTM Layout', 'Indiranagar', 'Koramangala'],
     lat: 12.9186529,
     lng: 77.6492076,
     rating: { value: 4.9, count: 493, asOf: '2026-10-31' },
@@ -224,7 +224,7 @@ export const locations = [
     // OWNER: confirm 079966 66012 rings at the Brookfield salon. A landline can't take WhatsApp, so that stays on 81471 11344.
     phone: '7996666012',
     whatsapp: '8147111344',
-    hours: { opens: '09:00', closes: '21:30' },
+    hours: { opens: '10:00', closes: '21:30' },
     gbpCategory: 'Beauty Parlour',
     plusCode: 'XP75+CP',
     mapUrl: 'https://www.google.com/maps?cid=3366119781327561907',

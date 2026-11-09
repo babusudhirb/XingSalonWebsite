@@ -49,18 +49,18 @@ describe('salon facts match the Google Business Profiles', () => {
   });
 
   it('knows each salon is open on its own hours', () => {
-    expect(open('hsr-layout', '21:45')).toBe(true);
+    expect(open('hsr-layout', '21:45')).toBe(false);
     expect(open('sarjapur-road', '21:45')).toBe(false);
     expect(open('brookfield', '21:45')).toBe(false);
-    expect(open('brookfield', '09:30')).toBe(true);
-    expect(open('hsr-layout', '09:30')).toBe(false);
+    expect(open('brookfield', '09:30')).toBe(false);
+    expect(open('hsr-layout', '09:30')).toBe(true);
     expect(open('sarjapur-road', '09:30')).toBe(false);
   });
 
   it('offers booking slots inside each salon\'s hours', () => {
-    expect(bookingSlots(salonById('brookfield')!)[0]).toBe('9 AM');
+    expect(bookingSlots(salonById('brookfield')!)[0]).toBe('10 AM');
     expect(bookingSlots(salonById('sarjapur-road')!)[0]).toBe('10 AM');
-    expect(bookingSlots(salonById('hsr-layout')!).at(-1)).toBe('9 PM');
+    expect(bookingSlots(salonById('hsr-layout')!).at(-1)).toBe('8 PM');
   });
 });
 
@@ -95,8 +95,8 @@ describe.skipIf(!existsSync('dist/index.html'))('the built site', () => {
     }
   });
 
-  it('says Sarjapura Road only inside the exact profile name', () => {
-    for (const { file, html } of pages) expect(html.replaceAll(GBP['sarjapur-road'].gbpName, '').includes('Sarjapura Road'), file).toBe(false);
+  it('uses the Sarjapura Road branch name', () => {
+    for (const { file, html } of salons) expect(html.includes('Sarjapura Road'), file).toBe(true);
   });
 
   it('sends each salon\'s facts in its schema', () => {

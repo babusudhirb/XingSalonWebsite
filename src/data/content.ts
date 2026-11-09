@@ -684,7 +684,7 @@ export const why = {
     { icon: 'products', label: 'Premium Products' },
     { icon: 'personal', label: 'Personalised Service' },
     { icon: 'hygiene', label: 'Hygiene & Care' },
-    { icon: 'pin', label: 'Multiple Locations' },
+    { icon: 'pin', label: 'International Procedures' },
   ],
   journeyEyebrow: 'Your Xing Experience',
   journey: [

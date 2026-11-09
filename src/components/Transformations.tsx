@@ -93,17 +93,25 @@ export function Transformations() {
           </ArrowLink>
         </div>
 
-        <div id="before-after" className="mt-14 scroll-mt-24 border-t border-ink/10 pt-12 md:mt-16 md:pt-14">
-          <Reveal>
-            <SectionHeader eyebrow={beforeAfter.eyebrow} title={beforeAfter.title} text={beforeAfter.text} />
-          </Reveal>
-          <div className="mt-8">
-            <SnapRow className="md:grid-cols-3 md:gap-6">
-              {beforeAfter.pairs.map((pair) => (
-                <BeforeAfter key={pair.before.src} pair={pair} />
-              ))}
-            </SnapRow>
-          </div>
+      </div>
+    </section>
+  );
+}
+
+/** Kept separate from the transformation gallery so reviews can sit directly before the comparisons. */
+export function BeforeAfterSection() {
+  return (
+    <section id="before-after" className="scroll-mt-24 bg-blush py-14 lg:py-24">
+      <div className="container-site border-t border-ink/10 pt-12 md:pt-14">
+        <Reveal>
+          <SectionHeader eyebrow={beforeAfter.eyebrow} title={beforeAfter.title} text={beforeAfter.text} />
+        </Reveal>
+        <div className="mt-8">
+          <SnapRow className="md:grid-cols-3 md:gap-6">
+            {beforeAfter.pairs.map((pair) => (
+              <BeforeAfter key={pair.before.src} pair={pair} />
+            ))}
+          </SnapRow>
         </div>
       </div>
     </section>

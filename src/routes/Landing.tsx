@@ -2,8 +2,8 @@ import { BranchesSection } from '../components/BranchesSection';
 import { FromOurBlog } from '../components/blog/FromOurBlog';
 import { CtaBand } from '../components/Footer';
 import { Hero } from '../components/Hero';
+import { HomepageOffers } from '../components/HomepageOffers';
 import { MembershipBanner } from '../components/MembershipBanner';
-import { OfferPagesSection } from '../components/offers/OfferPageCards';
 import { Reviews } from '../components/Reviews';
 import { Services } from '../components/Services';
 import { Transformations } from '../components/Transformations';
@@ -15,7 +15,7 @@ export default function Landing() {
       <Hero />
       <Services />
       <BranchesSection id="branches" tone="blush" />
-      <OfferPagesSection tone="white" />
+      <HomepageOffers />
       <Transformations />
       <Reviews />
       <FromOurBlog />

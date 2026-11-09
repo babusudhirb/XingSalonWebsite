@@ -627,6 +627,8 @@ export const transformations = {
         work('work-smoothing-4', 'Extra-long hair, smooth from root to tip'),
         work('work-smoothing-5', 'Soft, natural-looking smoothness'),
         work('work-smoothing-6', 'Extra-long hair, sleek back view'),
+        work('work-smoothing-7', 'Silky, glossy keratin finish'),
+        work('work-smoothing-8', 'Smooth, polished keratin lengths'),
       ],
     },
     {

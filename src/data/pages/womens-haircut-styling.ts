@@ -5,7 +5,6 @@ const instagram = footer.socials.find((social) => social.icon === 'instagram')!;
 
 export const womensHaircutStyling: ServicePageContent = {
   slug: 'womens-haircut-styling',
-  bridalCare: {},
   seo: {
     title: "Women's Haircut & Styling in Bangalore – Xing Salon",
     description:

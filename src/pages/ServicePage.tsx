@@ -1,7 +1,6 @@
 import type { ReactNode } from 'react';
 import { ArrowRight, Instagram } from 'lucide-react';
 import { guides as blogGuides } from 'virtual:blog-picks';
-import { BridalCareSection } from '../components/BridalCareSection';
 import { BlogCard } from '../components/blog/BlogCard';
 import { FAQAccordion } from '../components/service/FAQAccordion';
 import { HeroSplit } from '../components/service/HeroSplit';
@@ -21,7 +20,6 @@ import {
 import { FeaturedComboCard, ServiceCardGrid, ServiceCards } from '../components/service/ServiceCards';
 import { ArrowLink } from '../components/ui/Button';
 import { Picture, Reveal } from '../components/ui/Primitives';
-import { Fold } from '../components/ui/Fold';
 import { OfferPagesSection } from '../components/offers/OfferPageCards';
 import { offerPage, offerPageForService } from '../data/offerPages';
 import { ReelRow } from '../components/Reels';
@@ -29,8 +27,8 @@ import { SnapRow } from '../components/ui/SnapRow';
 import { locationsSection } from '../data/content';
 import { reels, reelsFor } from '../data/media';
 import { combos, isCampaignOpen } from '../data/offers';
-import { ReadMore } from '../components/ui/ReadMore';
 import { QuickAnswers } from '../components/service/QuickAnswers';
+import { ServiceEssentials } from '../components/service/ServiceEssentials';
 import { NovemberServiceLink } from '../components/offers/NovemberBits';
 import { servicePages } from '../data/pages';
 import type { SectionKey, ServicePageContent } from '../data/pages/types';
@@ -55,7 +53,6 @@ const DEFAULT_ORDER: SectionKey[] = [
   'occasions',
   'process',
   'aftercare',
-  'bridal',
   'offers',
   'locations',
   'faq',
@@ -103,7 +100,7 @@ export function ServicePage({ page }: { page: ServicePageContent }) {
       <Section key="intro" tone={tone}>
         <SectionHeader eyebrow={page.intro.eyebrow ?? category.title} title={page.intro.title} align="center" />
         <Reveal className="mx-auto mt-6 max-w-3xl space-y-4 text-center">
-          <ReadMore paragraphs={page.intro.paragraphs} />
+          {page.intro.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
         </Reveal>
       </Section>
     ),
@@ -296,9 +293,7 @@ export function ServicePage({ page }: { page: ServicePageContent }) {
       ((tone) => (
         <Section key="audience" tone={tone}>
           <SectionHeader eyebrow="Who Is It For?" title={audience.title} />
-          <Fold>
-            <TipsChecklist tips={audience.items} />
-          </Fold>
+          <TipsChecklist tips={audience.items} />
           <p className="mt-6 text-sm leading-relaxed text-muted">{audience.note}</p>
         </Section>
       )),
@@ -367,28 +362,17 @@ export function ServicePage({ page }: { page: ServicePageContent }) {
       ((tone) => (
         <Section key="process" tone={tone}>
           <SectionHeader eyebrow="Your Visit" title={page.process!.title} text={page.process!.text} />
-          <Fold>
-            <ProcessStepper steps={page.process!.steps} />
-          </Fold>
+          <ProcessStepper steps={page.process!.steps} />
           {page.process!.duration && <p className="mt-8 text-sm text-ink">{page.process!.duration}</p>}
         </Section>
       )),
     aftercare: (tone) => (
       <Section key="aftercare" tone={tone}>
         <SectionHeader eyebrow={page.aftercare.eyebrow ?? 'Aftercare'} title={page.aftercare.title} text={page.aftercare.text} />
-        <Fold>
-          {page.aftercare.groups ? <TipGroups groups={page.aftercare.groups} /> : <TipsChecklist tips={page.aftercare.tips ?? []} />}
-          {page.aftercare.closing && <p className="mt-6 text-sm leading-relaxed text-muted">{page.aftercare.closing}</p>}
-        </Fold>
+        {page.aftercare.groups ? <TipGroups groups={page.aftercare.groups} /> : <TipsChecklist tips={page.aftercare.tips ?? []} />}
+        {page.aftercare.closing && <p className="mt-6 text-sm leading-relaxed text-muted">{page.aftercare.closing}</p>}
       </Section>
     ),
-    bridal:
-      page.bridalCare &&
-      ((tone) => (
-        <Section key="bridal" id="bridal" tone={tone}>
-          <BridalCareSection compact={!!page.bridalCare!.cards} cards={page.bridalCare!.cards} />
-        </Section>
-      )),
     // The offer page that fits this service, as one card; none where no offer page does.
     offers: offerPageId && ((tone) => <OfferPagesSection key="offers" tone={tone} only={[offerPageId]} title={`${offerPage(offerPageId).name} at All 3 Salons`} />),
     locations: (tone) => (
@@ -473,6 +457,7 @@ export function ServicePage({ page }: { page: ServicePageContent }) {
     <div className="group/page" data-theme={page.theme}>
       <NovemberServiceLink slug={page.slug} />
       <HeroSplit page={{ hero }} label={service.label} trail={trail} whatsappHref={bookHref} phone={phone || undefined} />
+      <ServiceEssentials page={page} category={category} />
       <QuickAnswers faqs={page.faqs} slug={page.slug} />
       {/* Backgrounds alternate down the page, whichever sections it has. */}
       {sections.map((render, i) => render(i % 2 === 0 ? 'white' : 'tint'))}

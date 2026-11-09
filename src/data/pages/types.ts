@@ -51,7 +51,6 @@ export type SectionKey =
   | 'occasions'
   | 'process'
   | 'aftercare'
-  | 'bridal'
   | 'offers'
   | 'locations'
   | 'faq'
@@ -218,8 +217,6 @@ export interface ServicePageContent {
   audience?: { title: string; items: string[]; note: string };
   /** "Pick by goal": each goal points to the service that fits it. `slug` sends the row to that service's own page. */
   goals?: { title: string; items: Array<{ goal: string; service: string; slug?: string }>; note: string };
-  /** Shows the bridal & pre-wedding section; `cards` picks a compact set of three. */
-  bridalCare?: { cards?: Array<'hair-styling' | 'hair-spa' | 'glow' | 'body-polish' | 'waxing' | 'nails'> };
   /** "Perfect for": occasions shown as a wrapping row of icon chips. */
   occasions?: {
     /** Defaults to "Perfect For". */

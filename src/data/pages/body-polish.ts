@@ -11,8 +11,7 @@ const instagram = footer.socials.find((social) => social.icon === 'instagram')!;
 
 export const bodyPolish: ServicePageContent = {
   slug: 'body-polish',
-  order: ['intro', 'gallery', 'combo', 'menu', 'benefits', 'occasions', 'compare', 'process', 'aftercare', 'bridal', 'offers', 'locations', 'faq', 'related'],
-  bridalCare: { cards: ['glow', 'waxing', 'nails'] },
+  order: ['intro', 'gallery', 'combo', 'menu', 'benefits', 'occasions', 'compare', 'process', 'aftercare', 'offers', 'locations', 'faq', 'related'],
   seo: {
     title: 'Body Polishing in Bangalore for Women – Xing Salon',
     description:

@@ -6,8 +6,7 @@ import type { ServicePageContent } from './types';
 //   2. Whether the hydra facial is offered to men. If not, remove the "available for men" FAQ.
 export const hydraFacial: ServicePageContent = {
   slug: 'hydra-facial',
-  order: ['intro', 'menu', 'process', 'benefits', 'compare', 'combo', 'audience', 'aftercare', 'bridal', 'offers', 'locations', 'faq', 'related'],
-  bridalCare: { cards: ['hair-styling', 'body-polish', 'nails'] },
+  order: ['intro', 'menu', 'process', 'benefits', 'compare', 'combo', 'audience', 'aftercare', 'offers', 'locations', 'faq', 'related'],
   seo: {
     title: '7-Step Hydra Facial in Bangalore | Bestseller – Xing Salon',
     description:

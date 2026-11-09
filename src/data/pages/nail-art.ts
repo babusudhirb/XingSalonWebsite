@@ -14,8 +14,7 @@ const instagram = footer.socials.find((social) => social.icon === 'instagram')!;
 //   4. A real nail art photo for the hero.
 export const nailArt: ServicePageContent = {
   slug: 'nail-art',
-  order: ['intro', 'gallery', 'menu', 'picks', 'compare', 'combo', 'benefits', 'process', 'aftercare', 'bridal', 'offers', 'locations', 'faq', 'related'],
-  bridalCare: { cards: ['hair-styling', 'glow', 'body-polish'] },
+  order: ['intro', 'gallery', 'menu', 'picks', 'compare', 'combo', 'benefits', 'process', 'aftercare', 'offers', 'locations', 'faq', 'related'],
   seo: {
     title: 'Nail Art in Bangalore | Chrome, Cat Eye, French & Gel – Xing Salon',
     description:

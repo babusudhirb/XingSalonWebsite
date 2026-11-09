@@ -93,7 +93,8 @@ function BranchCard({ salon, distance, eager = false }: { salon: Salon; distance
           </p>
         )}
 
-        <p className="mt-4 text-xs font-semibold uppercase tracking-wide text-berry max-sm:hidden">Serving</p>
+        <p className="mt-4 text-xs text-muted max-sm:hidden">Within a 5 km radius</p>
+        <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-berry max-sm:hidden">Serving</p>
         <ul className="mt-2 flex flex-wrap gap-2 max-sm:hidden">
           {salon.areasServed.slice(0, MAX_AREAS).map((area) => (
             <li key={area} className="rounded-full bg-blush px-3 py-1 text-xs text-berrydark">

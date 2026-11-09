@@ -49,6 +49,14 @@ export const tattooWork: Img = {
   height: 1000,
 };
 
+/** Interior of Xing Fitness Club, AECS Layout, Brookfield. */
+export const fitnessClub: Img = {
+  src: '/images/xing-fitness-club.jpg',
+  alt: 'Strength-training floor at Xing Fitness Club in AECS Layout, Brookfield, Bangalore',
+  width: 243,
+  height: 249,
+};
+
 export const beforeAfter = {
   eyebrow: 'Before & After',
   title: 'See the Difference',

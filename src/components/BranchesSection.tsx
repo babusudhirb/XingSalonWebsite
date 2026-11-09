@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState, type ReactNode, type TouchEvent } from 'react';
-import { ArrowRight, ArrowUpRight, Clock, Dumbbell, Landmark, LocateFixed, MapPin, Navigation, Phone } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Clock, Landmark, LocateFixed, MapPin, Navigation, Phone } from 'lucide-react';
 import { fitness } from '../data/fitness';
 import { locations, type Salon } from '../data/branches';
-import { tattooWork } from '../data/media';
+import { fitnessClub, tattooWork } from '../data/media';
 import { studio } from '../data/pages/tattoo';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 import { onTabKeyDown } from '../lib/a11y';
@@ -297,6 +297,8 @@ export function BranchesSection({ id = 'branches', tone = 'cream', className, ch
 
 /** The tattoo studio (same building as Brookfield) and the gym (AECS Layout): separate businesses with their own sites. */
 export function SisterBusinesses({ intro }: { intro?: string }) {
+  const tattooGmbSearch = 'https://www.google.com/search?q=Xing+Tattoo+Studio';
+  const fitnessGmbSearch = 'https://www.google.com/search?q=Xing+Fitness+Club';
   return (
     <div className="mt-8">
       <p className="mb-3 text-eyebrow font-medium uppercase text-berry">Other Outlets</p>
@@ -307,7 +309,9 @@ export function SisterBusinesses({ intro }: { intro?: string }) {
             {/* The studio's own work, not an icon. */}
             <Picture image={tattooWork} sizes="64px" className="size-16 shrink-0 rounded-2xl object-cover" />
             <div>
-              <h3 className="font-display text-xl font-medium text-ink">{studio.name}</h3>
+              <a href={tattooGmbSearch} target="_blank" rel="noopener noreferrer" className="font-display text-xl font-medium text-ink transition-colors hover:text-berry">
+                {studio.name}
+              </a>
               <p className="mt-1 text-sm leading-relaxed text-muted">Same building as our Brookfield salon, SV Plaza · {studio.phone}</p>
             </div>
           </div>
@@ -327,11 +331,11 @@ export function SisterBusinesses({ intro }: { intro?: string }) {
       <Reveal className="mt-4">
         <div className="svc-card flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
           <div className="flex items-start gap-4">
-            <span className="grid size-12 shrink-0 place-items-center rounded-full bg-blush text-berry">
-              <Dumbbell aria-hidden className="size-6" strokeWidth={1.5} />
-            </span>
+            <Picture image={fitnessClub} sizes="64px" className="size-16 shrink-0 rounded-2xl object-cover" />
             <div>
-              <h3 className="font-display text-xl font-medium text-ink">{fitness.name}</h3>
+              <a href={fitnessGmbSearch} target="_blank" rel="noopener noreferrer" className="font-display text-xl font-medium text-ink transition-colors hover:text-berry">
+                {fitness.name}
+              </a>
               <p className="mt-1 text-sm leading-relaxed text-muted">
                 {fitness.where} · {fitness.phone}
               </p>

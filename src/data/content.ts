@@ -84,7 +84,7 @@ export const hero = {
   eyebrow: 'Consultation-led salon care in Bangalore',
   titleLines: ['Beyond Styling.'],
   titleAccent: 'We Craft Confidence.',
-  text: 'Hair, skin, nails and bridal care shaped around you at Xing Sarjapur Road, HSR Layout and Brookfield.',
+  text: 'Hair care, skin care and nails shaped around you at Xing Premium Unisex Salon, Sarjapur Road, HSR Layout and Brookfield.',
   primaryCta: 'Choose Your Salon',
   secondaryCta: 'See Current Offers',
   assurances: ['Free consultation', 'Walk-ins welcome', 'Price confirmed before we start'],

@@ -59,7 +59,7 @@ export const GBP = {
     phone: '+91 93808 12348',
     tel: 'tel:+919380812348',
     whatsapp: 'https://wa.me/919380812348',
-    opens: '09:00',
+    opens: '10:00',
     closes: '21:30',
     lat: 12.9186529,
     lng: 77.6492076,

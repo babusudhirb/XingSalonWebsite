@@ -53,7 +53,7 @@ describe('salon facts match the Google Business Profiles', () => {
     expect(open('sarjapur-road', '21:45')).toBe(false);
     expect(open('brookfield', '21:45')).toBe(false);
     expect(open('brookfield', '09:30')).toBe(false);
-    expect(open('hsr-layout', '09:30')).toBe(true);
+    expect(open('hsr-layout', '09:30')).toBe(false);
     expect(open('sarjapur-road', '09:30')).toBe(false);
   });
 

@@ -187,7 +187,7 @@ export const locations = [
     street: '1st Floor, 150/3, GSR Arcade, 9th Cross, 24th Main Rd',
     postalCode: '560102',
     phone: '9380812348',
-    hours: { opens: '09:00', closes: '21:30' },
+    hours: { opens: '10:00', closes: '21:30' },
     gbpCategory: 'Hairdresser',
     plusCode: 'WJ9X+FM',
     email: 'hsrxing@gmail.com',

@@ -84,6 +84,8 @@ export interface StudioContact {
 /** Copy for one service page. The list of services itself comes from services.ts. No prices anywhere. */
 export interface ServicePageContent {
   slug: string;
+  /** A shorter, decision-first page for high-intent services. */
+  layout?: 'compact';
   /** `kids` gives the page rounder cards and wavy section dividers. */
   theme?: 'kids';
   /** Section order for this page; defaults to the template's order. Sections without content are skipped. */

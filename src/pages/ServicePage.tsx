@@ -77,6 +77,7 @@ export function ServicePage({ page }: { page: ServicePageContent }) {
   const related = page.related.items.filter((item) => hasPage(item.slug));
   // Blog posts written for this service, best match first (the post's main service before its extras).
   const guides = blogGuides[page.slug] ?? [];
+  const isCompact = page.layout === 'compact';
 
   // Prefilled WhatsApp messages. The client fills in the blanks; location cards send the salon name instead.
   // A page about a separate venue (e.g. the tattoo studio) sends every message to that venue instead.
@@ -392,7 +393,7 @@ export function ServicePage({ page }: { page: ServicePageContent }) {
         <Section key="guides" tone={tone}>
           <SectionHeader eyebrow="Helpful Guides" title={`Read Before Your ${service.label} Visit`} />
           <ul data-swipe className="mt-10 no-scrollbar -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-px-4 px-4 pb-2 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 lg:grid-cols-3">
-            {guides.map((post) => (
+            {(isCompact ? guides.slice(0, 1) : guides).map((post) => (
               <li key={post.slug} className="w-[80%] shrink-0 snap-start sm:w-auto">
                 <BlogCard post={post} compact />
               </li>
@@ -450,15 +451,15 @@ export function ServicePage({ page }: { page: ServicePageContent }) {
   // Clips sit right after the photo gallery, or after the intro on a page without one.
   order.splice(Math.max(order.indexOf('gallery'), order.indexOf('intro')) + 1, 0, 'videos');
   const at = order.includes('related') ? order.indexOf('related') : order.length;
-  order.splice(at, 0, 'guides');
+  if (guides.length > 0) order.splice(at, 0, 'guides');
   const sections = order.map((key) => blocks[key]).filter((block) => !!block);
 
   return (
     <div className="group/page" data-theme={page.theme}>
       <NovemberServiceLink slug={page.slug} />
       <HeroSplit page={{ hero }} label={service.label} trail={trail} whatsappHref={bookHref} phone={phone || undefined} />
-      <ServiceEssentials page={page} category={category} />
-      <QuickAnswers faqs={page.faqs} slug={page.slug} />
+      <ServiceEssentials page={page} category={category} compact={isCompact} />
+      {!isCompact && <QuickAnswers faqs={page.faqs} slug={page.slug} />}
       {/* Backgrounds alternate down the page, whichever sections it has. */}
       {sections.map((render, i) => render(i % 2 === 0 ? 'white' : 'tint'))}
       <CTABand title={page.cta} whatsappHref={bookHref} phone={phone || undefined} secondary={page.ctaSecondary} />

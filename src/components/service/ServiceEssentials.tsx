@@ -7,10 +7,11 @@ import { serviceDurations } from '../../data/serviceDurations';
 interface ServiceEssentialsProps {
   page: ServicePageContent;
   category: ServiceCategory;
+  compact?: boolean;
 }
 
 /** Fully visible booking guidance. Detailed sections below provide the full service information. */
-export function ServiceEssentials({ page, category }: ServiceEssentialsProps) {
+export function ServiceEssentials({ page, category, compact = false }: ServiceEssentialsProps) {
   const rightFor = page.audience?.items.slice(0, 3) ?? [`Anyone looking for ${category.title.toLowerCase()} tailored to their needs.`];
   const steps = page.process?.steps.slice(0, 4) ?? [];
   const aftercare = page.aftercare.tips?.slice(0, 2) ?? page.aftercare.groups?.flatMap((group) => group.tips).slice(0, 2) ?? [];
@@ -23,23 +24,24 @@ export function ServiceEssentials({ page, category }: ServiceEssentialsProps) {
           <p className="eyebrow">Before You Book</p>
           <h2 id="service-essentials" className="mt-2 font-display text-3xl font-medium text-ink sm:text-4xl">Plan your service with confidence</h2>
         </div>
-        <div className="mt-7 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <div className={`mt-7 grid gap-4 md:grid-cols-2 ${compact ? 'xl:grid-cols-3' : 'xl:grid-cols-4'}`}>
           <article className="svc-card p-5">
             <span className="grid size-10 place-items-center rounded-full bg-blush text-berry"><Sparkles aria-hidden className="size-5" /></span>
             <h3 className="mt-4 font-semibold text-ink">Right for you if…</h3>
             <ul className="mt-3 space-y-2 text-sm leading-relaxed text-muted">{rightFor.map((item) => <li key={item} className="flex gap-2"><Check aria-hidden className="mt-1 size-3.5 shrink-0 text-berry" />{item}</li>)}</ul>
+            {compact && page.audience?.note && <p className="mt-4 border-t border-ink/10 pt-4 text-xs leading-relaxed text-muted">{page.audience.note}</p>}
           </article>
           <article className="svc-card p-5">
             <span className="grid size-10 place-items-center rounded-full bg-blush text-berry"><Clock3 aria-hidden className="size-5" /></span>
             <h3 className="mt-4 font-semibold text-ink">Estimated appointment time</h3>
             <p className="mt-3 text-sm leading-relaxed text-muted">{timing}</p>
-            {steps.length > 0 && <ol className="mt-4 space-y-1.5 text-sm text-ink">{steps.map((step, index) => <li key={step.title}><span className="mr-2 text-berry">{index + 1}.</span>{step.title}</li>)}</ol>}
+            {!compact && steps.length > 0 && <ol className="mt-4 space-y-1.5 text-sm text-ink">{steps.map((step, index) => <li key={step.title}><span className="mr-2 text-berry">{index + 1}.</span>{step.title}</li>)}</ol>}
           </article>
-          <article className="svc-card p-5">
-            <span className="grid size-10 place-items-center rounded-full bg-blush text-berry"><Check aria-hidden className="size-5" /></span>
-            <h3 className="mt-4 font-semibold text-ink">After your visit</h3>
-            {aftercare.length > 0 ? <ul className="mt-3 space-y-2 text-sm leading-relaxed text-muted">{aftercare.map((tip) => <li key={tip} className="flex gap-2"><Check aria-hidden className="mt-1 size-3.5 shrink-0 text-berry" />{tip}</li>)}</ul> : <p className="mt-3 text-sm leading-relaxed text-muted">Your therapist will share simple aftercare tailored to your service.</p>}
-          </article>
+          {!compact && <article className="svc-card p-5">
+              <span className="grid size-10 place-items-center rounded-full bg-blush text-berry"><Check aria-hidden className="size-5" /></span>
+              <h3 className="mt-4 font-semibold text-ink">After your visit</h3>
+              {aftercare.length > 0 ? <ul className="mt-3 space-y-2 text-sm leading-relaxed text-muted">{aftercare.map((tip) => <li key={tip} className="flex gap-2"><Check aria-hidden className="mt-1 size-3.5 shrink-0 text-berry" />{tip}</li>)}</ul> : <p className="mt-3 text-sm leading-relaxed text-muted">Your therapist will share simple aftercare tailored to your service.</p>}
+            </article>}
           <article className="svc-card p-5">
             <span className="grid size-10 place-items-center rounded-full bg-blush text-berry"><MapPin aria-hidden className="size-5" /></span>
             <h3 className="mt-4 font-semibold text-ink">Available at</h3>

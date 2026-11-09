@@ -1,12 +1,10 @@
 import { serviceHero } from '../content';
 import type { ServicePageContent } from './types';
 
-// OWNER: confirm before publishing:
-//   1. The exact seven steps. `process.steps` below is a typical hydra facial sequence, not a confirmed one.
-//   2. Whether the hydra facial is offered to men. If not, remove the "available for men" FAQ.
 export const hydraFacial: ServicePageContent = {
   slug: 'hydra-facial',
-  order: ['intro', 'menu', 'process', 'benefits', 'compare', 'combo', 'audience', 'aftercare', 'offers', 'locations', 'faq', 'related'],
+  layout: 'compact',
+  order: ['intro', 'benefits', 'process', 'aftercare', 'offers', 'faq', 'related'],
   seo: {
     title: '7-Step Hydra Facial in Bangalore | Bestseller – Xing Salon',
     description:
@@ -22,8 +20,8 @@ export const hydraFacial: ServicePageContent = {
     cta: 'Book Hydra Facial on WhatsApp',
     chips: [
       { icon: 'star', label: 'Bestseller' },
-      { icon: 'award', label: '5K+ hydra facials delivered' },
-      { icon: 'offer', label: 'Buy 3, get 1 free' },
+      { icon: 'clock', label: '60–90 minute session' },
+      { icon: 'offer', label: 'Offer available' },
     ],
     image: serviceHero('hydra-facial', 'Hydra facial treatment with a skin device for deep cleansing and hydration'),
   },
@@ -33,74 +31,30 @@ export const hydraFacial: ServicePageContent = {
     eyebrow: 'Skin Care',
     title: 'The Most-Loved Facial in Sarjapur Road, HSR Layout & Brookfield',
     paragraphs: [
-      'Pollution, sun, stress and late nights can leave your skin dull, congested and dehydrated. Our 7-Step Hydra Facial is Xing’s bestselling facial in Bangalore, with more than 5,000 treatments delivered. It combines deep cleansing, exfoliation, gentle extraction and intense hydration in one soothing session.',
-      'The result is skin that looks clearer, smoother and visibly radiant, often right after your first session. It’s a great choice before an event, as a monthly skin reset or as part of your regular skin-care routine. Your therapist starts with a quick skin check and adapts the treatment to your skin’s needs.',
+      'For skin that looks dull, congested or dehydrated, our 7-Step Hydra Facial combines deep cleansing, gentle exfoliation, pore care and hydration in one relaxing session. It is a strong choice before an event or as a regular skin reset; your therapist starts with a skin check and tailors the session to your needs.',
     ],
   },
   menu: {
     eyebrow: 'Signature Facial',
     title: 'What’s Included in the 7-Step Hydra Facial',
-    moreLink: {
-      slug: 'facial-cleanup',
-      text: 'Looking for a clean-up or classic facial?',
-      label: 'Explore Facials & Clean-ups',
-    },
   },
   process: {
-    title: 'Your 7 Steps to Glowing Skin',
-    // OWNER: confirm these seven steps with the owner.
+    title: 'What Happens in Your Hydra Facial',
     steps: [
-      { title: 'Skin consultation & cleanse' },
-      { title: 'Exfoliation' },
-      { title: 'Gentle peel or resurfacing' },
-      { title: 'Extraction (pore cleansing)' },
-      { title: 'Hydrating serum infusion' },
-      { title: 'Nourishing mask' },
-      { title: 'Moisturise & sun protection' },
+      { title: 'Skin check & cleanse', text: 'We begin by understanding your skin and removing surface build-up.' },
+      { title: 'Exfoliation & pore care', text: 'The treatment is tailored to help skin feel clearer and smoother.' },
+      { title: 'Hydration & nourishment', text: 'Hydrating care supports a fresh, comfortable-looking glow.' },
+      { title: 'Finish & aftercare', text: 'You leave with simple guidance for maintaining the result.' },
     ],
   },
   benefits: {
     title: 'Benefits of a Hydra Facial',
     items: [
-      { icon: 'sparkles', title: 'Instant glow & radiance' },
       { icon: 'droplets', title: 'Deep hydration' },
       { icon: 'layers', title: 'Cleaner-looking pores' },
-      { icon: 'heart', title: 'Smoother, softer skin' },
-      { icon: 'clock', title: 'Little to no downtime' },
-      { icon: 'calendar', title: 'Event-ready skin' },
+      { icon: 'sparkles', title: 'Fresh, radiant-looking skin' },
+      { icon: 'calendar', title: 'An event-ready reset' },
     ],
-  },
-  compare: {
-    title: 'Hydra Facial vs Regular Facial vs Clean-up',
-    columns: ['Facial', 'Focus', 'Best for', 'Result'],
-    rows: [
-      {
-        name: 'Hydra Facial',
-        cells: [
-          'Cleanse + exfoliate + extract + hydrate',
-          'Dull, dehydrated or congested skin; events',
-          'Visible glow and hydration',
-        ],
-        current: true,
-      },
-      {
-        name: 'Regular Facial',
-        cells: ['Relaxation & nourishment', 'Pampering and regular skin care', 'Refreshed, relaxed skin'],
-        slug: 'facial-cleanup',
-      },
-      {
-        name: 'Clean-up',
-        cells: ['Quick cleansing', 'Quick freshen-up between facials', 'Cleaner, fresher skin'],
-        slug: 'facial-cleanup',
-      },
-    ],
-  },
-  combo: {
-    badge: 'Offer',
-    title: 'Buy 3 Hydra Facials, Get 1 Free',
-    text: 'For best results, we recommend at least 3 sessions every 3–4 weeks. Book a set of three and your fourth hydra facial is on us.',
-    includes: ['Visible glow from session one', 'Builds results over time', 'Perfect before weddings & events'],
-    cta: 'Start my glow plan',
   },
   audience: {
     title: 'Is the Hydra Facial Right for You?',
@@ -117,12 +71,10 @@ export const hydraFacial: ServicePageContent = {
   aftercare: {
     title: 'Aftercare Tips for Lasting Glow',
     tips: [
-      'Avoid makeup for the rest of the day if you can.',
-      'Skip scrubs, peels and strong actives for a few days.',
       'Wear sunscreen daily, especially after exfoliation.',
-      'Drink plenty of water and keep your skin moisturised.',
-      'Avoid saunas, steam rooms and heavy workouts on the same day.',
-      'Book your next session in 3–4 weeks to build results.',
+      'Skip scrubs, peels and strong actives for a few days.',
+      'Keep skin moisturised and drink plenty of water.',
+      'Book your next session in 3–4 weeks if you want to maintain the result.',
     ],
   },
   offerBand: {
@@ -147,19 +99,6 @@ export const hydraFacial: ServicePageContent = {
     {
       q: 'Is there any downtime?',
       a: 'There’s typically little to no downtime, so most people can go about their day. Follow our aftercare tips for the best results.',
-    },
-    {
-      q: 'Is a hydra facial good before a wedding or event?',
-      a: 'Yes. It’s a popular pre-event facial. Book a few days before your event, and start a series of sessions a few weeks earlier for the best glow.',
-    },
-    // OWNER: confirm with the owner that the hydra facial is offered to men; remove this entry if it is not.
-    {
-      q: 'Is the hydra facial available for men?',
-      a: 'Yes. Our hydra facial is available for both men and women at all Xing salons.',
-    },
-    {
-      q: 'How is the price decided?',
-      a: 'Message us on WhatsApp for the latest pricing and ongoing offers, including Buy 3, Get 1 Free.',
     },
     {
       q: 'Where can I get a hydra facial in Bangalore?',

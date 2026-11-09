@@ -680,11 +680,11 @@ export const why = {
   eyebrow: 'Why Choose Xing',
   titleLines: ['More Than a Salon', 'A Complete Beauty Experience'],
   features: [
+    { icon: 'hygiene', label: 'Hygiene & Care' },
     { icon: 'consult', label: 'Expert Consultation' },
+    { icon: 'pin', label: 'International Procedures' },
     { icon: 'products', label: 'Premium Products' },
     { icon: 'personal', label: 'Personalised Service' },
-    { icon: 'hygiene', label: 'Hygiene & Care' },
-    { icon: 'pin', label: 'International Procedures' },
   ],
   journeyEyebrow: 'Your Xing Experience',
   journey: [

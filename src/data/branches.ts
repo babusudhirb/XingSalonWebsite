@@ -10,7 +10,7 @@
 //   - The Brookfield GBP spells it "Brookefield". That is a typo the owner is fixing, so the site writes "Brookfield".
 //
 // OWNER: confirm parking, wheelchair access and payment methods for each salon (from Google). None is
-// shown until then. Also HSR Layout's nearest landmark, and any landmark near Samvit Greens.
+// shown until then. Also confirm any landmark near Samvit Greens.
 import type { Img } from './content';
 
 /** What is true of every salon. Each salon's own times are `hours` on the salon; see `hoursFor`. */
@@ -198,7 +198,8 @@ export const locations = [
     lat: 12.9186529,
     lng: 77.6492076,
     rating: { value: 4.9, count: 493, asOf: '2026-10-31' },
-    nearbyLandmarks: ['GSR Arcade', '24th Main Road', '9th Cross'],
+    landmark: 'Above Bhola Sweets, on 24th Main Road',
+    nearbyLandmarks: ['Bhola Sweets', 'GSR Arcade', '24th Main Road', '9th Cross'],
     intro:
       'Our HSR Layout salon on 24th Main Road serves clients across Sectors 1, 2, 3, 4 and 6 for haircuts, colour, keratin, nanoplastia, hair spas, facials and more.',
     description:

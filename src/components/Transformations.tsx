@@ -18,7 +18,7 @@ export function Transformations() {
   const category = categories[active];
 
   return (
-    <section id="transformations" className="relative bg-cream py-14 lg:py-24">
+    <section id="transformations" className="relative bg-blush py-14 lg:py-24">
       <div className="container-site">
         <Reveal>
           <div className="flex flex-wrap items-end justify-between gap-5">

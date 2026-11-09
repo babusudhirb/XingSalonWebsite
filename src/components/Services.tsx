@@ -305,7 +305,7 @@ export function Services({ showMenu = false }: { showMenu?: boolean }) {
           <SectionIntro eyebrow={services.eyebrow} title={services.title} text={services.text} className="lg:col-span-3">
             <ArrowLink href={servicesHubPath}>{services.cta}</ArrowLink>
           </SectionIntro>
-          <ul className="grid grid-cols-2 gap-4 md:grid-cols-4 lg:col-span-9 lg:gap-5">
+          <ul className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:col-span-9 lg:gap-5">
             {services.items.map((service, i) => (
               <li key={service.title}>
                 <Reveal delay={i * 0.08} className="h-full">

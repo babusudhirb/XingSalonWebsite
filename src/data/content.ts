@@ -589,6 +589,7 @@ export const transformations = {
         work('work-haircut-7', 'Layers with golden highlights'),
         work('work-haircut-3', 'Side-swept layers'),
         work('work-haircut-5', 'Layered cut, back view'),
+        work('work-haircut-8', 'Soft layered cut with a polished blow-dry'),
       ],
     },
     {

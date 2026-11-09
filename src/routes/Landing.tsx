@@ -8,6 +8,7 @@ import { Reels } from '../components/Reels';
 import { Reviews } from '../components/Reviews';
 import { Services } from '../components/Services';
 import { SignatureColor } from '../components/SignatureColor';
+import { Transformations } from '../components/Transformations';
 
 /** The landing page's sections. Loaded only on the home page, so other pages don't download them. */
 export default function Landing() {
@@ -17,6 +18,7 @@ export default function Landing() {
       <Services />
       <BranchesSection id="branches" tone="blush" />
       <HomepageOffers />
+      <Transformations />
       <Reels />
       <SignatureColor />
       <Reviews />

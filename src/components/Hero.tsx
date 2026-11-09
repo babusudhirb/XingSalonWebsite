@@ -2,6 +2,7 @@ import { useId, type MouseEvent } from 'react';
 import { m, useMotionValue, useReducedMotion, useSpring, useTransform } from 'framer-motion';
 import { Check, MapPin, ShieldCheck, Sparkles, Star, UserRoundCheck } from 'lucide-react';
 import { hero, HERO_SIZES } from '../data/content';
+import { bookingPath } from '../data/bookingLinks';
 import { isPrerender, wasPrerendered } from '../lib/prerender';
 import { Button } from './ui/Button';
 import { Floral } from './ui/Decor';
@@ -139,7 +140,10 @@ export function Hero() {
             </div>
           </div>
           <m.div variants={item} className="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4 lg:mt-8">
-            <Button href="/salons">{hero.primaryCta}</Button>
+            <div className="self-start text-center">
+              <Button href={bookingPath}>{hero.primaryCta}</Button>
+              <p className="mt-1 text-xs font-medium text-berry">{hero.primaryCaption}</p>
+            </div>
             <Button variant="outline" href="/offers" arrow={false}>
               {hero.secondaryCta}
             </Button>

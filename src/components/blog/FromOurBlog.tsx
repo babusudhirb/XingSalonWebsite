@@ -8,7 +8,7 @@ import { BlogCard } from './BlogCard';
 export function FromOurBlog() {
   if (latest.length === 0) return null;
   return (
-    <section id="blog" aria-labelledby="from-our-blog" className="bg-cream py-section">
+    <section id="blog" aria-labelledby="from-our-blog" className="bg-blush py-section">
       <div className="container-site">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <SectionHeader eyebrow="From Our Blog" title="Hair, Skin & Nail Care Tips" />

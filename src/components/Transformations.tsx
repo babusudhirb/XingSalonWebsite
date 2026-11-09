@@ -18,7 +18,7 @@ export function Transformations() {
   const category = categories[active];
 
   return (
-    <section id="transformations" className="relative bg-blush py-14 lg:py-24">
+    <section id="transformations" className="relative bg-cream py-14 lg:py-24">
       <div className="container-site">
         <Reveal>
           <div className="flex flex-wrap items-end justify-between gap-5">
@@ -101,7 +101,7 @@ export function Transformations() {
 /** Kept separate from the transformation gallery so reviews can sit directly before the comparisons. */
 export function BeforeAfterSection() {
   return (
-    <section id="before-after" className="scroll-mt-24 bg-blush py-14 lg:py-24">
+    <section id="before-after" className="scroll-mt-24 bg-cream py-14 lg:py-24">
       <div className="container-site border-t border-ink/10 pt-12 md:pt-14">
         <Reveal>
           <SectionHeader eyebrow={beforeAfter.eyebrow} title={beforeAfter.title} text={beforeAfter.text} />

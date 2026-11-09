@@ -28,7 +28,7 @@ export function HomepageOffers() {
   }, []);
 
   return (
-    <Section tone="white" id="offers">
+    <Section tone="tint" id="offers">
       <SectionHeader eyebrow="Current Offers" title="Offers worth making time for." text="Choose the offer that fits your plan. Select your preferred salon when you book." />
       <div className="mt-8 grid gap-5 md:grid-cols-3">
         {slides[activeSlide].map((offer) => (

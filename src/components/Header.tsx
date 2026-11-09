@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react'
 import { ChevronDown, ChevronRight, MapPin, Menu, Phone } from 'lucide-react';
 import { bookingPath } from '../data/bookingLinks';
 import { locations, salonsPath } from '../data/branches';
-import { faqPath, hero, nav, site } from '../data/content';
+import { faqPath, nav, site } from '../data/content';
 import { offersPath } from '../data/offers';
 import { offersMenu, salonsMenu, type NavMenu } from '../data/navMenus';
 import { servicesHubPath } from '../data/services';
@@ -355,10 +355,10 @@ export function Header() {
               className="hidden min-h-11 items-center gap-2 text-sm font-medium text-ink hover:text-berry md:inline-flex lg:hidden xl:inline-flex"
             >
               <Phone aria-hidden className="size-4 text-berry" />
-              {contact?.phone ?? 'Call a salon'}
+              {contact?.phone ?? 'Call Salon'}
             </a>
             <Button size="sm" href={bookingPath} className="hidden min-h-11 md:inline-flex">
-              {hero.primaryCta}
+              Book Appointment
             </Button>
             <a
               href={contact?.whatsappHref ?? bookingWhatsappHref}

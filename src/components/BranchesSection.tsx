@@ -1,9 +1,8 @@
 import { useEffect, useRef, useState, type ReactNode, type TouchEvent } from 'react';
-import { ArrowRight, ArrowUpRight, Dumbbell, Landmark, LocateFixed, MapPin, Navigation, Phone } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Clock, Dumbbell, Landmark, LocateFixed, MapPin, Navigation, Phone } from 'lucide-react';
 import { fitness } from '../data/fitness';
 import { locations, type Salon } from '../data/branches';
 import { tattooWork } from '../data/media';
-import { SalonNap } from './SalonNap';
 import { studio } from '../data/pages/tattoo';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 import { onTabKeyDown } from '../lib/a11y';
@@ -64,7 +63,7 @@ function BranchCard({ salon, distance, eager = false }: { salon: Salon; distance
       </div>
 
       <div className="flex flex-1 flex-col p-5 sm:p-6">
-        <div>
+        <div className="md:min-h-[4.5rem]">
           <h3 id={`${salon.id}-card-title`} className="font-display text-2xl font-medium leading-snug text-ink">
             Xing {salon.name}
           </h3>
@@ -80,7 +79,19 @@ function BranchCard({ salon, distance, eager = false }: { salon: Salon; distance
           <RatingChip salon={salon} />
         </div>
 
-        <SalonNap salon={salon} className="mt-4 min-h-[5.25rem]" />
+        {/* The fixed address slot keeps hours, phone, landmark and service areas on the same row across all cards. */}
+        <div className="mt-4 text-sm leading-relaxed md:min-h-[7.5rem]">
+          <p className="font-semibold text-ink">{salon.fullName}</p>
+          <address className="not-italic text-muted">{salon.address}</address>
+        </div>
+        <p className="mt-1 flex items-center gap-2 text-sm leading-relaxed text-muted">
+          <Clock aria-hidden className="size-3.5 shrink-0 text-berry" />
+          Open daily {salon.hours.label}
+        </p>
+        <a href={salon.phoneHref} className="inline-flex min-h-11 items-center gap-2 text-sm text-muted transition-colors hover:text-berry lg:min-h-8">
+          <Phone aria-hidden className="size-3.5 shrink-0 text-berry" />
+          {salon.phone}
+        </a>
         {/* Phones: the address and the map are enough; the landmark and the areas served show from 640px and stay
             in the HTML (each salon's page has them in full). */}
         {salon.landmark && (

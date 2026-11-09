@@ -2,6 +2,7 @@ import { Check, Clock3, MapPin, Sparkles } from 'lucide-react';
 import { locations } from '../../data/branches';
 import type { ServicePageContent } from '../../data/pages/types';
 import type { ServiceCategory } from '../../data/services';
+import { serviceDurations } from '../../data/serviceDurations';
 
 interface ServiceEssentialsProps {
   page: ServicePageContent;
@@ -13,7 +14,7 @@ export function ServiceEssentials({ page, category }: ServiceEssentialsProps) {
   const rightFor = page.audience?.items.slice(0, 3) ?? [`Anyone looking for ${category.title.toLowerCase()} tailored to their needs.`];
   const steps = page.process?.steps.slice(0, 4) ?? [];
   const aftercare = page.aftercare.tips?.slice(0, 2) ?? page.aftercare.groups?.flatMap((group) => group.tips).slice(0, 2) ?? [];
-  const timing = page.process?.duration ?? 'Your stylist confirms the appointment time before starting, based on your hair, skin or nail assessment.';
+  const timing = serviceDurations[page.slug] ?? page.process?.duration ?? 'Your stylist confirms the appointment time before starting, based on your hair, skin or nail assessment.';
 
   return (
     <section aria-labelledby="service-essentials" className="border-b border-ink/10 bg-cream py-9 sm:py-12">
@@ -30,7 +31,7 @@ export function ServiceEssentials({ page, category }: ServiceEssentialsProps) {
           </article>
           <article className="svc-card p-5">
             <span className="grid size-10 place-items-center rounded-full bg-blush text-berry"><Clock3 aria-hidden className="size-5" /></span>
-            <h3 className="mt-4 font-semibold text-ink">Your appointment</h3>
+            <h3 className="mt-4 font-semibold text-ink">Estimated appointment time</h3>
             <p className="mt-3 text-sm leading-relaxed text-muted">{timing}</p>
             {steps.length > 0 && <ol className="mt-4 space-y-1.5 text-sm text-ink">{steps.map((step, index) => <li key={step.title}><span className="mr-2 text-berry">{index + 1}.</span>{step.title}</li>)}</ol>}
           </article>

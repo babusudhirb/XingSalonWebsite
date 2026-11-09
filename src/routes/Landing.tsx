@@ -14,8 +14,8 @@ export default function Landing() {
     <>
       <Hero />
       <Services />
-      <BranchesSection id="branches" />
-      <OfferPagesSection />
+      <BranchesSection id="branches" tone="blush" />
+      <OfferPagesSection tone="white" />
       <Transformations />
       <Reviews />
       <FromOurBlog />

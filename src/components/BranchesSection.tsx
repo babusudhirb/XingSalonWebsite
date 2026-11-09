@@ -139,6 +139,8 @@ function BranchCard({ salon, distance, eager = false }: { salon: Salon; distance
 interface BranchesSectionProps {
   /** Section anchor: "branches" on the landing page, "locations" on /about and /salons. */
   id?: string;
+  /** Cream by default; the home page uses blush to alternate with Services and Offers. */
+  tone?: 'cream' | 'blush';
   className?: string;
   /** Extra content under the header. */
   children?: ReactNode;
@@ -152,7 +154,7 @@ interface BranchesSectionProps {
  * is remembered and shared with the branch picker and the sticky bar; links like "/#branches?b=hsr-layout"
  * choose one.
  */
-export function BranchesSection({ id = 'branches', className, children, header }: BranchesSectionProps) {
+export function BranchesSection({ id = 'branches', tone = 'cream', className, children, header }: BranchesSectionProps) {
   const remembered = useBranch();
   const selectedIndex = Math.max(0, locations.findIndex((salon) => salon.id === remembered));
   const [distances, setDistances] = useState<Record<string, number>>({});
@@ -202,7 +204,7 @@ export function BranchesSection({ id = 'branches', className, children, header }
   };
 
   return (
-    <section id={id} data-gallery aria-labelledby={`${id}-title`} className={cn('relative bg-cream py-14 lg:py-24', className)}>
+    <section id={id} data-gallery aria-labelledby={`${id}-title`} className={cn('relative py-14 lg:py-24', tone === 'blush' ? 'bg-blush' : 'bg-cream', className)}>
       <div className="container-site">
         <div className="flex flex-wrap items-end justify-between gap-4">
           {header ?? (

@@ -228,9 +228,6 @@ export function SignatureColor() {
           </Reveal>
         </div>
 
-        <p className="mt-10 border-t border-berry/15 pt-4">
-          <ArrowLink href={signatureColor.bridalLink.href}>{signatureColor.bridalLink.label}</ArrowLink>
-        </p>
       </div>
 
       <StickyBookBar visible={inView} />

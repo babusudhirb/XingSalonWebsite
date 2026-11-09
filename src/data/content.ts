@@ -857,8 +857,6 @@ export const signatureColor = {
     },
   ],
   pageLink: { label: 'All hair colour, highlights and balayage services', slug: 'global-hair-color' },
-  // The bridal section lives on this service page.
-  bridalLink: { label: 'Getting married? Explore bridal hair', href: '/services/womens-haircut-styling#bridal' },
 } as const satisfies { benefits: ReadonlyArray<{ icon: IconKey; title: string }>; [key: string]: unknown };
 
 export const gallery = {

@@ -134,17 +134,17 @@ export function Hero() {
                 <em className="block text-berry">{hero.titleAccent}</em>
                 <span className="sr-only"> At Xing Salon in Bangalore</span>
               </m.h1>
-              <m.p variants={item} className="mt-4 max-w-xs text-sm leading-relaxed text-ink/80 sm:text-base lg:mt-5 lg:text-muted">
+              <m.p variants={item} className="mt-4 max-w-sm text-sm leading-relaxed text-ink/80 sm:text-base lg:mt-5 lg:text-muted">
                 {hero.text}
               </m.p>
             </div>
           </div>
           <m.div variants={item} className="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4 lg:mt-8">
-            <div className="self-start text-center">
-              <Button href={bookingPath}>{hero.primaryCta}</Button>
-              <p className="mt-1 text-xs font-medium text-berry">{hero.primaryCaption}</p>
+            <div className="w-full text-center sm:w-64">
+              <Button href={bookingPath} className="w-full">{hero.primaryCta}</Button>
+              <p className="mt-1 text-[11px] font-medium leading-tight text-berry">{hero.primaryCaption}</p>
             </div>
-            <Button variant="outline" href="/offers" arrow={false}>
+            <Button variant="outline" href="/offers" arrow={false} className="w-full sm:w-64">
               {hero.secondaryCta}
             </Button>
           </m.div>

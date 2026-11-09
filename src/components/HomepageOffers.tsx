@@ -51,11 +51,11 @@ export function HomepageOffers() {
               <h3 className="mt-2 font-display text-3xl font-medium leading-tight text-ink">{offerHeadline(offer)}</h3>
               <p className="mt-3 text-lg font-semibold text-berry">{offer.badge}</p>
               <p className="mt-3 text-sm leading-relaxed text-muted">{offer.sub}</p>
-              <div className="mt-auto grid gap-3 pt-5 sm:grid-cols-2">
-                <Button variant="outline" href={`/offers#${offer.id}`} arrow={false} className="w-full">
+              <div className="mt-auto flex gap-3 pt-5">
+                <Button variant="outline" href={`/offers#${offer.id}`} arrow={false} className="min-w-0 flex-1">
                   View Offer
                 </Button>
-                <Button href={offer.bookingService ? `${bookingPath}?service=${encodeURIComponent(offer.bookingService)}` : bookingPath} className="w-full" wrap>
+                <Button href={offer.bookingService ? `${bookingPath}?service=${encodeURIComponent(offer.bookingService)}` : bookingPath} className="shrink-0 whitespace-nowrap">
                   Book Appointment
                 </Button>
               </div>

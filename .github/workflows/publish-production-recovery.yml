@@ -1,0 +1,51 @@
+name: Publish production recovery build
+
+on:
+  push:
+    branches: [UAT]
+  workflow_dispatch:
+
+# This temporary recovery workflow reads the current production source exactly
+# as it is on main, then publishes only compiled files to production-static.
+# It never uploads to Hostinger and never changes main.
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the exact production source
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install pre-rendering browser
+        run: npx playwright install --with-deps chromium
+
+      - name: Build the production website
+        run: npm run build
+
+      - name: Publish compiled files to the production static branch
+        run: |
+          test -f dist/index.html
+          test -d dist/assets
+          ! grep -q '/src/main.tsx' dist/index.html
+          grep -q '/assets/' dist/index.html
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git checkout --orphan production-static
+          git rm -rf .
+          cp -a dist/. .
+          git add -A
+          git commit -m "Publish production static site for ${GITHUB_SHA}"
+          git push --force origin HEAD:production-static

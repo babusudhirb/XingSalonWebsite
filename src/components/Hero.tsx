@@ -144,7 +144,7 @@ export function Hero() {
               <Button href={bookingPath} className="w-full">{hero.primaryCta}</Button>
               <p className="mt-1 text-[11px] font-medium leading-tight text-berry">{hero.primaryCaption}</p>
             </div>
-            <Button variant="outline" href="/offers" arrow={false} className="w-full self-start">
+            <Button variant="outline" href="/offers" arrow={false} className="w-[70%] self-start">
               {hero.secondaryCta}
             </Button>
           </m.div>

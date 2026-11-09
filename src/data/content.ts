@@ -140,7 +140,7 @@ export const services = {
 
 // The full service catalog. Names only: prices are intentionally not shown on the site.
 // `bookAs` must match an entry in `booking.services`. `page` is the slug of the category's service page, if it has one.
-export const serviceMenu = [
+const serviceMenuSource = [
   {
     id: 'haircuts',
     label: 'Haircuts',
@@ -326,6 +326,67 @@ export const serviceMenu = [
       { title: 'Hair', items: ['Haircut (without Wash)', 'Haircut (with Wash & Styling)', 'Creative Haircut', 'Head Massage'] },
       { title: 'Beard', items: ['Beard Shave', 'Beard Trim', 'Beard Styling', 'Beard Colour'] },
       { title: 'Colour', items: ['Global Colour', 'Global Colour (Ammonia Free)', 'Crazy Fashion Colour', 'Highlights'] },
+    ],
+  },
+];
+
+const menuItems = (id: string, title?: string) =>
+  serviceMenuSource.find((category) => category.id === id)?.sections
+    .filter((section) => title === undefined || section.title === title)
+    .flatMap((section) => section.items) ?? [];
+
+/**
+ * The all-services catalogue follows the same top-level structure as the Services navigation.
+ * `serviceMenuSource` above retains every individual offering from the original salon menu.
+ */
+export const serviceMenu = [
+  {
+    id: 'hair-care',
+    label: 'Hair Care',
+    bookAs: 'Haircut & Styling',
+    note: 'Kids haircuts are for children up to 10 years. Hair services are available for short, shoulder, below-shoulder and waist-length hair.',
+    sections: [
+      { title: 'Haircuts & Styling', items: [...menuItems('haircuts'), ...menuItems('styling')] },
+      { title: 'Hair Colour', items: menuItems('hair-color') },
+      { title: 'Hair Treatments', items: menuItems('hair-treatments') },
+      { title: 'Hair Spa', items: menuItems('hair-spa') },
+    ],
+  },
+  {
+    id: 'skin-care',
+    label: 'Skin Care',
+    bookAs: 'Skin & Facial',
+    note: 'Body polish is available for female clients only.',
+    sections: [
+      { title: 'Monthly Essentials', items: menuItems('skin-care', 'Clean-up') },
+      { title: 'Facials', items: ['Anti-Aging Facial', 'Skin Brightening / Vit E Facial', 'Ultra Premium Facial', 'Hydra Facial'] },
+      { title: 'Body Polish', items: menuItems('body-polish') },
+      { title: 'Waxing', items: menuItems('waxing') },
+      { title: 'Threading & De-tan', items: menuItems('beauty-essentials') },
+      { title: 'Manicure & Pedicure', items: menuItems('mani-pedi') },
+    ],
+  },
+  {
+    id: 'nail-care',
+    label: 'Nail Care',
+    bookAs: 'Nails',
+    note: '',
+    sections: [
+      { title: 'File & Polish', items: menuItems('nails', 'File & Polish') },
+      { title: 'Extensions', items: [...menuItems('nails', 'Extensions'), ...menuItems('nails', 'Removal').map((item) => `Removal: ${item}`)] },
+      { title: 'Overlays', items: menuItems('nails', 'Overlays') },
+      { title: 'Nail Art', items: menuItems('nails', 'Nail Art') },
+    ],
+  },
+  {
+    id: 'others',
+    label: 'Others',
+    bookAs: 'Men Grooming',
+    note: '',
+    sections: [
+      { title: 'Men Grooming · Hair', items: menuItems('men-grooming', 'Hair') },
+      { title: 'Men Grooming · Beard', items: menuItems('men-grooming', 'Beard') },
+      { title: 'Men Grooming · Colour', items: menuItems('men-grooming', 'Colour') },
     ],
   },
 ];

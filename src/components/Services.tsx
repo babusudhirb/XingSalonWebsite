@@ -12,26 +12,17 @@ import { ArrowLink, Button } from './ui/Button';
 import { Eyebrow, Picture, Reveal, SectionIntro } from './ui/Primitives';
 
 type Service = (typeof services.items)[number];
-type Category = (typeof serviceMenu)[number];
+type Category = (typeof serviceMenu)[number] & { page?: string };
 
 const MENU_ID = 'service-menu';
 const SEARCH_ID = 'service-search';
 
 /** Icon on each category card, by `serviceMenu` id. */
 const CATEGORY_ICONS: Record<string, IconKey> = {
-  haircuts: 'scissors',
-  styling: 'wind',
-  'hair-color': 'palette',
-  'hair-treatments': 'waves',
-  'hair-spa': 'droplets',
+  'hair-care': 'scissors',
   'skin-care': 'sparkles',
-  'body-polish': 'sun',
-  waxing: 'zap',
-  'beauty-essentials': 'brush',
-  'mani-pedi': 'heart',
-  nails: 'nail-almond',
-  'men-grooming': 'users',
-  tattoo: 'flame',
+  'nail-care': 'nail-almond',
+  others: 'users',
 };
 
 const countItems = (category: Category) => category.sections.reduce((n, section) => n + section.items.length, 0);

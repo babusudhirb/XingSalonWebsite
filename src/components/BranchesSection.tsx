@@ -22,8 +22,6 @@ const COPY = {
   text: 'Sarjapur Road · HSR Layout · Brookfield. Pick your nearest salon for offers, directions and booking.',
 };
 
-/** Serving chips shown on a card before "+N more". */
-const MAX_AREAS = 4;
 const SWIPE_THRESHOLD_PX = 50;
 const PHOTO_SIZES = '(min-width: 1024px) 400px, (min-width: 768px) 50vw, 100vw';
 
@@ -48,7 +46,6 @@ const ICON_ACTION =
  */
 function BranchCard({ salon, distance, eager = false }: { salon: Salon; distance?: number; eager?: boolean }) {
   const book = whatsappLink(`Hi Xing ${salon.name}! I’d like to book an appointment. Preferred day/time: `, salon.whatsappHref);
-  const extraAreas = salon.areasServed.length - MAX_AREAS;
 
   return (
     <article
@@ -67,11 +64,11 @@ function BranchCard({ salon, distance, eager = false }: { salon: Salon; distance
       </div>
 
       <div className="flex flex-1 flex-col p-5 sm:p-6">
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+        <div>
           <h3 id={`${salon.id}-card-title`} className="font-display text-2xl font-medium leading-snug text-ink">
             Xing {salon.name}
           </h3>
-          <span className="inline-flex items-center gap-1 rounded-full bg-blush px-2.5 py-1 text-xs font-medium text-berrydark">
+          <span className="mt-2 inline-flex items-center gap-1 rounded-full bg-blush px-2.5 py-1 text-xs font-medium text-berrydark">
             <MapPin aria-hidden className="size-3" />
             {salon.area}
           </span>
@@ -93,15 +90,13 @@ function BranchCard({ salon, distance, eager = false }: { salon: Salon; distance
           </p>
         )}
 
-        <p className="mt-4 text-xs text-muted max-sm:hidden">Within a 5 km radius</p>
-        <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-berry max-sm:hidden">Serving</p>
+        <p className="mt-4 text-xs font-semibold uppercase tracking-wide text-berry max-sm:hidden">Serving within a 5 km radius</p>
         <ul className="mt-2 flex flex-wrap gap-2 max-sm:hidden">
-          {salon.areasServed.slice(0, MAX_AREAS).map((area) => (
+          {salon.areasServed.map((area) => (
             <li key={area} className="rounded-full bg-blush px-3 py-1 text-xs text-berrydark">
               {area}
             </li>
           ))}
-          {extraAreas > 0 && <li className="rounded-full border border-berry/20 px-3 py-1 text-xs text-muted">+{extraAreas} more</li>}
         </ul>
 
         <div className="mt-auto pt-6">

@@ -14,8 +14,8 @@ export default function Landing() {
     <>
       <Hero />
       <Services />
-      <OfferPagesSection />
       <BranchesSection id="branches" />
+      <OfferPagesSection />
       <Transformations />
       <Reviews />
       <FromOurBlog />

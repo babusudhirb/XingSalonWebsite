@@ -139,12 +139,12 @@ export function Hero() {
               </m.p>
             </div>
           </div>
-          <m.div variants={item} className="mt-5 grid gap-3 sm:grid-cols-2 sm:gap-4 lg:mt-8">
+          <m.div variants={item} className="mt-5 grid items-start gap-3 sm:grid-cols-2 sm:gap-4 lg:mt-8">
             <div className="min-w-0 text-center">
               <Button href={bookingPath} className="w-full">{hero.primaryCta}</Button>
               <p className="mt-1 text-[11px] font-medium leading-tight text-berry">{hero.primaryCaption}</p>
             </div>
-            <Button variant="outline" href="/offers" arrow={false} className="w-full">
+            <Button variant="outline" href="/offers" arrow={false} className="w-full self-start">
               {hero.secondaryCta}
             </Button>
           </m.div>

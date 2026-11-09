@@ -297,8 +297,10 @@ export function BranchesSection({ id = 'branches', tone = 'cream', className, ch
 
 /** The tattoo studio (same building as Brookfield) and the gym (AECS Layout): separate businesses with their own sites. */
 export function SisterBusinesses({ intro }: { intro?: string }) {
-  const tattooGmbSearch = 'https://www.google.com/search?q=Xing+Tattoo+Studio';
-  const fitnessGmbSearch = 'https://www.google.com/search?q=Xing+Fitness+Club';
+  const tattooOutletName = 'Xing Premium Tattoo Studio - Brookefield, Bangalore';
+  const fitnessOutletName = 'Xing Fitness Premium Gym - Brookefield';
+  const tattooGmbSearch = `https://www.google.com/search?q=${encodeURIComponent(tattooOutletName)}`;
+  const fitnessGmbSearch = `https://www.google.com/search?q=${encodeURIComponent(fitnessOutletName)}`;
   return (
     <div className="mt-8">
       <p className="mb-3 text-eyebrow font-medium uppercase text-berry">Other Outlets</p>
@@ -310,7 +312,7 @@ export function SisterBusinesses({ intro }: { intro?: string }) {
             <Picture image={tattooWork} sizes="64px" className="size-16 shrink-0 rounded-2xl object-cover" />
             <div>
               <a href={tattooGmbSearch} target="_blank" rel="noopener noreferrer" className="font-display text-xl font-medium text-ink transition-colors hover:text-berry">
-                {studio.name}
+                {tattooOutletName}
               </a>
               <p className="mt-1 text-sm leading-relaxed text-muted">Same building as our Brookfield salon, SV Plaza · {studio.phone}</p>
             </div>
@@ -334,7 +336,7 @@ export function SisterBusinesses({ intro }: { intro?: string }) {
             <Picture image={fitnessClub} sizes="64px" className="size-16 shrink-0 rounded-2xl object-cover" />
             <div>
               <a href={fitnessGmbSearch} target="_blank" rel="noopener noreferrer" className="font-display text-xl font-medium text-ink transition-colors hover:text-berry">
-                {fitness.name}
+                {fitnessOutletName}
               </a>
               <p className="mt-1 text-sm leading-relaxed text-muted">
                 {fitness.where} · {fitness.phone}

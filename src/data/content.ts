@@ -86,7 +86,7 @@ export const hero = {
   titleAccent: 'We Craft Confidence.',
   text: 'Hair care, skin care and nails shaped around you at Xing Premium Unisex Salon, Sarjapur Road, HSR Layout and Brookfield.',
   primaryCta: 'Book Appointment',
-  primaryCaption: '5% Off on Online Booking',
+  primaryCaption: 'Add. 5% Off on Online Booking',
   secondaryCta: 'Explore Offers',
   assurances: ['Free consultation', 'Walk-ins welcome', 'Price confirmed before we start'],
   trust: [

@@ -4,9 +4,10 @@ import { CtaBand } from '../components/Footer';
 import { Hero } from '../components/Hero';
 import { HomepageOffers } from '../components/HomepageOffers';
 import { MembershipBanner } from '../components/MembershipBanner';
+import { Reels } from '../components/Reels';
 import { Reviews } from '../components/Reviews';
 import { Services } from '../components/Services';
-import { Transformations } from '../components/Transformations';
+import { SignatureColor } from '../components/SignatureColor';
 
 /** The landing page's sections. Loaded only on the home page, so other pages don't download them. */
 export default function Landing() {
@@ -16,7 +17,8 @@ export default function Landing() {
       <Services />
       <BranchesSection id="branches" tone="blush" />
       <HomepageOffers />
-      <Transformations />
+      <Reels />
+      <SignatureColor />
       <Reviews />
       <FromOurBlog />
       <MembershipBanner />

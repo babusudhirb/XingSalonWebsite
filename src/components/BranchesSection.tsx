@@ -307,7 +307,7 @@ export function SisterBusinesses({ intro }: { intro?: string }) {
       {intro && <p className="mb-4 font-display text-xl font-medium text-ink sm:text-2xl">{intro}</p>}
       <Reveal>
         <div className="svc-card flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
-          <div className="grid min-w-0 grid-cols-[4rem_minmax(0,1fr)] items-center gap-4">
+          <div className="grid min-w-0 grid-cols-[4rem_minmax(0,1fr)] items-center gap-4 sm:flex-1">
             {/* The studio's own work, not an icon. */}
             <Picture image={tattooWork} sizes="64px" className="size-16 shrink-0 rounded-2xl object-cover" />
             <div className="min-w-0">
@@ -317,7 +317,7 @@ export function SisterBusinesses({ intro }: { intro?: string }) {
               <p className="mt-1 text-sm leading-relaxed text-muted">Same building as our Brookfield salon, SV Plaza · {studio.phone}</p>
             </div>
           </div>
-          <div className="flex flex-col gap-3 sm:flex-row">
+          <div className="flex shrink-0 flex-col gap-3 sm:flex-row">
             <Button variant="outline" href="https://www.xingtattoo.in/offer" external rel="noopener" arrow={false}>
               Tattoo Offers
               <ArrowUpRight aria-hidden className="size-4" />
@@ -332,7 +332,7 @@ export function SisterBusinesses({ intro }: { intro?: string }) {
 
       <Reveal className="mt-4">
         <div className="svc-card flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
-          <div className="grid min-w-0 grid-cols-[4rem_minmax(0,1fr)] items-center gap-4">
+          <div className="grid min-w-0 grid-cols-[4rem_minmax(0,1fr)] items-center gap-4 sm:flex-1">
             <Picture image={fitnessClub} sizes="64px" className="size-16 shrink-0 rounded-2xl object-cover" />
             <div className="min-w-0">
               <a href={fitnessGmbSearch} target="_blank" rel="noopener noreferrer" className="block font-display text-xl font-medium text-ink transition-colors hover:text-berry">
@@ -343,7 +343,7 @@ export function SisterBusinesses({ intro }: { intro?: string }) {
               </p>
             </div>
           </div>
-          <div className="flex flex-col gap-3 sm:flex-row">
+          <div className="flex shrink-0 flex-col gap-3 sm:flex-row">
             <Button variant="outline" href={fitness.offersUrl} external rel="noopener" arrow={false}>
               Gym Offers
               <ArrowUpRight aria-hidden className="size-4" />

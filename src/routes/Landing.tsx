@@ -20,9 +20,9 @@ export default function Landing() {
       <BranchesSection id="branches" tone="blush" />
       <WhyChoose />
       <HomepageOffers />
-      <Transformations />
       <Reels />
       <SignatureColor />
+      <Transformations />
       <Reviews />
       <FromOurBlog />
       <MembershipBanner />

@@ -63,9 +63,9 @@ function BranchCard({ salon, distance, eager = false }: { salon: Salon; distance
       </div>
 
       <div className="flex flex-1 flex-col p-5 sm:p-6">
-        <div className="md:min-h-[4.5rem]">
+        <div className="md:min-h-[6.5rem]">
           <h3 id={`${salon.id}-card-title`} className="font-display text-2xl font-medium leading-snug text-ink">
-            Xing {salon.name}
+            {salon.fullName}
           </h3>
           <span className="mt-2 inline-flex items-center gap-1 rounded-full bg-blush px-2.5 py-1 text-xs font-medium text-berrydark">
             <MapPin aria-hidden className="size-3" />
@@ -80,8 +80,7 @@ function BranchCard({ salon, distance, eager = false }: { salon: Salon; distance
         </div>
 
         {/* The fixed address slot keeps hours, phone, landmark and service areas on the same row across all cards. */}
-        <div className="mt-4 text-sm leading-relaxed md:min-h-[7.5rem]">
-          <p className="font-semibold text-ink">{salon.fullName}</p>
+        <div className="mt-4 text-sm leading-relaxed md:min-h-[4.5rem]">
           <address className="not-italic text-muted">{salon.address}</address>
         </div>
         <p className="mt-1 flex items-center gap-2 text-sm leading-relaxed text-muted">

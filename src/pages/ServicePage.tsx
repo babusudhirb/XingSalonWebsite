@@ -22,15 +22,14 @@ import { ArrowLink, Button } from '../components/ui/Button';
 import { WhatsAppIcon } from '../components/ui/Decor';
 import { Picture, Reveal } from '../components/ui/Primitives';
 import { OfferPagesSection } from '../components/offers/OfferPageCards';
-import { offerPage, offerPageForService } from '../data/offerPages';
 import { ReelRow } from '../components/Reels';
 import { SnapRow } from '../components/ui/SnapRow';
 import { locationsSection } from '../data/content';
 import { reels, reelsFor } from '../data/media';
 import { combos, isCampaignOpen } from '../data/offers';
-import { QuickAnswers } from '../components/service/QuickAnswers';
 import { ServiceEssentials } from '../components/service/ServiceEssentials';
 import { HydraFacialGoodToKnow, HydraFacialOutcomes } from '../components/service/HydraFacialDetails';
+import { ServiceGoodToKnow, ServiceOutcomes } from '../components/service/ServiceDecisionSupport';
 import { NovemberServiceLink } from '../components/offers/NovemberBits';
 import { servicePages } from '../data/pages';
 import type { SectionKey, ServicePageContent } from '../data/pages/types';
@@ -75,7 +74,6 @@ export function ServicePage({ page }: { page: ServicePageContent }) {
   const hero = { ...page.hero, h1: service.h1 ?? page.hero.h1 };
   // Home › Services › Hair Care › this page. Tattoo's category page is this page, so it stops at Services.
   const trail = [{ label: 'Services', href: servicesHubPath }, ...(category.hasPage ? [{ label: category.title, href: category.path }] : [])];
-  const offerPageId = offerPageForService(page.slug);
   const related = page.related.items.filter((item) => hasPage(item.slug));
   // Blog posts written for this service, best match first (the post's main service before its extras).
   const guides = blogGuides[page.slug] ?? [];
@@ -399,11 +397,8 @@ export function ServicePage({ page }: { page: ServicePageContent }) {
         {page.aftercare.closing && <p className="mt-6 text-sm leading-relaxed text-muted">{page.aftercare.closing}</p>}
       </Section>
     ),
-    // The offer page that fits this service, as one card; none where no offer page does.
-    offers:
-      page.slug === 'hydra-facial'
-        ? ((tone) => <OfferPagesSection key="offers" tone={tone} hideSalonTabs title="Current Offers" />)
-        : offerPageId && ((tone) => <OfferPagesSection key="offers" tone={tone} only={[offerPageId]} title={`${offerPage(offerPageId).name} at All 3 Salons`} />),
+    // The complete offer range stays visible on every service page; the visitor chooses a salon when booking.
+    offers: (tone) => <OfferPagesSection key="offers" tone={tone} hideSalonTabs title="Current Offers" />,
     locations: (tone) => (
       <Section key="locations" id="locations" tone={tone}>
         <SectionHeader eyebrow={contact ? 'Our Studio' : 'Our Salons'} title={page.locationsTitle ?? locationsSection.eyebrow} />
@@ -475,26 +470,31 @@ export function ServicePage({ page }: { page: ServicePageContent }) {
   }
 
   // Every page gets its guides strip just before Related, whatever its own order.
-  const order: SectionKey[] = (page.order ?? DEFAULT_ORDER).filter((key) => key !== 'guides' && key !== 'videos' && (!isCompact || key !== 'benefits'));
+  const order: SectionKey[] = (page.order ?? DEFAULT_ORDER).filter((key) => key !== 'guides' && key !== 'videos' && key !== 'benefits');
   // Clips sit right after the photo gallery, or after the intro on a page without one.
   order.splice(Math.max(order.indexOf('gallery'), order.indexOf('intro')) + 1, 0, 'videos');
   const at = order.includes('related') ? order.indexOf('related') : order.length;
   if (guides.length > 0) order.splice(at, 0, 'guides');
-  const sections = order.map((key) => blocks[key]).filter((block) => !!block);
+  const sections = order
+    .map((key) => ({ key, render: blocks[key] }))
+    .filter((section): section is { key: SectionKey; render: (tone: Tone) => ReactNode } => typeof section.render === 'function');
 
   return (
     <div className="group/page" data-theme={page.theme}>
       <NovemberServiceLink slug={page.slug} />
       <HeroSplit page={{ hero }} label={service.label} trail={trail} whatsappHref={bookHref} phone={phone || undefined} />
-      {isCompact && blocks.benefits && blocks.benefits('white')}
+      {blocks.benefits && blocks.benefits('white')}
       <ServiceEssentials page={page} category={category} compact={isCompact} />
-      {!isCompact && <QuickAnswers faqs={page.faqs} slug={page.slug} />}
       {/* Backgrounds alternate down the page, whichever sections it has. */}
-      {sections.map((render, i) => (
-        <div key={i}>
+      {sections.map(({ key, render }, i) => (
+        <div key={key}>
           {render(i % 2 === 0 ? 'white' : 'tint')}
-          {page.slug === 'hydra-facial' && (page.order ?? []).at(i) === 'intro' && <HydraFacialGoodToKnow />}
-          {page.slug === 'hydra-facial' && (page.order ?? []).at(i) === 'process' && <HydraFacialOutcomes />}
+          {key === 'intro' && (page.slug === 'hydra-facial'
+            ? <HydraFacialGoodToKnow />
+            : <ServiceGoodToKnow page={page} serviceLabel={service.label} categoryTitle={category.title} />)}
+          {key === 'process' && (page.slug === 'hydra-facial'
+            ? <HydraFacialOutcomes />
+            : <ServiceOutcomes page={page} serviceLabel={service.label} categoryTitle={category.title} />)}
         </div>
       ))}
       {!isCompact && <CTABand title={page.cta} whatsappHref={bookHref} phone={phone || undefined} secondary={page.ctaSecondary} />}

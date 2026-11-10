@@ -30,7 +30,7 @@ import { reels, reelsFor } from '../data/media';
 import { combos, isCampaignOpen } from '../data/offers';
 import { QuickAnswers } from '../components/service/QuickAnswers';
 import { ServiceEssentials } from '../components/service/ServiceEssentials';
-import { HydraFacialDetails } from '../components/service/HydraFacialDetails';
+import { HydraFacialGoodToKnow, HydraFacialOutcomes } from '../components/service/HydraFacialDetails';
 import { NovemberServiceLink } from '../components/offers/NovemberBits';
 import { servicePages } from '../data/pages';
 import type { SectionKey, ServicePageContent } from '../data/pages/types';
@@ -400,7 +400,10 @@ export function ServicePage({ page }: { page: ServicePageContent }) {
       </Section>
     ),
     // The offer page that fits this service, as one card; none where no offer page does.
-    offers: offerPageId && ((tone) => <OfferPagesSection key="offers" tone={tone} only={[offerPageId]} title={`${offerPage(offerPageId).name} at All 3 Salons`} />),
+    offers:
+      page.slug === 'hydra-facial'
+        ? ((tone) => <OfferPagesSection key="offers" tone={tone} hideSalonTabs title="Current Offers" />)
+        : offerPageId && ((tone) => <OfferPagesSection key="offers" tone={tone} only={[offerPageId]} title={`${offerPage(offerPageId).name} at All 3 Salons`} />),
     locations: (tone) => (
       <Section key="locations" id="locations" tone={tone}>
         <SectionHeader eyebrow={contact ? 'Our Studio' : 'Our Salons'} title={page.locationsTitle ?? locationsSection.eyebrow} />
@@ -490,7 +493,8 @@ export function ServicePage({ page }: { page: ServicePageContent }) {
       {sections.map((render, i) => (
         <div key={i}>
           {render(i % 2 === 0 ? 'white' : 'tint')}
-          {page.slug === 'hydra-facial' && (page.order ?? []).at(i) === 'intro' && <HydraFacialDetails />}
+          {page.slug === 'hydra-facial' && (page.order ?? []).at(i) === 'intro' && <HydraFacialGoodToKnow />}
+          {page.slug === 'hydra-facial' && (page.order ?? []).at(i) === 'process' && <HydraFacialOutcomes />}
         </div>
       ))}
       {!isCompact && <CTABand title={page.cta} whatsappHref={bookHref} phone={phone || undefined} secondary={page.ctaSecondary} />}

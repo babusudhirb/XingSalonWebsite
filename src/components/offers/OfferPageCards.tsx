@@ -16,7 +16,7 @@ const priceLine = (page: OfferPage) => {
 };
 
 /** One of a salon's offers as a card: its photo, name, prices and offers. The whole card opens that salon's offer page. */
-function OfferPageCard({ page, salon, className }: { page: OfferPage; salon: BranchId; className?: string }) {
+function OfferPageCard({ page, salon, className, showSalon = true }: { page: OfferPage; salon: BranchId; className?: string; showSalon?: boolean }) {
   return (
     <a href={offerPath(page.id, salon)} data-cta={`offer-card-${page.id}`} className={cn('svc-card svc-card-hover group flex h-full flex-col overflow-hidden', className)}>
       <Picture image={page.image} sizes="(min-width: 1024px) 30vw, (min-width: 768px) 45vw, 80vw" className="aspect-[4/5] w-full object-cover" />
@@ -33,7 +33,7 @@ function OfferPageCard({ page, salon, className }: { page: OfferPage; salon: Bra
             </li>
           ))}
         </ul>
-        <p className="mt-auto pt-4 text-xs text-muted">Xing {salonById(salon)!.name}</p>
+        {showSalon && <p className="mt-auto pt-4 text-xs text-muted">Xing {salonById(salon)!.name}</p>}
       </div>
     </a>
   );
@@ -47,10 +47,12 @@ interface OfferPagesSectionProps {
   id?: string;
   tone?: 'white' | 'tint';
   title?: string;
+  /** Keep the full offer range visible without asking the visitor to choose a salon first. */
+  hideSalonTabs?: boolean;
 }
 
 /** The offers slot: a salon's three offers (hair colour, hair treatment, skin care), each opening its offer page. */
-export function OfferPagesSection({ salon, only, id = 'offers', tone = 'tint', title }: OfferPagesSectionProps) {
+export function OfferPagesSection({ salon, only, id = 'offers', tone = 'tint', title, hideSalonTabs = false }: OfferPagesSectionProps) {
   const remembered = useBranch() as BranchId | null;
   const [tab, setTab] = useState<BranchId | null>(null);
   const active = salon ?? tab ?? remembered ?? (locations[0].id as BranchId);
@@ -58,7 +60,7 @@ export function OfferPagesSection({ salon, only, id = 'offers', tone = 'tint', t
   return (
     <Section tone={tone} id={id}>
       <SectionHeader eyebrow="Offers" title={title ?? (salon ? `Offers at Xing ${salonById(salon)!.name}` : 'Offers at Your Salon')} />
-      {!salon && (
+      {!salon && !hideSalonTabs && (
         <div role="tablist" aria-label="Choose a salon" className="no-scrollbar -mx-4 mt-6 flex gap-2 overflow-x-auto px-4">
           {locations.map((loc) => (
             <button
@@ -78,11 +80,11 @@ export function OfferPagesSection({ salon, only, id = 'offers', tone = 'tint', t
         {pages.length > 1 ? (
           <SnapRow itemWidth="w-[78%]" className="md:grid-cols-3 md:gap-5">
             {pages.map((page) => (
-              <OfferPageCard key={page.id} page={page} salon={active} />
+              <OfferPageCard key={page.id} page={page} salon={active} showSalon={!hideSalonTabs} />
             ))}
           </SnapRow>
         ) : (
-          <OfferPageCard page={pages[0]} salon={active} className="max-w-sm" />
+          <OfferPageCard page={pages[0]} salon={active} className="max-w-sm" showSalon={!hideSalonTabs} />
         )}
       </div>
       <p className="mt-4 text-xs text-muted">Terms apply. We confirm the offer and the price before we start.</p>

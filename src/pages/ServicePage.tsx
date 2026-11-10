@@ -18,7 +18,8 @@ import {
   TipsChecklist,
 } from '../components/service/Sections';
 import { FeaturedComboCard, ServiceCardGrid, ServiceCards } from '../components/service/ServiceCards';
-import { ArrowLink } from '../components/ui/Button';
+import { ArrowLink, Button } from '../components/ui/Button';
+import { WhatsAppIcon } from '../components/ui/Decor';
 import { Picture, Reveal } from '../components/ui/Primitives';
 import { OfferPagesSection } from '../components/offers/OfferPageCards';
 import { offerPage, offerPageForService } from '../data/offerPages';
@@ -246,7 +247,18 @@ export function ServicePage({ page }: { page: ServicePageContent }) {
       ((tone) => (
         <Section key="benefits" tone={tone}>
           <SectionHeader eyebrow="Benefits" title={benefits.title} text={benefits.text} />
-          <BenefitGrid items={benefits.items} />
+          {benefits.paragraphs ? (
+            <div className="mt-10 max-w-3xl divide-y divide-ink/10 border-y border-ink/10">
+              {benefits.paragraphs.map((benefit) => (
+                <article key={benefit.title} className="py-6 first:pt-0 last:pb-0">
+                  <h3 className="font-display text-2xl font-medium text-ink">{benefit.title}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-muted sm:text-base">{benefit.text}</p>
+                </article>
+              ))}
+            </div>
+          ) : (
+            <BenefitGrid items={benefits.items} />
+          )}
         </Section>
       )),
     combo:
@@ -365,6 +377,18 @@ export function ServicePage({ page }: { page: ServicePageContent }) {
           <SectionHeader eyebrow="Your Visit" title={page.process!.title} text={page.process!.text} />
           <ProcessStepper steps={page.process!.steps} />
           {page.process!.duration && <p className="mt-8 text-sm text-ink">{page.process!.duration}</p>}
+          {isCompact && (
+            <div className="mt-12 flex flex-col gap-4 border-t border-ink/10 pt-8 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <h3 className="font-display text-2xl font-medium text-ink">Ready to book?</h3>
+                <p className="mt-1 text-sm text-muted">Choose your preferred Xing salon when you message us.</p>
+              </div>
+              <Button href={bookHref} external arrow={false}>
+                <WhatsAppIcon className="size-4" />
+                Book Hydra Facial
+              </Button>
+            </div>
+          )}
         </Section>
       )),
     aftercare: (tone) => (
@@ -447,7 +471,7 @@ export function ServicePage({ page }: { page: ServicePageContent }) {
   }
 
   // Every page gets its guides strip just before Related, whatever its own order.
-  const order: SectionKey[] = (page.order ?? DEFAULT_ORDER).filter((key) => key !== 'guides' && key !== 'videos');
+  const order: SectionKey[] = (page.order ?? DEFAULT_ORDER).filter((key) => key !== 'guides' && key !== 'videos' && (!isCompact || key !== 'benefits'));
   // Clips sit right after the photo gallery, or after the intro on a page without one.
   order.splice(Math.max(order.indexOf('gallery'), order.indexOf('intro')) + 1, 0, 'videos');
   const at = order.includes('related') ? order.indexOf('related') : order.length;
@@ -458,11 +482,12 @@ export function ServicePage({ page }: { page: ServicePageContent }) {
     <div className="group/page" data-theme={page.theme}>
       <NovemberServiceLink slug={page.slug} />
       <HeroSplit page={{ hero }} label={service.label} trail={trail} whatsappHref={bookHref} phone={phone || undefined} />
+      {isCompact && blocks.benefits && blocks.benefits('white')}
       <ServiceEssentials page={page} category={category} compact={isCompact} />
       {!isCompact && <QuickAnswers faqs={page.faqs} slug={page.slug} />}
       {/* Backgrounds alternate down the page, whichever sections it has. */}
       {sections.map((render, i) => render(i % 2 === 0 ? 'white' : 'tint'))}
-      <CTABand title={page.cta} whatsappHref={bookHref} phone={phone || undefined} secondary={page.ctaSecondary} />
+      {!isCompact && <CTABand title={page.cta} whatsappHref={bookHref} phone={phone || undefined} secondary={page.ctaSecondary} />}
       <MobileStickyBar whatsappHref={bookHref} phoneHref={contact?.phoneHref} whatsappLabel={COLOUR_SLUGS.includes(page.slug) && isCampaignOpen() ? 'Claim Nov offer' : undefined} />
     </div>
   );

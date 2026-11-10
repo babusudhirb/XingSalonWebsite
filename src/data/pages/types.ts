@@ -169,7 +169,13 @@ export interface ServicePageContent {
     compact?: boolean;
     steps?: string[];
   }>;
-  benefits?: { title: string; text?: string; items: Array<{ icon: IconKey; title: string; text?: string }> };
+  benefits?: {
+    title: string;
+    text?: string;
+    items: Array<{ icon: IconKey; title: string; text?: string }>;
+    /** Editorial benefits for a service where explanation is more useful than feature tiles. */
+    paragraphs?: Array<{ title: string; text: string }>;
+  };
   lengthGuide?: { title: string; text: string };
   compare?: {
     title: string;

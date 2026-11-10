@@ -29,7 +29,7 @@ export const hydraFacial: ServicePageContent = {
   whatsappSuffix: '. My skin concern is ___',
   intro: {
     eyebrow: 'Skin Care',
-    title: 'The Most-Loved Facial in Sarjapur Road, HSR Layout & Brookfield',
+    title: 'What Is a Hydra Facial?',
     paragraphs: [
       'For skin that looks dull, congested or dehydrated, our 7-Step Hydra Facial combines deep cleansing, gentle exfoliation, pore care and hydration in one relaxing session. It is a strong choice before an event or as a regular skin reset; your therapist starts with a skin check and tailors the session to your needs.',
     ],
@@ -39,7 +39,7 @@ export const hydraFacial: ServicePageContent = {
     title: 'What’s Included in the 7-Step Hydra Facial',
   },
   process: {
-    title: 'What Happens in Your Hydra Facial',
+    title: 'Your Hydra Facial Visit',
     steps: [
       { title: 'Skin check & cleanse', text: 'We begin by understanding your skin and removing surface build-up.' },
       { title: 'Exfoliation & pore care', text: 'The treatment is tailored to help skin feel clearer and smoother.' },
@@ -48,12 +48,13 @@ export const hydraFacial: ServicePageContent = {
     ],
   },
   benefits: {
-    title: 'Benefits of a Hydra Facial',
-    items: [
-      { icon: 'droplets', title: 'Deep hydration' },
-      { icon: 'layers', title: 'Cleaner-looking pores' },
-      { icon: 'sparkles', title: 'Fresh, radiant-looking skin' },
-      { icon: 'calendar', title: 'An event-ready reset' },
+    title: 'Why a Hydra Facial Makes Sense in Bangalore',
+    text: 'City air, sun exposure, indoor cooling and busy routines can leave skin looking dull or dehydrated. This is a practical reset when your skin needs more than a basic clean-up.',
+    items: [],
+    paragraphs: [
+      { title: 'A reset for daily city exposure', text: 'Bangalore days can mean sunscreen, traffic, dust, changing weather and time indoors with air-conditioning. A Hydra Facial focuses on cleansing and hydration together, so skin feels refreshed without making your routine more complicated.' },
+      { title: 'Helpful before a plan, not only for one', text: 'It is a considered choice before a celebration, a work event or a weekend out, and it can also work as a regular skin-care reset. Your therapist checks your skin first and adapts the session to the concerns you bring in.' },
+      { title: 'Results that fit everyday life', text: 'The aim is clearer-looking, more hydrated and smoother-feeling skin with simple aftercare. It is designed to support a fresh appearance, not to replace a dermatologist’s advice for an active skin condition.' },
     ],
   },
   audience: {

@@ -30,6 +30,7 @@ import { reels, reelsFor } from '../data/media';
 import { combos, isCampaignOpen } from '../data/offers';
 import { QuickAnswers } from '../components/service/QuickAnswers';
 import { ServiceEssentials } from '../components/service/ServiceEssentials';
+import { HydraFacialDetails } from '../components/service/HydraFacialDetails';
 import { NovemberServiceLink } from '../components/offers/NovemberBits';
 import { servicePages } from '../data/pages';
 import type { SectionKey, ServicePageContent } from '../data/pages/types';
@@ -486,7 +487,12 @@ export function ServicePage({ page }: { page: ServicePageContent }) {
       <ServiceEssentials page={page} category={category} compact={isCompact} />
       {!isCompact && <QuickAnswers faqs={page.faqs} slug={page.slug} />}
       {/* Backgrounds alternate down the page, whichever sections it has. */}
-      {sections.map((render, i) => render(i % 2 === 0 ? 'white' : 'tint'))}
+      {sections.map((render, i) => (
+        <div key={i}>
+          {render(i % 2 === 0 ? 'white' : 'tint')}
+          {page.slug === 'hydra-facial' && (page.order ?? []).at(i) === 'intro' && <HydraFacialDetails />}
+        </div>
+      ))}
       {!isCompact && <CTABand title={page.cta} whatsappHref={bookHref} phone={phone || undefined} secondary={page.ctaSecondary} />}
       <MobileStickyBar whatsappHref={bookHref} phoneHref={contact?.phoneHref} whatsappLabel={COLOUR_SLUGS.includes(page.slug) && isCampaignOpen() ? 'Claim Nov offer' : undefined} />
     </div>

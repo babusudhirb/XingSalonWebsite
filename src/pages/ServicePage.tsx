@@ -30,7 +30,7 @@ import { reels, reelsFor } from '../data/media';
 import { combos, isCampaignOpen } from '../data/offers';
 import { QuickAnswers } from '../components/service/QuickAnswers';
 import { ServiceEssentials } from '../components/service/ServiceEssentials';
-import { HydraFacialDetails } from '../components/service/HydraFacialDetails';
+import { HydraFacialOutcomes, HydraFacialPlan } from '../components/service/HydraFacialDetails';
 import { NovemberServiceLink } from '../components/offers/NovemberBits';
 import { servicePages } from '../data/pages';
 import type { SectionKey, ServicePageContent } from '../data/pages/types';
@@ -477,20 +477,22 @@ export function ServicePage({ page }: { page: ServicePageContent }) {
   order.splice(Math.max(order.indexOf('gallery'), order.indexOf('intro')) + 1, 0, 'videos');
   const at = order.includes('related') ? order.indexOf('related') : order.length;
   if (guides.length > 0) order.splice(at, 0, 'guides');
-  const sections = order.map((key) => blocks[key]).filter((block) => !!block);
+  const sections = order
+    .map((key) => ({ key, render: blocks[key] }))
+    .filter((section): section is { key: SectionKey; render: (tone: Tone) => ReactNode } => typeof section.render === 'function');
 
   return (
     <div className="group/page" data-theme={page.theme}>
       <NovemberServiceLink slug={page.slug} />
       <HeroSplit page={{ hero }} label={service.label} trail={trail} whatsappHref={bookHref} phone={phone || undefined} />
       {isCompact && blocks.benefits && blocks.benefits('white')}
-      <ServiceEssentials page={page} category={category} compact={isCompact} />
+      {page.slug === 'hydra-facial' ? <HydraFacialPlan /> : <ServiceEssentials page={page} category={category} compact={isCompact} />}
       {!isCompact && <QuickAnswers faqs={page.faqs} slug={page.slug} />}
       {/* Backgrounds alternate down the page, whichever sections it has. */}
-      {sections.map((render, i) => (
-        <div key={i}>
+      {sections.map(({ key, render }, i) => (
+        <div key={key}>
           {render(i % 2 === 0 ? 'white' : 'tint')}
-          {page.slug === 'hydra-facial' && (page.order ?? []).at(i) === 'intro' && <HydraFacialDetails />}
+          {page.slug === 'hydra-facial' && key === 'process' && <HydraFacialOutcomes />}
         </div>
       ))}
       {!isCompact && <CTABand title={page.cta} whatsappHref={bookHref} phone={phone || undefined} secondary={page.ctaSecondary} />}

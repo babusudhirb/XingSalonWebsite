@@ -9,6 +9,7 @@ import { privacyPath } from '../data/privacy';
 import { offersPath } from '../data/offers';
 import { categoryBySlug, redirects, servicesHubPath } from '../data/services';
 import { legacyOfferByPath } from '../data/staticOfferPages';
+import { individualOfferById } from '../data/individualOffers';
 
 // Pages are separate documents (plain links, full page loads), so the route is fixed for the page's lifetime.
 const path = window.location.pathname.replace(/\/+$/, '') || '/';
@@ -16,6 +17,9 @@ if (path in redirects) window.location.replace(redirects[path]);
 /** One of the historic offer addresses, now served by the shared React offer page. */
 export const currentLegacyOffer = legacyOfferByPath[path];
 export const isStaticPage = !!currentLegacyOffer;
+/** A shareable evergreen offer detail page. */
+export const currentIndividualOffer = individualOfferById(path.match(/^\/offers\/([a-z0-9-]+)$/)?.[1] ?? '');
+export const isIndividualOffer = !!currentIndividualOffer;
 
 const slug = path.match(/^\/services\/([a-z0-9-]+)$/)?.[1];
 
@@ -85,9 +89,9 @@ const blogNotLiveYet = !hasBlog && /^\/blog(\/|$)/.test(path);
 
 /** An address no page answers to. */
 export const isNotFound =
-  path !== '/' && !isServicePage && !currentCategory && !isServicesHub && !isOffers && !blogRoute && !isAbout && !isFaq && !isPrivacy && !isMembership && !isCelebrationOffers && !isBooking && !isSalons && !currentSalon && !(path in redirects) && !isStaticPage && !blogNotLiveYet;
+  path !== '/' && !isServicePage && !currentCategory && !isServicesHub && !isOffers && !isIndividualOffer && !blogRoute && !isAbout && !isFaq && !isPrivacy && !isMembership && !isCelebrationOffers && !isBooking && !isSalons && !currentSalon && !(path in redirects) && !isStaticPage && !blogNotLiveYet;
 
-export const isHome = !isStaticPage && !isServicePage && !currentCategory && !isServicesHub && !isOffers && !blogRoute && !isAbout && !isFaq && !isPrivacy && !isMembership && !isCelebrationOffers && !isBooking && !isSalons && !currentSalon && !isNotFound;
+export const isHome = !isStaticPage && !isIndividualOffer && !isServicePage && !currentCategory && !isServicesHub && !isOffers && !blogRoute && !isAbout && !isFaq && !isPrivacy && !isMembership && !isCelebrationOffers && !isBooking && !isSalons && !currentSalon && !isNotFound;
 
 /** Link to a landing-page section such as "#offers", from whichever page we are on. Other paths pass through. */
 export const homeHref = (href: string) => (href.startsWith('#') && !isHome ? `/${href}` : href);

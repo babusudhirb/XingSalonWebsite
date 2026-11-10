@@ -5,6 +5,7 @@ import { celebrationOffersPath } from './celebrationOffers';
 import { bookingPath } from './bookingLinks';
 import { offersPage } from './offersPage';
 import { offersPath } from './offers';
+import { individualOfferPath, individualOffers } from './individualOffers';
 import { offerPage } from './offerPages';
 import { legacyOfferRoutes } from './staticOfferPages';
 import { branchPages, salonsPage, type BranchPageContent } from './branchPages';
@@ -183,6 +184,36 @@ const offersMeta: PageMeta = {
     { '@context': 'https://schema.org', '@type': 'CollectionPage', name: 'Xing salon offers in Bangalore', url: abs(offersPath), isPartOf: { '@id': `${site.url}/#website` } },
   ],
 };
+
+/** Each evergreen offer has its own crawlable, shareable URL; campaign landing pages remain separate below. */
+const individualOfferMetas: PageMeta[] = individualOffers.map((offer) => {
+  const path = individualOfferPath(offer.id);
+  return {
+    path,
+    title: `${offer.title} in Bangalore | Xing Premium Salon`,
+    description: offer.description,
+    image: offer.image,
+    preload: { src: offer.image.src, srcSet: offer.image.srcSet, sizes: '(min-width:1024px) 40vw, 90vw' },
+    jsonLd: [
+      crumbs([['Home', '/'], ['Offers', offersPath], [offer.title, path]]),
+      {
+        '@context': 'https://schema.org',
+        '@type': 'Offer',
+        name: offer.title,
+        description: offer.description,
+        url: abs(path),
+        seller: { '@id': `${site.url}/#organization` },
+        itemOffered: { '@type': 'Service', name: offer.title },
+        eligibleRegion: { '@type': 'City', name: 'Bengaluru' },
+      },
+      {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: offer.faqs.map((faq) => ({ '@type': 'Question', name: faq.q, acceptedAnswer: { '@type': 'Answer', text: faq.a } })),
+      },
+    ],
+  };
+});
 
 /** SEO for the established campaign/GMB offer URLs, now rendered by the shared responsive page. */
 const legacyOfferMetas: PageMeta[] = legacyOfferRoutes.map((route) => {
@@ -511,6 +542,7 @@ function categoryMeta(category: ServiceCategory): PageMeta {
 export const routes: PageMeta[] = [
   home,
   offersMeta,
+  ...individualOfferMetas,
   ...legacyOfferMetas,
   servicesHubMeta,
   ...categories.filter((category) => category.hasPage).map(categoryMeta),

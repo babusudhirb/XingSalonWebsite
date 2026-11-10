@@ -272,6 +272,7 @@ function routeChunks(bundle: OutputBundle) {
   const branchPage = files((id) => id.endsWith('/src/pages/BranchPage.tsx'));
   const hubPage = files((id) => id.endsWith('/src/pages/ServicesHubPage.tsx'));
   const categoryPage = files((id) => id.endsWith('/src/pages/ServiceCategoryPage.tsx'));
+  const individualOfferPage = files((id) => id.endsWith('/src/pages/IndividualOfferPage.tsx'));
   const categoryPaths = categories.filter((category) => category.hasPage).map((category) => category.path);
   return (path: string) => {
     if (path === '/') return landing;
@@ -281,6 +282,7 @@ function routeChunks(bundle: OutputBundle) {
     if (path === membershipPath) return membershipPage;
     if (path === celebrationOffersPath) return celebrationOffersPage;
     if (path === bookingPath) return bookingPage;
+    if (path.startsWith('/offers/')) return individualOfferPage;
     if (path === '/404') return notFoundPage;
     if (path === '/salons') return salonsPage;
     if (path.startsWith('/salons/')) return branchPage;
@@ -312,7 +314,8 @@ function contentFiles(path: string) {
   if (path === membershipPath) return ['src/data/giftMembership.ts'];
   if (path === celebrationOffersPath) return ['src/data/celebrationOffers.ts'];
   if (path === bookingPath) return ['src/data/bookingLinks.ts', 'src/components/BookingModal.tsx'];
-  if (path === offersPath) return ['src/data/offers.ts', 'src/data/offersPage.ts'];
+  if (path === offersPath) return ['src/data/individualOffers.ts', 'src/data/offersPage.ts'];
+  if (path.startsWith('/offers/')) return ['src/data/individualOffers.ts'];
   if (path === '/salons') return ['src/data/branchPages/index.ts', 'src/data/branches.ts'];
   if (path.startsWith('/salons/')) return [`src/data/branchPages${path.slice('/salons'.length)}.ts`, 'src/data/branches.ts'];
   if (path.startsWith('/blog')) return ['content/blog'];

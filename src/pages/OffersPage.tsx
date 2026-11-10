@@ -1,24 +1,24 @@
 import { useMemo, useState } from 'react';
 import { Check } from 'lucide-react';
 import { bookingPath } from '../data/bookingLinks';
-import { locations } from '../data/branches';
 import { offersPage } from '../data/offersPage';
-import { salonOffers, type OfferCategory } from '../data/offers';
+import { individualOfferPath, individualOffers, type IndividualOfferCategory } from '../data/individualOffers';
 import { Button } from '../components/ui/Button';
 import { Eyebrow, Picture } from '../components/ui/Primitives';
 import { cn } from '../lib/cn';
 
-const filters: Array<{ id: 'all' | OfferCategory; label: string }> = [
+const filters: Array<{ id: 'all' | IndividualOfferCategory; label: string }> = [
   { id: 'all', label: 'All offers' },
-  { id: 'hair', label: 'Hair colour & treatments' },
-  { id: 'skin', label: 'Skin' },
-  { id: 'value', label: 'Membership & gifting' },
+  { id: 'Hair Colour', label: 'Hair colour' },
+  { id: 'Hair Treatments', label: 'Hair treatments' },
+  { id: 'Skin & Care', label: 'Skin & care' },
+  { id: 'Celebrations & Value', label: 'Celebrations & value' },
 ];
 
 /** A focused, shareable campaign page for GMB, paid campaigns and direct links. */
 export default function OffersPage() {
   const [filter, setFilter] = useState<(typeof filters)[number]['id']>('all');
-  const offers = useMemo(() => salonOffers.filter((offer) => filter === 'all' || offer.category === filter), [filter]);
+  const offers = useMemo(() => individualOffers.filter((offer) => filter === 'all' || offer.category === filter), [filter]);
   return (
     <>
       <section className="bg-blush pb-14 pt-header-sm lg:pb-20 lg:pt-header">
@@ -50,7 +50,7 @@ export default function OffersPage() {
           <ul className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {offers.map((offer) => <li key={offer.id} id={offer.id} className="overflow-hidden rounded-card border border-ink/10 bg-white shadow-soft">
               <Picture image={offer.image} sizes="(min-width:1024px) 30vw, (min-width:640px) 45vw, 90vw" className="aspect-[4/3] w-full object-cover" />
-              <div className="p-5"><p className="text-sm font-semibold text-berry">{offer.badge}</p><h3 className="mt-1 font-display text-3xl font-medium text-ink">{offer.title}</h3><p className="mt-2 text-sm leading-relaxed text-muted">{offer.sub}</p><p className="mt-4 text-xs text-muted">Available at {offer.branches.map((id) => locations.find((location) => location.id === id)?.name).join(' · ')}</p><Button href={`${bookingPath}?service=${encodeURIComponent(offer.bookingService)}`} className="mt-5 w-full" wrap>{offer.bookingService ? `Book ${offer.title}` : 'Ask about this offer'}</Button></div>
+              <div className="p-5"><p className="text-sm font-semibold text-berry">{offer.kicker}</p><h3 className="mt-1 font-display text-3xl font-medium text-ink">{offer.title}</h3><p className="mt-2 text-sm leading-relaxed text-muted">{offer.description}</p><p className="mt-4 text-sm font-medium text-berry">{offer.value}</p><Button href={individualOfferPath(offer.id)} className="mt-5 w-full">View offer</Button></div>
             </li>)}
           </ul>
           <p className="mt-8 text-sm text-muted">{offersPage.smallPrint}</p>

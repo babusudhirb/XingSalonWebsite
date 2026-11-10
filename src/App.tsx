@@ -10,7 +10,7 @@ import { BookingProvider } from './context/booking';
 import { MobileStickyBar } from './components/service/MobileStickyBar';
 import { OfferSheetsProvider } from './components/offers/OfferSheets';
 import { trackContactClicks } from './lib/analytics';
-import { blogRoute, currentCategory, currentLegacyOffer, currentPage, currentSalon, isAbout, isBooking, isCelebrationOffers, isFaq, isPrivacy, isServicePage, loadCurrentPage, isMembership, isNotFound, isSalons, isServicesHub } from './lib/route';
+import { blogRoute, currentCategory, currentIndividualOffer, currentLegacyOffer, currentPage, currentSalon, isAbout, isBooking, isCelebrationOffers, isFaq, isIndividualOffer, isPrivacy, isServicePage, loadCurrentPage, isMembership, isNotFound, isSalons, isServicesHub } from './lib/route';
 import { whenHydrated } from './lib/hydration';
 import { isPrerender, readyLazy, wasPrerendered } from './lib/prerender';
 import { bookingWhatsappHref } from './lib/whatsapp';
@@ -34,6 +34,7 @@ const BranchPage = readyLazy(() => import('./pages/BranchPage'));
 const NotFoundPage = readyLazy(() => import('./pages/NotFoundPage'));
 const OffersPage = readyLazy(() => import('./pages/OffersPage'));
 const LegacyOfferPage = readyLazy(() => import('./pages/LegacyOfferPage'));
+const IndividualOfferPage = readyLazy(() => import('./pages/IndividualOfferPage'));
 // Neither is needed to show a page, so both load later: the booking form on its first use, the offer popup
 // once the page has settled.
 const OfferPopup = lazy(() => import('./components/offers/OfferPopup'));
@@ -57,6 +58,8 @@ async function loadPage() {
   }
   const page = currentLegacyOffer
     ? LegacyOfferPage
+    : isIndividualOffer
+    ? IndividualOfferPage
     : isServicePage
     ? ServicePage
     : currentCategory
@@ -178,6 +181,8 @@ export default function App() {
           <main id="main">
             {currentLegacyOffer ? (
               <LegacyOfferPage route={currentLegacyOffer} />
+            ) : currentIndividualOffer ? (
+              <IndividualOfferPage offer={currentIndividualOffer} />
             ) : currentPage ? (
               <ServicePage page={currentPage} />
             ) : currentCategory ? (

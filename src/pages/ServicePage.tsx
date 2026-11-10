@@ -92,6 +92,16 @@ export function ServicePage({ page }: { page: ServicePageContent }) {
   const askHref = wa(`Hi, I have a question about ${service.label} at Xing.`);
 
   const { benefits, lengthGuide, compare, miniCompare, crossNote, combo, highlight, audience, goals, occasions, gallery, picks } = page;
+  const resolvedBenefits = benefits ?? {
+    title: `Why Choose Xing for ${service.label}`,
+    text: `A considered ${service.label.toLowerCase()} begins with a consultation and ends with clear care guidance.`,
+    items: [],
+    paragraphs: [
+      { title: 'A plan around your starting point', text: 'Your stylist or therapist first understands your hair, skin or nail condition, preferences and the result you have in mind.' },
+      { title: 'Clarity before we begin', text: 'We discuss the recommended approach, expected appointment time and any care considerations before the service starts.' },
+      { title: 'Care beyond the appointment', text: 'You leave with practical aftercare and a clear sense of when to revisit if you want to maintain the result.' },
+    ],
+  };
   const HighlightIcon = highlight && ICONS[highlight.icon];
   const clips = reelsFor(page.slug);
 
@@ -241,14 +251,12 @@ export function ServicePage({ page }: { page: ServicePageContent }) {
           </SectionHeader>
         </Section>
       )),
-    benefits:
-      benefits &&
-      ((tone) => (
+    benefits: (tone) => (
         <Section key="benefits" tone={tone}>
-          <SectionHeader eyebrow="Benefits" title={benefits.title} text={benefits.text} />
-          {benefits.paragraphs ? (
+          <SectionHeader eyebrow="Benefits" title={resolvedBenefits.title} text={resolvedBenefits.text} />
+          {resolvedBenefits.paragraphs ? (
             <div className="mt-10 max-w-3xl divide-y divide-ink/10 border-y border-ink/10">
-              {benefits.paragraphs.map((benefit) => (
+              {resolvedBenefits.paragraphs.map((benefit) => (
                 <article key={benefit.title} className="py-6 first:pt-0 last:pb-0">
                   <h3 className="font-display text-2xl font-medium text-ink">{benefit.title}</h3>
                   <p className="mt-3 text-sm leading-relaxed text-muted sm:text-base">{benefit.text}</p>
@@ -256,10 +264,10 @@ export function ServicePage({ page }: { page: ServicePageContent }) {
               ))}
             </div>
           ) : (
-            <BenefitGrid items={benefits.items} />
+            <BenefitGrid items={resolvedBenefits.items} />
           )}
         </Section>
-      )),
+      ),
     combo:
       combo &&
       ((tone) => (
@@ -369,13 +377,21 @@ export function ServicePage({ page }: { page: ServicePageContent }) {
           {occasions.note && <p className="mt-6 text-sm leading-relaxed text-muted">{occasions.note}</p>}
         </Section>
       )),
-    process:
-      page.process &&
-      ((tone) => (
+    process: (tone) => {
+      const visit = page.process ?? {
+        title: `Your ${service.label} Visit`,
+        text: 'A simple, consultation-led appointment shaped around your goals.',
+        steps: [
+          { title: 'Consultation', text: 'Tell us about your starting point, preferences and the result you want.' },
+          { title: 'Your tailored service', text: 'Your stylist or therapist follows the plan agreed during consultation.' },
+          { title: 'Finish & aftercare', text: 'We share practical guidance to help you care for the result after your visit.' },
+        ],
+      };
+      return (
         <Section key="process" tone={tone}>
-          <SectionHeader eyebrow="Your Visit" title={page.process!.title} text={page.process!.text} />
-          <ProcessStepper steps={page.process!.steps} />
-          {page.process!.duration && <p className="mt-8 text-sm text-ink">{page.process!.duration}</p>}
+          <SectionHeader eyebrow="Your Visit" title={visit.title} text={visit.text} />
+          <ProcessStepper steps={visit.steps} />
+          {visit.duration && <p className="mt-8 text-sm text-ink">{visit.duration}</p>}
           {isCompact && (
             <div className="mt-12 flex flex-col gap-4 border-t border-ink/10 pt-8 sm:flex-row sm:items-center sm:justify-between">
               <div>
@@ -389,7 +405,8 @@ export function ServicePage({ page }: { page: ServicePageContent }) {
             </div>
           )}
         </Section>
-      )),
+      );
+    },
     aftercare: (tone) => (
       <Section key="aftercare" tone={tone}>
         <SectionHeader eyebrow={page.aftercare.eyebrow ?? 'Aftercare'} title={page.aftercare.title} text={page.aftercare.text} />
@@ -469,12 +486,25 @@ export function ServicePage({ page }: { page: ServicePageContent }) {
     );
   }
 
-  // Every page gets its guides strip just before Related, whatever its own order.
-  const order: SectionKey[] = (page.order ?? DEFAULT_ORDER).filter((key) => key !== 'guides' && key !== 'videos' && key !== 'benefits');
-  // Clips sit right after the photo gallery, or after the intro on a page without one.
-  order.splice(Math.max(order.indexOf('gallery'), order.indexOf('intro')) + 1, 0, 'videos');
-  const at = order.includes('related') ? order.indexOf('related') : order.length;
-  if (guides.length > 0) order.splice(at, 0, 'guides');
+  // One shared Hydra-style journey for every service. Page-specific menus, galleries and comparisons stay together
+  // between explanation and visit steps, preserving their service detail without changing the decision flow.
+  const declared = page.order ?? DEFAULT_ORDER;
+  const coreKeys = new Set<SectionKey>(['intro', 'benefits', 'process', 'aftercare', 'offers', 'locations', 'faq', 'guides', 'related', 'videos']);
+  const serviceDetails = declared.filter((key) => !coreKeys.has(key));
+  const order: SectionKey[] = [
+    'intro',
+    ...serviceDetails,
+    'process',
+    'aftercare',
+    'offers',
+    'locations',
+    'faq',
+    ...(guides.length > 0 ? ['guides' as SectionKey] : []),
+    'related',
+  ];
+  // Clips sit with the service's visual detail, directly after its gallery when there is one.
+  const galleryAt = order.indexOf('gallery');
+  order.splice(galleryAt >= 0 ? galleryAt + 1 : 1, 0, 'videos');
   const sections = order
     .map((key) => ({ key, render: blocks[key] }))
     .filter((section): section is { key: SectionKey; render: (tone: Tone) => ReactNode } => typeof section.render === 'function');

@@ -27,7 +27,7 @@ export default function BookingPage() {
       </section>
 
       <section className="bg-cream py-12 lg:py-20">
-        <div className="container-site max-w-3xl">
+        <div className="container-site max-w-6xl">
           <div className="overflow-hidden rounded-card border border-ink/10 bg-white shadow-soft">
             <BookingFlow service={service} location={location} detail={detail} offer={offer} />
           </div>

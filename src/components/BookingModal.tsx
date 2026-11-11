@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { AnimatePresence, m } from 'framer-motion';
-import { ArrowLeft, BadgePercent, Check, CircleCheckBig, X } from 'lucide-react';
+import { ArrowLeft, BadgePercent, Check, CircleCheckBig, Tag, X } from 'lucide-react';
 import { useBooking } from '../context/booking';
-import { booking, locations, primaryLocation, site } from '../data/content';
+import { booking, locations, primaryLocation, serviceMenu, site } from '../data/content';
+import { individualOffers, type IndividualOffer } from '../data/individualOffers';
+import { services } from '../data/services';
 import { getBranch } from '../lib/branch';
 import { cn } from '../lib/cn';
 import { whatsappLink } from '../lib/whatsapp';
@@ -10,7 +12,7 @@ import { Button } from './ui/Button';
 import { WhatsAppIcon } from './ui/Decor';
 import { Modal } from './ui/Modal';
 
-const EMPTY = { service: '', location: '', date: '', time: '', name: '', phone: '' };
+const EMPTY = { services: [] as string[], location: '', date: '', time: '', name: '', phone: '' };
 type Form = typeof EMPTY;
 type Errors = Partial<Record<keyof Form, string>>;
 
@@ -21,7 +23,7 @@ const today = () => new Date().toLocaleDateString('en-CA'); // YYYY-MM-DD in loc
 
 function validate(step: number, form: Form): Errors {
   const errors: Errors = {};
-  if (step === 0 && !form.service) errors.service = 'Please choose a service.';
+  if (step === 0 && form.services.length === 0) errors.services = 'Choose at least one service to continue.';
   if (step === 1) {
     if (!form.location) errors.location = 'Please choose a salon.';
     if (!form.date) errors.date = 'Please pick a date.';
@@ -37,12 +39,101 @@ function validate(step: number, form: Form): Errors {
 
 interface ChoiceGroupProps {
   legend: string;
-  name: keyof Form;
+  name: string;
   options: readonly string[];
   value: string;
   error?: string;
   columns: string;
   onChange: (value: string) => void;
+}
+
+type BookingTab = 'offers' | 'hair-care' | 'skin-care' | 'nail-care';
+const bookingMenus = serviceMenu.filter((menu) => menu.id === 'hair-care' || menu.id === 'skin-care' || menu.id === 'nail-care');
+const bookingTabs: Array<{ id: BookingTab; label: string }> = [
+  { id: 'offers', label: 'Offers' },
+  ...bookingMenus.map((menu) => ({ id: menu.id as Exclude<BookingTab, 'offers'>, label: menu.label })),
+];
+
+function BookingSummary({ services: selectedServices, offer, compact = false }: { services: string[]; offer: string; compact?: boolean }) {
+  return (
+    <aside className={cn('rounded-card border border-ink/10 bg-blush/60 p-4', compact ? '' : 'lg:sticky lg:top-6')} aria-live="polite">
+      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-berry">Your appointment</p>
+      {offer && <p className="mt-3 flex gap-2 text-sm font-medium text-ink"><Tag aria-hidden className="mt-0.5 size-4 shrink-0 text-berry" />{offer}</p>}
+      {selectedServices.length ? (
+        <ul className="mt-3 flex flex-wrap gap-2">
+          {selectedServices.map((item) => <li key={item} className="rounded-full bg-white px-3 py-1.5 text-xs font-medium text-ink shadow-sm">{item}</li>)}
+        </ul>
+      ) : (
+        <p className="mt-3 text-sm leading-relaxed text-muted">Choose one or more services. We will confirm availability, timing and price with you.</p>
+      )}
+      {!compact && <p className="mt-4 border-t border-ink/10 pt-3 text-xs leading-relaxed text-muted">Your selections are a request, not a payment. Your Xing professional confirms the plan before the appointment.</p>}
+    </aside>
+  );
+}
+
+function ServiceBuilder({ selectedServices, selectedOffer, onToggleService, onOfferChange, error }: {
+  selectedServices: string[];
+  selectedOffer: string;
+  onToggleService: (item: string) => void;
+  onOfferChange: (offer: IndividualOffer | null) => void;
+  error?: string;
+}) {
+  const [tab, setTab] = useState<BookingTab>('offers');
+  const isSelected = (item: string) => selectedServices.includes(item);
+
+  return (
+    <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_18rem]">
+      <div>
+        <div>
+          <p className="text-sm font-semibold text-ink">Build your appointment</p>
+          <p className="mt-1 text-sm leading-relaxed text-muted">Start with an offer if it suits you, then choose one or more hair, skin or nail services.</p>
+        </div>
+        <div className="mt-5 flex gap-2 overflow-x-auto pb-1 no-scrollbar" role="tablist" aria-label="Booking choices">
+          {bookingTabs.map((item) => (
+            <button key={item.id} type="button" role="tab" aria-selected={tab === item.id} onClick={() => setTab(item.id)} className={cn('min-h-11 shrink-0 rounded-full border px-4 text-sm font-medium transition', tab === item.id ? 'border-berry bg-berry text-cream' : 'border-ink/15 bg-white text-ink hover:border-berry')}>
+              {item.label}
+            </button>
+          ))}
+        </div>
+
+        {tab === 'offers' ? (
+          <div className="mt-5">
+            <div className="flex items-start justify-between gap-4">
+              <div><h4 className="font-medium text-ink">Add one offer, if applicable</h4><p className="mt-1 text-xs leading-relaxed text-muted">Select one offer for this request. Your salon confirms eligibility before the appointment.</p></div>
+              {selectedOffer && <button type="button" onClick={() => onOfferChange(null)} className="min-h-11 shrink-0 text-xs font-medium text-berry underline underline-offset-4">Remove offer</button>}
+            </div>
+            <div className="mt-4 grid gap-3 sm:grid-cols-2">
+              {individualOffers.map((offer) => {
+                const active = selectedOffer === offer.title;
+                return <button key={offer.id} type="button" onClick={() => onOfferChange(offer)} aria-pressed={active} className={cn('rounded-xl border p-4 text-left transition hover:border-berry focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-berry', active ? 'border-berry bg-white ring-1 ring-berry' : 'border-ink/10 bg-white')}>
+                  <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-berry">{offer.category}</span>
+                  <span className="mt-1 block font-medium text-ink">{offer.title}</span>
+                  <span className="mt-1 block text-xs leading-relaxed text-muted">{offer.value}</span>
+                </button>;
+              })}
+            </div>
+          </div>
+        ) : (
+          <div className="mt-5 space-y-5">
+            {bookingMenus.find((menu) => menu.id === tab)?.sections.map((section) => (
+              <section key={section.title}>
+                <h4 className="text-sm font-semibold text-ink">{section.title}</h4>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {section.items.filter((item) => !/bridal|tattoo/i.test(item)).map((item) => (
+                    <button key={item} type="button" aria-pressed={isSelected(item)} onClick={() => onToggleService(item)} className={cn('inline-flex min-h-11 items-center gap-2 rounded-lg border px-3 py-2 text-left text-sm transition', isSelected(item) ? 'border-berry bg-berry text-cream' : 'border-ink/15 bg-white text-ink hover:border-berry')}>
+                      {isSelected(item) && <Check aria-hidden className="size-3.5 shrink-0" />}{item}
+                    </button>
+                  ))}
+                </div>
+              </section>
+            ))}
+          </div>
+        )}
+        <FieldError id="services-error" message={error} />
+      </div>
+      <BookingSummary services={selectedServices} offer={selectedOffer} />
+    </div>
+  );
 }
 
 /** Radio group rendered as selectable chips. */
@@ -95,6 +186,7 @@ interface BookingFlowProps {
 export function BookingFlow({ service = '', location = '', detail = '', offer = '', active = true, onDone }: BookingFlowProps) {
   const [step, setStep] = useState(0);
   const [form, setForm] = useState<Form>(EMPTY);
+  const [selectedOffer, setSelectedOffer] = useState('');
   const [errors, setErrors] = useState<Errors>({});
   const [sending, setSending] = useState(false);
   const [notice, setNotice] = useState('');
@@ -105,20 +197,40 @@ export function BookingFlow({ service = '', location = '', detail = '', offer = 
   useEffect(() => {
     if (!active) return;
     const asked = new URLSearchParams(window.location.search).get('salon') ?? getBranch() ?? '';
-    setForm({ ...EMPTY, service, location: location || (locations.find((loc) => loc.id === asked)?.name ?? '') });
+    const initialService = detail ? `${service}${service ? ' — ' : ''}${detail}` : service;
+    const initialOffer = individualOffers.find((item) => item.id === offer || item.title === offer)?.title ?? offer;
+    setForm({ ...EMPTY, services: initialService ? [initialService] : [], location: location || (locations.find((loc) => loc.id === asked)?.name ?? '') });
+    setSelectedOffer(initialOffer);
     setErrors({});
     setNotice('');
     setStep(0);
-  }, [active, service, location]);
+  }, [active, service, location, detail, offer]);
 
   // Announce each step change to keyboard and screen-reader users.
   useEffect(() => {
     if (active && step > 0) headingRef.current?.focus();
   }, [active, step]);
 
-  const update = (field: keyof Form) => (value: string) => {
+  const update = (field: Exclude<keyof Form, 'services'>) => (value: string) => {
     setForm((prev) => ({ ...prev, [field]: value }));
     setErrors((prev) => ({ ...prev, [field]: undefined }));
+  };
+
+  const toggleService = (item: string) => {
+    setForm((previous) => ({
+      ...previous,
+      services: previous.services.includes(item) ? previous.services.filter((selected) => selected !== item) : [...previous.services, item],
+    }));
+    setErrors((previous) => ({ ...previous, services: undefined }));
+  };
+
+  const changeOffer = (chosen: IndividualOffer | null) => {
+    setSelectedOffer(chosen?.title ?? '');
+    if (!chosen?.service) return;
+    const linkedService = services[chosen.service]?.label;
+    if (!linkedService) return;
+    setForm((previous) => previous.services.includes(linkedService) ? previous : { ...previous, services: [...previous.services, linkedService] });
+    setErrors((previous) => ({ ...previous, services: undefined }));
   };
 
   const onSubmit = async (e: FormEvent) => {
@@ -137,7 +249,7 @@ export function BookingFlow({ service = '', location = '', detail = '', offer = 
       const response = await fetch('/api/form-submit.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ type: 'appointment', ...form, detail, offer }),
+        body: JSON.stringify({ type: 'appointment', ...form, service: form.services.join(' · '), detail, offer: selectedOffer }),
       });
       const body = await response.json().catch(() => ({}));
       if (!response.ok || !body.ok) throw new Error(body.code ?? 'mail_failed');
@@ -149,14 +261,13 @@ export function BookingFlow({ service = '', location = '', detail = '', offer = 
     }
   };
 
-  // Keep the exact menu item only while the client stays on the service it belongs to.
-  const serviceLabel = detail && form.service === service ? `${form.service} (${detail})` : form.service;
-  const offerLine = offer ? ` Offer: ${offer}.` : '';
+  const serviceLabel = form.services.join(' · ');
+  const offerLine = selectedOffer ? ` Offer: ${selectedOffer}.` : '';
   const whatsappText = `Hi ${site.name}, I'd like to book ${serviceLabel || 'an appointment'} at ${form.location} on ${form.date} at ${form.time}.${offerLine} Name: ${form.name.trim()}, Phone: ${form.phone.trim()}`;
   // The confirmation message goes to the salon the client picked.
   const salon = locations.find((loc) => loc.name === form.location) ?? primaryLocation;
   const summary = [
-    ...(offer ? [['Offer', offer]] : []),
+    ...(selectedOffer ? [['Offer', selectedOffer]] : []),
     ['Service', serviceLabel],
     ['Salon', form.location],
     ['When', `${form.date} · ${form.time}`],
@@ -183,11 +294,11 @@ export function BookingFlow({ service = '', location = '', detail = '', offer = 
           )}
         </div>
 
-        {offer && step < SUCCESS_STEP && (
+        {selectedOffer && step < SUCCESS_STEP && (
           <p className="mt-4 flex items-center gap-2 rounded-card bg-blush px-4 py-3 text-sm text-ink">
             <BadgePercent aria-hidden className="size-4 shrink-0 text-berry" />
             <span>
-              Offer: <strong className="font-semibold">{offer}</strong>
+              Offer: <strong className="font-semibold">{selectedOffer}</strong>
             </span>
           </p>
         )}
@@ -259,15 +370,7 @@ export function BookingFlow({ service = '', location = '', detail = '', offer = 
                 </h3>
 
                 {step === 0 && (
-                  <ChoiceGroup
-                    legend="Which service would you like?"
-                    name="service"
-                    options={booking.services}
-                    value={form.service}
-                    error={errors.service}
-                    columns="grid-cols-2 sm:grid-cols-3"
-                    onChange={update('service')}
-                  />
+                  <ServiceBuilder selectedServices={form.services} selectedOffer={selectedOffer} onToggleService={toggleService} onOfferChange={changeOffer} error={errors.services} />
                 )}
 
                 {step === 1 && (

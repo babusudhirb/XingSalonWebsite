@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { AnimatePresence, m } from 'framer-motion';
-import { ArrowLeft, BadgePercent, Check, CircleCheckBig, Tag, X } from 'lucide-react';
+import { ArrowLeft, BadgePercent, Check, ChevronDown, CircleCheckBig, Tag, X } from 'lucide-react';
 import { useBooking } from '../context/booking';
 import { booking, locations, primaryLocation, site } from '../data/content';
 import { getBranch } from '../lib/branch';
@@ -73,7 +73,20 @@ const bookingMenus: Array<{ id: Exclude<BookingTab, 'offers'>; label: string; se
     ],
   },
 ];
-const bookingOffers = ['Hair Colour Offer', 'Hair Treatment Offer', 'Skin Care Offer', 'Celebration, Membership & Gift Card'];
+const bookingOffers = [
+  { id: 'offer-hair-colour', title: 'Hair Colour Offers', items: [
+    ['Balayage Offer', 'Soft, blended brightness'], ['Highlights Offer', 'Brighter, dimensional strands'], ['Global Hair Colour Offer', 'An all-over shade refresh'], ['Crazy Fashion Colour Offer', 'Bold, creative colour'],
+  ] },
+  { id: 'offer-hair-treatments', title: 'Hair Treatment Offers', items: [
+    ['Keratin Treatment Offer', 'Smoother, more manageable hair'], ['Straightening & Smoothening Offer', 'A sleek, controlled finish'], ['Nanoplastia Offer', 'A natural-looking smoother result'], ['Olaplex Bond Repair Offer', 'Care for stressed or coloured hair'],
+  ] },
+  { id: 'offer-skin-care', title: 'Skin Care Offers', items: [
+    ['Hydra Facial Offer', 'Deep cleansing and hydration'], ['Body Polish Offer', 'A full-body refresh'], ['Hair Spa 2 + 1 Offer', 'Nourishing regular hair care'], ['Anti-Aging Facial Offer', 'Targeted, refreshing skin care'],
+  ] },
+  { id: 'offer-celebrations', title: 'Celebrations & Value', items: [
+    ['Birthday Offer', 'A salon treat for your birthday week'], ['Anniversary Offer', 'Plan a shared celebration'], ['Xing Membership', 'More value for regular care'], ['Xing Gift Card', 'A thoughtful salon gift'],
+  ] },
+];
 const bookingTabs: Array<{ id: BookingTab; label: string }> = [
   { id: 'offers', label: 'Offers' },
   ...bookingMenus.map((menu) => ({ id: menu.id as Exclude<BookingTab, 'offers'>, label: menu.label })),
@@ -104,7 +117,13 @@ function ServiceBuilder({ selectedServices, selectedOffer, onToggleService, onOf
   error?: string;
 }) {
   const [tab, setTab] = useState<BookingTab>('offers');
+  const [openSection, setOpenSection] = useState('offer-hair-colour');
   const isSelected = (item: string) => selectedServices.includes(item);
+  const chooseTab = (next: BookingTab) => {
+    setTab(next);
+    if (next === 'offers') setOpenSection('offer-hair-colour');
+    else setOpenSection(`${next}-${bookingMenus.find((menu) => menu.id === next)?.sections[0]?.title ?? ''}`);
+  };
 
   return (
     <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_18rem]">
@@ -115,46 +134,57 @@ function ServiceBuilder({ selectedServices, selectedOffer, onToggleService, onOf
         </div>
         <div className="mt-5 flex gap-2 overflow-x-auto pb-1 no-scrollbar" role="tablist" aria-label="Booking choices">
           {bookingTabs.map((item) => (
-            <button key={item.id} type="button" role="tab" aria-selected={tab === item.id} onClick={() => setTab(item.id)} className={cn('min-h-11 shrink-0 rounded-full border px-4 text-sm font-medium transition', tab === item.id ? 'border-berry bg-berry text-cream' : 'border-ink/15 bg-white text-ink hover:border-berry')}>
+            <button key={item.id} type="button" role="tab" aria-selected={tab === item.id} onClick={() => chooseTab(item.id)} className={cn('min-h-11 shrink-0 rounded-full border px-4 text-sm font-medium transition', tab === item.id ? 'border-berry bg-berry text-cream' : 'border-ink/15 bg-white text-ink hover:border-berry')}>
               {item.label}
             </button>
           ))}
         </div>
+        <div className="mt-4 lg:hidden"><BookingSummary services={selectedServices} offer={selectedOffer} compact /></div>
 
         {tab === 'offers' ? (
-          <div className="mt-5">
-            <div className="flex items-start justify-between gap-4">
-              <h4 className="font-medium text-ink">Add an offer, if applicable</h4>
+          <div className="mt-5 space-y-2">
+            <div className="flex items-center justify-between gap-4">
+              <p className="text-sm font-medium text-ink">Choose an offer</p>
               {selectedOffer && <button type="button" onClick={() => onOfferChange(null)} className="min-h-11 shrink-0 text-xs font-medium text-berry underline underline-offset-4">Remove offer</button>}
             </div>
-            <div className="mt-4 flex flex-wrap gap-2">
-              {bookingOffers.map((offer) => (
-                <button key={offer} type="button" onClick={() => onOfferChange(offer)} aria-pressed={selectedOffer === offer} className={cn('inline-flex min-h-11 items-center rounded-lg border px-3 py-2 text-sm transition', selectedOffer === offer ? 'border-berry bg-berry text-cream' : 'border-ink/15 bg-white text-ink hover:border-berry')}>
-                  {offer}
+            {bookingOffers.map((group) => {
+              const open = openSection === group.id;
+              return <section key={group.id} className="overflow-hidden rounded-xl border border-ink/10 bg-white">
+                <button type="button" onClick={() => setOpenSection(open ? '' : group.id)} aria-expanded={open} className="flex min-h-12 w-full items-center justify-between gap-3 px-4 text-left text-sm font-semibold text-ink">
+                  {group.title}<ChevronDown aria-hidden className={cn('size-4 shrink-0 transition-transform', open && 'rotate-180')} />
                 </button>
-              ))}
-            </div>
+                {open && <div className="grid gap-2 border-t border-ink/10 p-3">
+                  {group.items.map(([name, detail]) => <button key={name} type="button" onClick={() => onOfferChange(name)} aria-pressed={selectedOffer === name} className={cn('flex min-h-11 items-center justify-between gap-3 rounded-lg border px-3 py-2 text-left transition', selectedOffer === name ? 'border-berry bg-berry text-cream' : 'border-ink/10 bg-cream/40 text-ink hover:border-berry')}>
+                    <span className="text-sm font-medium">{name}</span><span className={cn('text-xs text-right', selectedOffer === name ? 'text-cream/85' : 'text-muted')}>{detail}</span>
+                  </button>)}
+                </div>}
+              </section>;
+            })}
           </div>
         ) : (
-          <div className="mt-5 space-y-5">
-            {bookingMenus.find((menu) => menu.id === tab)?.sections.map((section) => (
-              <section key={section.title}>
-                <h4 className="text-sm font-semibold text-ink">{section.title}</h4>
-                <div className="mt-3 flex flex-wrap gap-2">
+          <div className="mt-5 space-y-2">
+            {bookingMenus.find((menu) => menu.id === tab)?.sections.map((section) => {
+              const id = `${tab}-${section.title}`;
+              const open = openSection === id;
+              return <section key={section.title} className="overflow-hidden rounded-xl border border-ink/10 bg-white">
+                <button type="button" onClick={() => setOpenSection(open ? '' : id)} aria-expanded={open} className="flex min-h-12 w-full items-center justify-between gap-3 px-4 text-left text-sm font-semibold text-ink">
+                  {section.title}<ChevronDown aria-hidden className={cn('size-4 shrink-0 transition-transform', open && 'rotate-180')} />
+                </button>
+                {open && <div className="flex flex-wrap gap-2 border-t border-ink/10 p-3">
                   {section.items.map((item) => {
                     const selection = `${section.title} — ${item}`;
                     return <button key={item} type="button" aria-pressed={isSelected(selection)} onClick={() => onToggleService(selection)} className={cn('inline-flex min-h-11 items-center gap-2 rounded-lg border px-3 py-2 text-left text-sm transition', isSelected(selection) ? 'border-berry bg-berry text-cream' : 'border-ink/15 bg-white text-ink hover:border-berry')}>
                       {isSelected(selection) && <Check aria-hidden className="size-3.5 shrink-0" />}{item}
                     </button>
                   })}
-                </div>
-              </section>
-            ))}
+                </div>}
+              </section>;
+            })}
           </div>
         )}
         <FieldError id="services-error" message={error} />
       </div>
-      <BookingSummary services={selectedServices} offer={selectedOffer} />
+      <div className="hidden lg:block"><BookingSummary services={selectedServices} offer={selectedOffer} /></div>
     </div>
   );
 }

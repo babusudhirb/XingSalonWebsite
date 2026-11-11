@@ -51,7 +51,6 @@ export const individualOffers: IndividualOffer[] = [
     ...serviceOffer('keratin', 'Hair Treatments', 'Hair Keratin', 'Flat · any length', '₹4,999', photo('keratin-offer', 'Hair keratin offer at Xing Salon: ₹4,999 at any length'), 'keratin-treatment', '2–3 hours', ['Hair consultation', 'Treatment plan', 'Keratin application', 'Aftercare guidance'], ['Frizz control', 'A smoother finish', 'Easier daily styling']),
     description: 'A professional keratin treatment for smoother hair, frizz control and long-lasting manageability.',
   },
-  serviceOffer('straightening-smoothening', 'Hair Treatments', 'Straightening & Smoothening Offer', 'Sleek, manageable hair', 'Choose the right smoothing direction after a hair assessment.', photo('keratin', 'Smooth hair treatment at Xing Salon'), 'hair-smoothening', '2–3 hours', ['Hair assessment', 'Treatment recommendation', 'Professional application', 'Aftercare guidance'], ['Persistent frizz', 'A sleeker look', 'Simpler styling']),
   {
     ...serviceOffer('nanoplastia', 'Hair Treatments', 'Hair Nanoplastia', 'Sleeker. Smoother. Stronger.', 'Starting from ₹5,999', photo('nanoplastia-offer', 'Hair Nanoplastia offer at Xing Salon, starting from ₹5,999'), 'nanoplastia', '2–3 hours', ['Hair consultation', 'Texture assessment', 'Treatment application', 'Care plan'], ['Wavy or curly hair', 'A natural smoother finish', 'Easy styling']),
     description: 'A smoothing option chosen around your texture for frizz control, natural shine and lasting smoothness.',

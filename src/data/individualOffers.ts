@@ -31,8 +31,14 @@ const serviceOffer = (id: string, category: IndividualOfferCategory, title: stri
 });
 
 export const individualOffers: IndividualOffer[] = [
-  serviceOffer('global-hair-colour', 'Hair Colour', 'Global Hair Colour Offer', 'An all-over refresh', 'One even shade, tailored in consultation.', photo('global-hair-colour', 'Global hair colour at Xing Salon'), 'global-hair-color', '1–2 hours', ['Colour consultation', 'Shade selection', 'All-over colour application', 'Finish styling'], ['Grey coverage', 'Refreshing faded colour', 'A complete colour change']),
-  serviceOffer('highlights', 'Hair Colour', 'Highlights Offer', 'Light and dimension', 'Brighter strands placed to flatter your natural hair.', photo('highlights', 'Hair highlights at Xing Salon'), 'highlights', '2–3 hours', ['Colour consultation', 'Placement plan', 'Lightening and toning where needed', 'Finish styling'], ['A first step into colour', 'Adding brightness', 'Dimension without all-over colour']),
+  {
+    ...serviceOffer('global-hair-colour', 'Hair Colour', 'Global Hair Colour', 'Any-length offer', '₹3,999 · Save ₹2,000', photo('global-hair-colour-offer', 'Global hair colour offer at Xing Salon: ₹3,999 at any length, saving ₹2,000'), 'global-hair-color', '1–2 hours', ['Colour consultation', 'Shade selection', 'All-over colour application', 'Finish styling'], ['Grey coverage', 'Refreshing faded colour', 'A complete colour change']),
+    description: 'One even, all-over shade selected in consultation for your hair goals, skin tone and desired finish.',
+  },
+  {
+    ...serviceOffer('highlights', 'Hair Colour', 'Hair Highlights', 'Limited-time offer', '40% off · ₹399 per streak', photo('highlights-offer', 'Hair highlights offer at Xing Salon: ₹399 per streak with 40% off'), 'highlights', '2–3 hours', ['Colour consultation', 'Placement plan', 'Lightening and toning where needed', 'Finish styling'], ['A first step into colour', 'Adding brightness', 'Dimension without all-over colour']),
+    description: 'Brighter, dimensional strands with 8–10 streaks recommended for a beautifully blended result.',
+  },
   {
     ...serviceOffer('balayage', 'Hair Colour', 'Premium Balayage Hair Colour', 'Premium quality. Stunning results.', 'Starting from ₹5,499', photo('balayage-offer', 'Premium balayage hair colour offer at Xing Salon, starting from ₹5,499'), 'balayage', '2–3 hours', ['Colour consultation', 'Personalised placement', 'Toning where needed', 'Finish styling'], ['Low-maintenance colour', 'Soft brightness', 'A lived-in dimension']),
     description: 'Hand-painted, dimensional colour designed around your inspiration, skin tone and preferred finish.',
@@ -41,14 +47,39 @@ export const individualOffers: IndividualOffer[] = [
     ...serviceOffer('crazy-fashion-colour', 'Hair Colour', 'Crazy Hair Colour', 'Limited-time offer', 'Flat 40% off · ₹499 per streak', photo('crazy-fashion-offer', 'Crazy hair colour offer at Xing Salon: ₹499 per streak with 40% off'), 'fashion-color', '3–5 hours', ['Colour consultation', 'Shade and placement plan', 'Colour application', 'Finish styling'], ['A bold change', 'Creative streaks', 'Statement colour']),
     description: 'Bold, creative colour streaks in shades chosen around your look, with expert placement and finish styling.',
   },
-  serviceOffer('keratin', 'Hair Treatments', 'Keratin Treatment Offer', 'Smooth. Strong. Polished.', 'A consultation-led smoothing treatment for more manageable hair.', photo('keratin', 'Keratin treatment at Xing Salon'), 'keratin-treatment', '2–3 hours', ['Hair consultation', 'Treatment plan', 'Keratin application', 'Aftercare guidance'], ['Frizz control', 'A smoother finish', 'Easier daily styling']),
+  {
+    ...serviceOffer('keratin', 'Hair Treatments', 'Hair Keratin', 'Flat · any length', '₹4,999', photo('keratin-offer', 'Hair keratin offer at Xing Salon: ₹4,999 at any length'), 'keratin-treatment', '2–3 hours', ['Hair consultation', 'Treatment plan', 'Keratin application', 'Aftercare guidance'], ['Frizz control', 'A smoother finish', 'Easier daily styling']),
+    description: 'A professional keratin treatment for smoother hair, frizz control and long-lasting manageability.',
+  },
   serviceOffer('straightening-smoothening', 'Hair Treatments', 'Straightening & Smoothening Offer', 'Sleek, manageable hair', 'Choose the right smoothing direction after a hair assessment.', photo('keratin', 'Smooth hair treatment at Xing Salon'), 'hair-smoothening', '2–3 hours', ['Hair assessment', 'Treatment recommendation', 'Professional application', 'Aftercare guidance'], ['Persistent frizz', 'A sleeker look', 'Simpler styling']),
-  serviceOffer('nanoplastia', 'Hair Treatments', 'Nanoplastia Offer', 'Sleeker. Smoother. Stronger.', 'A smoothing option selected around your texture and desired finish.', photo('nanoplastia', 'Nanoplastia hair treatment at Xing Salon'), 'nanoplastia', '2–3 hours', ['Hair consultation', 'Texture assessment', 'Treatment application', 'Care plan'], ['Wavy or curly hair', 'A natural smoother finish', 'Easy styling']),
-  serviceOffer('olaplex-bond-repair', 'Hair Treatments', 'Olaplex Bond Repair Offer', 'Stronger. Healthier. Shinier.', 'Bond-repair care for hair that needs a considered recovery plan.', photo('olaplex', 'Olaplex bond repair at Xing Salon'), 'olaplex-bond-repair', 'About 60 minutes', ['Hair assessment', 'Bond-repair treatment', 'Conditioning care', 'Aftercare advice'], ['Colour-treated hair', 'Heat-stressed hair', 'A softness and strength reset']),
-  serviceOffer('hydra-facial', 'Skin & Care', 'Hydra Facial Offer', 'Deep cleanse. Hydrate. Radiate.', 'A consultation-led facial for fresh, hydrated-looking skin.', photo('hydra-facial', 'Hydra Facial at Xing Salon'), 'hydra-facial', '60–90 minutes', ['Skin check', 'Cleanse and exfoliation', 'Pore care and hydration', 'Glow finish'], ['Dull-looking skin', 'A pre-event reset', 'Dehydrated skin']),
-  serviceOffer('body-polish', 'Skin & Care', 'Body Polish Offer', 'Smooth. Radiant. Refreshing.', 'A full-body polishing ritual for softer, refreshed-looking skin.', photo('body-polish', 'Body polish at Xing Salon'), 'body-polish', '2–3 hours', ['Consultation', 'Exfoliation', 'Polishing ritual', 'Moisture finish'], ['Dry-looking skin', 'A special occasion', 'A full-body reset']),
-  serviceOffer('hair-spa', 'Skin & Care', 'Hair Spa 2 + 1 Offer', 'Relax. Repair. Rejuvenate.', 'Nourishing care to condition and restore softness through a planned series.', photo('hair-spa', 'Hair spa at Xing Salon'), 'moroccan-hair-spa', 'About 60 minutes per visit', ['Hair and scalp check', 'Nourishing spa care', 'Relaxing finish', 'Home-care guidance'], ['Dry or stressed hair', 'Regular hair care', 'A restorative routine']),
-  serviceOffer('anti-aging-facial', 'Skin & Care', 'Anti-Aging Facial Offer', 'Nourish. Smooth. Refresh.', 'Targeted facial care for a visibly refreshed, cared-for finish.', photo('express-facial', 'Anti-aging facial at Xing Salon'), 'express-facial', '45–90 minutes', ['Skin check', 'Cleanse and treatment', 'Nourishing care', 'Aftercare guidance'], ['A refreshed look', 'Dry or tired-looking skin', 'A regular skin-care ritual']),
+  {
+    ...serviceOffer('nanoplastia', 'Hair Treatments', 'Hair Nanoplastia', 'Sleeker. Smoother. Stronger.', 'Starting from ₹5,999', photo('nanoplastia-offer', 'Hair Nanoplastia offer at Xing Salon, starting from ₹5,999'), 'nanoplastia', '2–3 hours', ['Hair consultation', 'Texture assessment', 'Treatment application', 'Care plan'], ['Wavy or curly hair', 'A natural smoother finish', 'Easy styling']),
+    description: 'A smoothing option chosen around your texture for frizz control, natural shine and lasting smoothness.',
+  },
+  {
+    ...serviceOffer('olaplex-bond-repair', 'Hair Treatments', 'Olaplex Bond Repair Treatment', 'Stronger. Healthier. Shinier.', '₹2,999', photo('olaplex-offer', 'Olaplex bond repair treatment offer at Xing Salon: ₹2,999'), 'olaplex-bond-repair', 'About 60 minutes', ['Hair assessment', 'Bond-repair treatment', 'Conditioning care', 'Aftercare advice'], ['Colour-treated hair', 'Heat-stressed hair', 'A softness and strength reset']),
+    description: 'Targeted bond-repair care that helps improve strength, elasticity, smoothness and shine.',
+  },
+  {
+    ...serviceOffer('hydra-facial', 'Skin & Care', 'Hydra Facial', 'Complete 6-step process', '35% off · ₹3,499', photo('hydra-facial-offer', 'Hydra Facial offer at Xing Salon: ₹3,499 with 35% off'), 'hydra-facial', '60–90 minutes', ['Skin check', 'Cleanse and exfoliation', 'Pore care and hydration', 'Glow finish'], ['Dull-looking skin', 'A pre-event reset', 'Dehydrated skin']),
+    description: 'A six-step facial with deep cleansing, pore care and intense hydration for glowing, radiant-looking skin.',
+  },
+  {
+    ...serviceOffer('body-polish', 'Skin & Care', 'Head-to-Toe Body Polish', 'Smooth. Radiant. Refreshingly you.', '₹4,999', photo('body-polish-offer', 'Head-to-toe body polish offer at Xing Salon: ₹4,999'), 'body-polish', '2–3 hours', ['Consultation', 'Exfoliation', 'Polishing ritual', 'Moisture finish'], ['Dry-looking skin', 'A special occasion', 'A full-body reset']),
+    description: 'A relaxing full-body ritual with deep exfoliation to lift tan and dullness, leaving skin softer and glowing.',
+  },
+  {
+    ...serviceOffer('hair-spa', 'Hair Treatments', 'Hair Spa 2 + 1 Offer', 'Relax. Repair. Rejuvenate.', 'Starting from ₹1,999', photo('hair-spa-offer', 'Hair Spa 2 plus 1 offer at Xing Salon, starting from ₹1,999'), 'moroccan-hair-spa', 'About 60 minutes per visit', ['Hair and scalp check', 'Nourishing spa care', 'Relaxing finish', 'Home-care guidance'], ['Dry or stressed hair', 'Regular hair care', 'A restorative routine']),
+    description: 'A nourishing hair-spa series to deeply condition hair, improve softness and add a healthy-looking shine.',
+  },
+  {
+    ...serviceOffer('anti-dandruff-scalp-treatment', 'Hair Treatments', 'Anti-Dandruff Scalp Treatment', 'Cleanse. Soothe. Revive.', '₹1,999', photo('anti-dandruff-scalp-offer', 'Anti-dandruff scalp treatment offer at Xing Salon: ₹1,999'), 'anti-dandruff-hair-spa', 'About 60 minutes', ['Scalp assessment', 'Targeted anti-dandruff care', 'Soothing scalp treatment', 'Aftercare guidance'], ['Visible dandruff', 'An irritated scalp', 'A cleaner scalp reset']),
+    description: 'A scalp-focused treatment to help remove dandruff, soothe irritation and leave hair feeling refreshed.',
+  },
+  {
+    ...serviceOffer('anti-aging-facial', 'Skin & Care', 'Monthly Express Facial', 'Monthly facial offer', '₹2,499', photo('monthly-facial-offer', 'Monthly Express Facial offer at Xing Salon: ₹2,499'), 'express-facial', '45–90 minutes', ['Skin check', 'Cleanse and treatment', 'Nourishing care', 'Aftercare guidance'], ['A refreshed look', 'Dry or tired-looking skin', 'A regular skin-care ritual']),
+    description: 'A six-step express facial with deep cleansing, intense hydration and a healthy, radiant-looking finish.',
+  },
   {
     id: 'birthday', category: 'Celebrations & Value', title: 'Birthday Offer', kicker: 'Make your birthday your salon day', value: 'A celebratory salon treat, planned around you.', description: 'Book a service around your birthday and let the salon confirm the applicable celebration benefit.', image: { src: '/images/birthday-offer.png', width: 800, height: 600, alt: 'Xing Birthday offer' }, duration: 'Confirmed with your salon', includes: ['Birthday consultation', 'Service recommendation', 'Celebration benefit confirmation', 'Booking support'], bestFor: ['Your birthday week', 'A self-care plan', 'Celebrating with friends'], terms: ['Valid within seven days of your birthday.', 'Monday to Thursday only; show ID at the salon and book ahead where possible.'], faqs: [{ q: 'When can I use the birthday offer?', a: 'It is valid within seven days of your birthday, subject to salon confirmation.' }, { q: 'Do I need proof of my birthday?', a: 'Please carry a valid ID to the salon.' }],
   },

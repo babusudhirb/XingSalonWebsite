@@ -1,6 +1,6 @@
 import { Check } from 'lucide-react';
 import type { IndividualOffer } from '../data/individualOffers';
-import { individualOfferPath, individualOffers } from '../data/individualOffers';
+import { individualOfferPath, individualOffers, OFFER_IMAGE_FRAME } from '../data/individualOffers';
 import { bookingPath } from '../data/bookingLinks';
 import { Button } from '../components/ui/Button';
 import { Eyebrow, Picture } from '../components/ui/Primitives';
@@ -14,7 +14,7 @@ export default function IndividualOfferPage({ offer }: { offer: IndividualOffer 
       <section className="bg-blush pb-14 pt-header-sm lg:pb-20 lg:pt-header">
         <div className="container-site grid gap-8 lg:grid-cols-12 lg:items-center">
           <div className="lg:col-span-7"><Eyebrow>{offer.category} offer</Eyebrow><h1 className="mt-3 max-w-3xl text-balance font-display text-hero font-medium leading-[1.05] text-ink">{offer.title}</h1><p className="mt-4 text-xl font-medium text-berry">{offer.value}</p><p className="mt-5 max-w-2xl text-base leading-relaxed text-muted">{offer.description}</p><div className="mt-7 flex flex-col gap-3 sm:flex-row"><Button href={book}>Book this offer</Button><Button href="/offers" variant="outline">See all offers</Button></div></div>
-          <Picture image={offer.image} eager priority sizes="(min-width:1024px) 40vw, 90vw" className="aspect-[4/3] w-full rounded-card object-cover shadow-soft lg:col-span-5" />
+          <Picture image={offer.image} eager priority sizes="(min-width:1024px) 40vw, 90vw" className={`${OFFER_IMAGE_FRAME} rounded-card shadow-soft lg:col-span-5`} />
         </div>
       </section>
       <section className="bg-cream py-14 lg:py-20"><div className="container-site grid gap-10 lg:grid-cols-2"><div><Eyebrow>What is included</Eyebrow><h2 className="heading mt-3">A plan with clarity from the start.</h2><ul className="mt-7 space-y-3">{offer.includes.map((item) => <li key={item} className="flex gap-3 text-sm leading-relaxed text-ink"><Check className="mt-0.5 size-4 shrink-0 text-berry" />{item}</li>)}</ul></div><div className="rounded-card border border-ink/10 bg-white p-6 shadow-soft"><p className="text-sm font-semibold text-berry">Good to know</p><dl className="mt-5 divide-y divide-ink/10"><div className="py-3"><dt className="text-xs font-semibold uppercase tracking-wide text-muted">Estimated time</dt><dd className="mt-1 font-display text-2xl text-ink">{offer.duration}</dd></div><div className="py-3"><dt className="text-xs font-semibold uppercase tracking-wide text-muted">Ideal for</dt><dd className="mt-2 flex flex-wrap gap-2">{offer.bestFor.map((item) => <span key={item} className="rounded-full bg-blush px-3 py-1 text-xs text-berrydark">{item}</span>)}</dd></div></dl></div></div></section>

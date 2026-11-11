@@ -1,6 +1,6 @@
 import { CalendarHeart, CheckCircle2, Sparkles } from 'lucide-react';
 import { Button } from '../components/ui/Button';
-import { individualOfferById, individualOfferPath } from '../data/individualOffers';
+import { individualOfferById, individualOfferPath, OFFER_IMAGE_FRAME } from '../data/individualOffers';
 
 const celebrationOffers = ['birthday', 'anniversary'].map((id) => individualOfferById(id)!).filter(Boolean);
 
@@ -31,7 +31,7 @@ export default function CelebrationOffersPage() {
         <div className="container-site space-y-10 lg:space-y-16">
           {celebrationOffers.map((offer, index) => (
             <article id={offer.id} key={offer.id} className="grid scroll-mt-28 overflow-hidden rounded-card border border-ink/10 bg-white shadow-soft lg:grid-cols-2">
-              <img src={offer.image.src} alt={offer.image.alt ?? ''} width={offer.image.width} height={offer.image.height} loading={index === 0 ? 'eager' : 'lazy'} decoding="async" className="h-full min-h-64 w-full object-cover" />
+              <img src={offer.image.src} alt={offer.image.alt ?? ''} width={offer.image.width} height={offer.image.height} loading={index === 0 ? 'eager' : 'lazy'} decoding="async" className={OFFER_IMAGE_FRAME} />
               <div className="flex flex-col justify-center p-7 sm:p-10 lg:p-12">
                 <p className="text-sm font-semibold uppercase tracking-[0.18em] text-berry">{offer.kicker}</p>
                 <h2 className="mt-3 font-display text-5xl leading-none text-ink sm:text-6xl">{offer.title}</h2>

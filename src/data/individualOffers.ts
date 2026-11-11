@@ -59,6 +59,8 @@ export const individualOffers: IndividualOffer[] = [
 
 export const individualOfferPath = (id: string) => `/offers/${id}`;
 export const individualOfferById = (id: string) => individualOffers.find((offer) => offer.id === id);
+/** One consistent crop for every current-offer card or hero image. */
+export const OFFER_IMAGE_FRAME = 'aspect-square w-full object-cover';
 
 /** Keeps repeated offer slots fresh while remaining stable for a particular page and its prerendered HTML. */
 export function rotatedIndividualOffers(seed: string, count = individualOffers.length) {

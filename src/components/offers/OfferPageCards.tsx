@@ -1,6 +1,6 @@
 import { ArrowRight } from 'lucide-react';
 import { salonById } from '../../data/branches';
-import { individualOfferPath, rotatedIndividualOffers, type IndividualOffer, type IndividualOfferCategory } from '../../data/individualOffers';
+import { individualOfferPath, OFFER_IMAGE_FRAME, rotatedIndividualOffers, type IndividualOffer, type IndividualOfferCategory } from '../../data/individualOffers';
 import type { BranchId } from '../../data/offers';
 import { cn } from '../../lib/cn';
 import { Section, SectionHeader } from '../service/SectionHeader';
@@ -11,7 +11,7 @@ import { SnapRow } from '../ui/SnapRow';
 function OfferPageCard({ offer, className, salon }: { offer: IndividualOffer; className?: string; salon?: BranchId }) {
   return (
     <a href={individualOfferPath(offer.id)} data-cta={`offer-card-${offer.id}`} className={cn('svc-card svc-card-hover group flex h-full flex-col overflow-hidden', className)}>
-      <Picture image={offer.image} sizes="(min-width: 1024px) 30vw, (min-width: 768px) 45vw, 80vw" className="aspect-[4/5] w-full object-cover" />
+      <Picture image={offer.image} sizes="(min-width:1024px) 23rem, (min-width:640px) 24rem, 82vw" className={OFFER_IMAGE_FRAME} />
       <div className="flex flex-1 flex-col p-5">
         <h3 className="flex items-center justify-between gap-3 font-display text-2xl font-medium text-ink">
           {offer.title}

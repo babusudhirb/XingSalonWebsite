@@ -1,10 +1,7 @@
 // The Offers, Gifts and Salons menus, for the desktop header and the mobile drawer.
 import { locations, salonsPath } from './branches';
-import { celebrationOffersPath } from './celebrationOffers';
 import type { Img } from './content';
-import { membershipPath } from './membershipLinks';
-import type { BranchId } from './offers';
-import { salonOfferPages, type OfferPageId } from './staticOfferPages';
+import { individualOfferPath, individualOffers } from './individualOffers';
 
 
 export interface NavMenuItem {
@@ -29,33 +26,14 @@ export interface NavMenu {
   feature?: { image: Img; title: string; button: string; href: string };
 }
 
-/** Under Offers whether or not a campaign is running. */
-const GIFT_ITEMS: NavMenuItem[] = [
-  { label: 'Birthday & Anniversary Offers', href: celebrationOffersPath, divider: true },
-  { label: 'Membership Offers', href: `${membershipPath}#membership` },
-  { label: 'Gift Cards', href: `${membershipPath}#gift-cards` },
-];
-
-const OFFER_LINKS: { id: OfferPageId; label: string }[] = [
-  { id: 'hair-colour', label: 'Hair colour' },
-  { id: 'hair-treatment', label: 'Hair treatment' },
-  { id: 'skin-care', label: 'Skin care' },
-];
-
-/** One item per treatment: people choose what they want first, then their salon. */
+/** The menu is derived from the same catalogue as every offer card, so it cannot become stale. */
 export const offersMenu = (): NavMenu => ({
   title: 'Offers',
-  items: [
-    ...OFFER_LINKS.map((offer) => ({
-      label: offer.label,
-      href: salonOfferPages['hsr-layout'][offer.id],
-      links: locations.map((salon) => {
-        if (salon.id === 'brookfield') return { label: 'Xing Brookfield', href: 'https://xingsalon.com/' };
-        return { label: `Xing ${salon.name}`, href: salonOfferPages[salon.id as BranchId][offer.id] };
-      }),
-    })),
-    ...GIFT_ITEMS,
-  ],
+  items: [...new Set(individualOffers.map((offer) => offer.category))].map((category, index) => {
+    const offers = individualOffers.filter((offer) => offer.category === category);
+    return { label: category, href: individualOfferPath(offers[0].id), divider: index > 0, links: offers.map((offer) => ({ label: offer.title, href: individualOfferPath(offer.id) })) };
+  }),
+  viewAll: { label: 'View all offers', href: '/offers' },
 });
 
 export const salonsMenu: NavMenu = {

@@ -1,6 +1,6 @@
 import { ArrowRight } from 'lucide-react';
 import { bookingPath } from '../data/bookingLinks';
-import { individualOfferPath, individualOffers, type IndividualOffer } from '../data/individualOffers';
+import { individualOfferPath, individualOffers, OFFER_IMAGE_FRAME, type IndividualOffer } from '../data/individualOffers';
 import { Button } from './ui/Button';
 import { Picture } from './ui/Primitives';
 import { Section, SectionHeader } from './service/SectionHeader';
@@ -23,7 +23,7 @@ export function HomepageOffers() {
         <SnapRow carousel autoPlayMs={10_000} itemWidth="w-[82%] sm:w-[24rem] lg:w-[23rem]" label="Current salon offers">
         {individualOffers.map((offer) => (
           <article key={offer.id} className="svc-card flex h-full flex-col overflow-hidden bg-white">
-            <Picture image={offer.image} sizes="(min-width:1024px) 30vw, (min-width:640px) 45vw, 90vw" className="aspect-[4/3] w-full object-cover" />
+            <Picture image={offer.image} sizes="(min-width:1024px) 23rem, (min-width:640px) 24rem, 82vw" className={OFFER_IMAGE_FRAME} />
             <div className="flex flex-1 flex-col p-5">
               <p className="text-xs font-semibold uppercase tracking-wide text-berry">{offerLabel(offer)}</p>
               <h3 className="mt-2 font-display text-3xl font-medium leading-tight text-ink">{offer.title}</h3>

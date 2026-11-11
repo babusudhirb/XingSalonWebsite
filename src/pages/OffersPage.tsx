@@ -2,18 +2,12 @@ import { useMemo, useState } from 'react';
 import { Check } from 'lucide-react';
 import { bookingPath } from '../data/bookingLinks';
 import { offersPage } from '../data/offersPage';
-import { individualOfferPath, individualOffers, type IndividualOfferCategory } from '../data/individualOffers';
+import { individualOfferPath, individualOffers, OFFER_IMAGE_FRAME } from '../data/individualOffers';
 import { Button } from '../components/ui/Button';
 import { Eyebrow, Picture } from '../components/ui/Primitives';
 import { cn } from '../lib/cn';
 
-const filters: Array<{ id: 'all' | IndividualOfferCategory; label: string }> = [
-  { id: 'all', label: 'All offers' },
-  { id: 'Hair Colour', label: 'Hair colour' },
-  { id: 'Hair Treatments', label: 'Hair treatments' },
-  { id: 'Skin & Care', label: 'Skin & care' },
-  { id: 'Celebrations & Value', label: 'Celebrations & value' },
-];
+const filters = [{ id: 'all', label: 'All offers' }, ...[...new Set(individualOffers.map((offer) => offer.category))].map((category) => ({ id: category, label: category }))] as const;
 
 /** A focused, shareable campaign page for GMB, paid campaigns and direct links. */
 export default function OffersPage() {
@@ -49,7 +43,7 @@ export default function OffersPage() {
           </div>
           <ul className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {offers.map((offer) => <li key={offer.id} id={offer.id} className="overflow-hidden rounded-card border border-ink/10 bg-white shadow-soft">
-              <Picture image={offer.image} sizes="(min-width:1024px) 30vw, (min-width:640px) 45vw, 90vw" className="aspect-[4/3] w-full object-cover" />
+              <Picture image={offer.image} sizes="(min-width:1024px) 30vw, (min-width:640px) 45vw, 90vw" className={OFFER_IMAGE_FRAME} />
               <div className="p-5"><p className="text-sm font-semibold text-berry">{offer.kicker}</p><h3 className="mt-1 font-display text-3xl font-medium text-ink">{offer.title}</h3><p className="mt-2 text-sm leading-relaxed text-muted">{offer.description}</p><p className="mt-4 text-sm font-medium text-berry">{offer.value}</p><Button href={individualOfferPath(offer.id)} className="mt-5 w-full">View offer</Button></div>
             </li>)}
           </ul>

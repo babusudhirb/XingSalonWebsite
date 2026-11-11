@@ -38,7 +38,7 @@ interface MobileMenuProps {
 
 const SWIPE_PX = 60;
 const SLIDE_S = 0.22;
-const categoryLinkLabel = (title: string) => `View ${title} Services`;
+const categoryLinkLabel = (title: string) => `View ${title.replace(' Care', '')} Services`;
 
 /** A level's top row: Back (or the logo), its title, and Close. Stays put while the level scrolls under it. */
 function LevelHeader({ title, back, onBack, onClose, headingRef }: { title: string; back?: string; onBack?: () => void; onClose: () => void; headingRef: RefObject<HTMLHeadingElement> }) {
@@ -223,7 +223,7 @@ export function MobileMenu({ items, servicesId, menus, path, onEnter, onUp, onCl
               <ArrowRight aria-hidden className="size-3.5" />
             </a>
             {visibleCategories.map((entry) => (
-              <a key={entry.key} href={entry.path} onClick={onNavigate} className="inline-flex min-h-11 items-center gap-1 text-sm font-medium text-ink underline-offset-4 hover:text-berry hover:underline">
+              <a key={entry.key} href={entry.path} onClick={onNavigate} className="inline-flex min-h-11 items-center gap-1 whitespace-nowrap text-xs font-medium text-ink underline-offset-4 hover:text-berry hover:underline">
                 {categoryLinkLabel(entry.title)}
                 <ArrowRight aria-hidden className="size-3.5" />
               </a>

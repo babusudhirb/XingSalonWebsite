@@ -48,7 +48,7 @@ export const faqPage = {
   allLabel: 'All FAQs',
 };
 
-const fromPage = (slug: string, count?: number): FaqItem[] =>
+const fromPage = (slug: string, count = 2): FaqItem[] =>
   servicePages[slug].faqs.slice(0, count).map(({ q, a }) => ({ q, a, href: `/services/${slug}` }));
 const from = (items: ReadonlyArray<{ q: string; a: string }>, href: string): FaqItem[] => items.map(({ q, a }) => ({ q, a, href }));
 
@@ -92,7 +92,7 @@ export const faqGroups = (now = campaignNow()): FaqGroup[] =>
       blocks: [
         {
           title: 'Skin, Nails & Grooming',
-          items: ['hydra-facial', 'facial-cleanup', 'manicure', 'pedicure', 'nail-extensions', 'nail-art', 'waxing', 'mens-haircut-beard-grooming'].flatMap((slug) => fromPage(slug, 3)),
+          items: ['hydra-facial', 'facial-cleanup', 'manicure', 'pedicure', 'nail-extensions', 'nail-art', 'waxing', 'mens-haircut-beard-grooming'].flatMap((slug) => fromPage(slug)),
         },
       ],
     },

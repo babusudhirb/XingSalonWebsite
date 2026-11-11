@@ -892,7 +892,7 @@ export const faq = {
   items: [
     {
       q: 'What services does Xing offer?',
-      a: 'Xing offers haircuts, styling, hair colour, hair treatments and hair spa, along with skin care, body polish, waxing, threading, de-tan, manicure and pedicure, nails, men’s grooming and tattoo services — all with professional consultation and premium products. See the full list in our service menu.',
+      a: 'Xing offers haircuts, styling, hair colour, hair treatments and hair spa, alongside skin care, body polish, waxing, threading, de-tan, manicures, pedicures, nail services and men’s grooming. Every visit starts with a professional consultation; explore the full salon menu to choose a service.',
     },
     {
       q: 'How do I choose the right hair colour?',
@@ -903,12 +903,12 @@ export const faq = {
       a: `Yes. You can visit us at Sarjapur Road, HSR Layout and AECS Layout, Brookfield in Bangalore. ${allHoursText}`,
     },
     {
-      q: 'Do you offer bridal services?',
-      a: 'Yes. We offer bridal hair styling and pre-wedding salon care, including hair spas and treatments, facials, body polish, waxing, manicures, pedicures and nail art.',
-    },
-    {
       q: 'Can I book a consultation first?',
       a: 'Absolutely. Choose “Consultation” when booking and one of our experts will guide you on the right service before you commit to anything.',
+    },
+    {
+      q: 'How long does a salon appointment usually take?',
+      a: 'Timing depends on the service and your hair or skin needs. Haircuts and grooming are usually shorter visits, while colour, keratin and smoothing need more time. Each service page shows a guide, and your Xing professional confirms the expected duration before starting.',
     },
     {
       q: 'How can I see the latest offers?',

@@ -80,7 +80,7 @@ export const brookfield: BranchPageContent = {
   faqs: [
     {
       q: 'Where exactly is Xing salon in Brookfield?',
-      a: `We’re at ${salon.address}, near DMart Ready. Xing Premium Tattoo Studio is in the same building.`,
+      a: `We’re at ${salon.address}, on 60 Feet Road in AECS Layout near DMart Ready.`,
     },
     {
       q: 'What are the timings of the Brookfield salon?',
@@ -114,10 +114,6 @@ export const brookfield: BranchPageContent = {
     {
       q: 'Is it a unisex salon? Do you have men’s grooming and kids’ haircuts?',
       a: 'Yes, Xing is a unisex salon. Men can book haircuts, beard trims, shaves, beard styling and hair colour, and we cut kids’ hair for children up to 10.',
-    },
-    {
-      q: 'Do you offer bridal hair?',
-      a: 'Yes. We style bridal hair, from sleek blow-dries and ironed looks to soft curls, and help you prepare with hair spas, treatments and colour in the weeks before. Our bridal service is hair styling only.',
     },
   ],
   cta: 'Ready for your next look at Xing Brookfield?',

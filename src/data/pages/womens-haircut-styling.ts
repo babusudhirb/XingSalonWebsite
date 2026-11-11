@@ -99,10 +99,6 @@ export const womensHaircutStyling: ServicePageContent = {
   faqTitle: 'Women’s Haircut & Styling FAQs',
   faqs: [
     {
-      q: 'Do you do bridal hair styling?',
-      a: 'Yes. We offer bridal and wedding-guest hair styling, including blow dries, sleek ironed looks and curls, at all three Xing salons. Book in advance on WhatsApp for your wedding date.',
-    },
-    {
       q: 'Which is the best salon for a women’s haircut in HSR Layout?',
       a: 'Xing Premium Unisex Salon in HSR Layout offers consultation-led women’s haircuts and professional styling, with more than 10,000 advanced haircuts delivered. We also have salons in Sarjapur Road and Brookfield.',
     },

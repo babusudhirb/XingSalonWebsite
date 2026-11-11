@@ -96,8 +96,8 @@ export const about = {
       a: 'WhatsApp or call your nearest salon. Each branch has its own number, listed above.',
     },
     {
-      q: 'Do you have a tattoo studio?',
-      a: 'Yes. Xing Premium Tattoo Studio is in the same building as our Brookfield salon.',
+      q: 'Which Xing salon should I choose?',
+      a: 'Choose the salon closest to you: Sarjapur Road serves Kasavanahalli and nearby areas, HSR Layout is on 24th Main Road, and Brookfield is in AECS Layout near Whitefield. All three offer consultation-led hair, skin and nail care; check the salon page for its exact services and contact details.',
     },
   ],
   cta: 'Visit your nearest Xing salon today.',

@@ -143,8 +143,8 @@ export const bodyPolish: ServicePageContent = {
       a: 'Our body polish service is currently available for female clients only.',
     },
     {
-      q: 'When should I get a body polish before my wedding?',
-      a: 'Book your final session 1–3 days before the occasion. Many brides also start a few weeks earlier for the best glow.',
+      q: 'When should I get a body polish before an event?',
+      a: 'Book your final session 1–3 days before the occasion. If you are trying body polish for the first time, ask your therapist about a plan a few weeks earlier so your skin has time to settle.',
     },
     {
       q: 'Can I polish just my arms or legs?',

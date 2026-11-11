@@ -119,10 +119,6 @@ export const hsrLayout: BranchPageContent = {
       q: 'Is Xing HSR Layout a men’s salon too?',
       a: 'Yes, it’s a unisex salon. Men can book haircuts, creative cuts, beard trims, shaves, beard styling, beard colour and head massages.',
     },
-    {
-      q: 'Do you offer bridal hair in HSR Layout?',
-      a: 'Yes. We style bridal hair and help you prepare with hair spas, treatments, facials and nails in the weeks before the wedding. Our bridal service is hair styling only.',
-    },
   ],
   cta: 'Ready for your next look at Xing HSR Layout?',
 };

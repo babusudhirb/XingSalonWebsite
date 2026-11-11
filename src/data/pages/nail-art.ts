@@ -154,8 +154,8 @@ export const nailArt: ServicePageContent = {
       a: 'Chrome nails have a mirror-like metallic shine. Cat eye nails use a magnetic shimmer that shifts with the light.',
     },
     {
-      q: 'Which nail art is best for a wedding?',
-      a: 'Popular bridal choices include French tips, chrome, and stone-embellished designs. Book 1–2 days before the event.',
+      q: 'Which nail art is best for a special event?',
+      a: 'French tips, chrome and stone-embellished designs are popular event choices. Bring an inspiration photo, and book 1–2 days before your event for a fresh finish.',
     },
     // OWNER: add "Is nail art available for men?" here once the owner confirms the answer.
     {

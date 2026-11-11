@@ -586,7 +586,7 @@ export const faqs = [
   },
   {
     q: 'How does Xing salon membership work?',
-    a: 'You prepay once and we add 10% to 25% bonus value depending on your tier. Use the balance for hair, skin, nail and bridal services at any Xing salon until it expires. Our team confirms your tier value on WhatsApp or at the salon before you pay, so there are no surprises.',
+    a: 'You prepay once and we add 10% to 25% bonus value depending on your tier. Use the balance for eligible hair, skin and nail services at any Xing salon until it expires. Our team confirms your tier value and eligible services on WhatsApp or at the salon before you pay, so there are no surprises.',
   },
   {
     q: 'Which Xing membership is best?',
@@ -594,7 +594,7 @@ export const faqs = [
   },
   {
     q: 'Can I use my gift card at any Xing salon?',
-    a: 'Yes, gift cards and memberships work at all three Xing salons in Bangalore. Use them at Sarjapur Road, HSR Layout or Brookfield, for hair, skin, nail and bridal services, and switch between salons whenever it suits you. We confirm the details with you before every service starts.',
+    a: 'Yes, gift cards and memberships work at all three Xing salons in Bangalore. Use them at Sarjapur Road, HSR Layout or Brookfield for eligible hair, skin and nail services, and switch between salons whenever it suits you. We confirm the details with you before every service starts.',
   },
   {
     q: 'How long is a Xing gift card valid?',

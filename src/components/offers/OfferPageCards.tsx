@@ -41,14 +41,17 @@ interface OfferPagesSectionProps {
 export function OfferPagesSection({ salon, only, id = 'offers', tone = 'tint', title, hideSalonTabs = false }: OfferPagesSectionProps) {
   // Retained while older page call sites transition; direct offer pages no longer need salon tabs.
   void hideSalonTabs;
-  const offers = rotatedIndividualOffers(`${id}-${salon ?? title ?? 'all'}`).filter((offer) => !only || only.includes(offer.category));
+  // Every established placement exposes the same full offer set. `only` remains accepted so older category
+  // call sites do not break, but it no longer hides the other offers from a visitor.
+  void only;
+  const offers = rotatedIndividualOffers(`${id}-${salon ?? title ?? 'all'}`);
   const active = salon;
   return (
     <Section tone={tone} id={id}>
       <SectionHeader eyebrow="Offers" title={title ?? (salon ? `Offers at Xing ${salonById(salon)!.name}` : 'Offers at Your Salon')} />
       <div className="mt-8">
         {offers.length > 1 ? (
-          <SnapRow itemWidth="w-[78%]" className="md:grid-cols-3 md:gap-5">
+          <SnapRow carousel autoPlayMs={10_000} itemWidth="w-[82%] sm:w-[24rem] lg:w-[23rem]" label={`${title ?? 'Current'} offers`}>
             {offers.map((offer) => (
               <OfferPageCard key={offer.id} offer={offer} salon={active} />
             ))}

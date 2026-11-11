@@ -174,18 +174,18 @@ export function ServicesMegaMenu({ label, isActive, underline }: { label: string
               </div>
             </div>
             <div className="border-t border-ink/10">
-              <div className="container-site flex items-center justify-between gap-6 py-3.5">
-                <div className="flex flex-wrap items-center gap-2">
-                  <a href="/menu/xing-salons-menu-catalog-2026.pdf" target="_blank" rel="noopener noreferrer" onClick={close} className="inline-flex min-h-11 items-center gap-1.5 rounded-full bg-berry px-5 text-sm font-semibold text-cream transition-colors hover:bg-berrydark">
+              <div className="container-site flex items-center justify-between gap-3 py-3.5">
+                <div className="flex min-w-0 flex-nowrap items-center gap-1.5">
+                  <a href="/menu/xing-salons-menu-catalog-2026.pdf" target="_blank" rel="noopener noreferrer" onClick={close} className="inline-flex min-h-10 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full bg-berry px-4 text-xs font-semibold text-cream transition-colors hover:bg-berrydark">
                     Explore Our Full Salon Menu
                     <ArrowRight aria-hidden className="size-4" />
                   </a>
-                  <a href={servicesHubPath} onClick={close} className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-berry/30 px-4 text-sm font-semibold text-berry transition-colors hover:border-berry hover:bg-blush">
+                  <a href={servicesHubPath} onClick={close} className="inline-flex min-h-10 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border border-berry/30 px-3 text-xs font-semibold text-berry transition-colors hover:border-berry hover:bg-blush">
                     View All Services
                     <ArrowRight aria-hidden className="size-4" />
                   </a>
                   {visibleCategories.map((entry) => (
-                    <a key={entry.key} href={entry.path} onClick={close} className="inline-flex min-h-11 items-center gap-1 whitespace-nowrap rounded-full px-2.5 text-xs font-medium text-ink transition-colors hover:bg-blush hover:text-berry">
+                    <a key={entry.key} href={entry.path} onClick={close} className="inline-flex min-h-10 shrink-0 items-center gap-1 whitespace-nowrap rounded-full px-2 text-[11px] font-medium text-ink transition-colors hover:bg-blush hover:text-berry">
                       {categoryLinkLabel(entry.title)}
                       <ArrowRight aria-hidden className="size-3.5" />
                     </a>
@@ -195,7 +195,7 @@ export function ServicesMegaMenu({ label, isActive, underline }: { label: string
                   href={bookingWhatsappHref}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-ink hover:text-berry"
+                  className="inline-flex min-h-10 shrink-0 items-center gap-2 whitespace-nowrap text-xs font-medium text-ink hover:text-berry"
                 >
                   <WhatsAppIcon className="size-4 text-whatsapp" />
                   Free consultation · Book on WhatsApp

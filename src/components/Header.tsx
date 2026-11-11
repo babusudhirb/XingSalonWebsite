@@ -1,18 +1,17 @@
-import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
-import { ChevronDown, ChevronRight, MapPin, Menu, Phone } from 'lucide-react';
-import { bookingPath } from '../data/bookingLinks';
+import { useCallback, useEffect, useState } from 'react';
+import { Menu, Phone } from 'lucide-react';
+import { bookingHref, bookingPath } from '../data/bookingLinks';
 import { locations, salonsPath } from '../data/branches';
 import { faqPath, nav, site } from '../data/content';
 import { offersPath } from '../data/offers';
-import { offersMenu, salonsMenu, type NavMenu } from '../data/navMenus';
+import { offersMenu, salonsMenu } from '../data/navMenus';
+import { faqGroups } from '../data/faqPage';
 import { servicesHubPath } from '../data/services';
 import { useHistoryClose } from '../hooks/useHistoryClose';
 import { useScrollSpy } from '../hooks/useScrollSpy';
-import { track } from '../lib/analytics';
 import { cn } from '../lib/cn';
 import { blogRoute, currentPage, currentSalon, hasBlog, homeHref, isAbout, isCelebrationOffers, isFaq, isHome, isMembership, isOffers, isSalons, isStaticPage } from '../lib/route';
 import { bookingWhatsappHref, PICK_CALL, whatsappLink } from '../lib/whatsapp';
-import { StatusDot } from './branch/StatusChip';
 import { Button } from './ui/Button';
 
 /** The nav item that stays highlighted on the offers page. */
@@ -28,9 +27,11 @@ const pageContact = () =>
   });
 import { MobileMenu } from './nav/MobileMenu';
 import { ServicesMegaMenu } from './nav/ServicesMegaMenu';
+import { SectionMegaMenu, type MegaPanel } from './nav/SectionMegaMenu';
 import { Logo, WhatsAppIcon } from './ui/Decor';
 import { UtilityBar } from './UtilityBar';
 import { Modal } from './ui/Modal';
+import { categories as blogCategories, posts as blogPosts } from 'virtual:blog-index';
 
 const NAV_IDS = nav.map((item) => item.id);
 const GUIDES_ID = 'guides';
@@ -63,186 +64,6 @@ const SERVICES_ID = 'services';
 
 const NAV_LINK = 'relative whitespace-nowrap py-2 text-sm transition-colors hover:text-berry';
 const UNDERLINE = <span className="absolute inset-x-0 bottom-0 h-0.5 rounded-full bg-berry" />;
-
-/**
- * A desktop nav item with a dropdown: opens on hover or from its button, Esc closes it and returns to that button.
- * With `href` the label is a link to the section's page and the chevron is the button.
- */
-function NavDropdown({ id, label, href, isActive, badge, children, clickOnly = false }: { id: string; label: string; href?: string; isActive: boolean; badge?: ReactNode; children: ReactNode; clickOnly?: boolean }) {
-  const [open, setOpen] = useState(false);
-  const toggle = useRef<HTMLButtonElement>(null);
-  const menu = useRef<HTMLLIElement>(null);
-  const chevron = <ChevronDown aria-hidden className={cn('size-3.5 transition-transform duration-200', open && 'rotate-180')} />;
-  const tone = isActive ? 'font-medium text-berry' : 'text-ink';
-
-  useEffect(() => {
-    if (!clickOnly || !open) return;
-    const closeOnOutsideClick = (event: PointerEvent) => {
-      // On the six legacy offer pages Header is rendered inside a Shadow DOM.
-      // At document level, `event.target` is retargeted to the shadow host, so a
-      // normal contains(target) check incorrectly treats every menu click as an
-      // outside click. The composed path preserves the actual clicked element.
-      if (!event.composedPath().includes(menu.current!)) setOpen(false);
-    };
-    document.addEventListener('pointerdown', closeOnOutsideClick);
-    return () => document.removeEventListener('pointerdown', closeOnOutsideClick);
-  }, [clickOnly, open]);
-
-  return (
-    <li
-      ref={menu}
-      className="relative flex h-full items-center"
-      onMouseEnter={() => !clickOnly && setOpen(true)}
-      onMouseLeave={() => !clickOnly && setOpen(false)}
-      onBlur={(e) => !e.currentTarget.contains(e.relatedTarget) && setOpen(false)}
-      onKeyDown={(e) => {
-        if (e.key !== 'Escape' || !open) return;
-        setOpen(false);
-        toggle.current?.focus();
-      }}
-    >
-      {href ? (
-        <>
-          <a href={href} aria-current={isActive ? 'true' : undefined} className={cn(NAV_LINK, tone)}>
-            {label}
-            {badge}
-            {isActive && UNDERLINE}
-          </a>
-          <button
-            ref={toggle}
-            type="button"
-            aria-label={`${label} menu`}
-            aria-expanded={open}
-            aria-controls={`${id}-menu`}
-            onClick={() => setOpen((value) => !value)}
-            className={cn('-mr-1 ml-0.5 inline-flex h-8 w-5 items-center justify-center hover:text-berry', tone)}
-          >
-            {chevron}
-          </button>
-        </>
-      ) : (
-        <button
-          ref={toggle}
-          type="button"
-          aria-expanded={open}
-          aria-controls={`${id}-menu`}
-          onClick={() => setOpen((value) => !value)}
-          className={cn(NAV_LINK, 'inline-flex items-center gap-1', tone)}
-        >
-          {label}
-          {chevron}
-          {isActive && UNDERLINE}
-        </button>
-      )}
-      {open && (
-        <div id={`${id}-menu`} className="absolute left-1/2 top-full w-80 -translate-x-1/2 rounded-card border border-ink/10 bg-cream p-2 shadow-lift">
-          {children}
-        </div>
-      )}
-    </li>
-  );
-}
-
-/** Desktop Offers and Gifts: salon services open as a compact second-level menu. */
-function LinksMenu({ id, label, href, isActive, menu, badge }: { id: string; label: string; href?: string; isActive: boolean; menu: NavMenu; badge?: ReactNode }) {
-  const [openSalon, setOpenSalon] = useState<string | null>(null);
-
-  return (
-    <NavDropdown id={id} label={label} href={href} isActive={isActive} badge={badge} clickOnly>
-      <ul>
-        {menu.items.map((item) => {
-          const hasServices = Boolean(item.links?.length);
-          const salonOpen = openSalon === item.label;
-
-          return (
-            <li
-              key={item.label}
-              className="relative"
-            >
-              {hasServices ? (
-                <button
-                  type="button"
-                  aria-expanded={salonOpen}
-                  aria-controls={`${id}-${item.label.replace(/[^a-z0-9]+/gi, '-').toLowerCase()}-services`}
-                  onClick={() => setOpenSalon((current) => (current === item.label ? null : item.label))}
-                  className="flex min-h-11 w-full items-center justify-between gap-2 rounded-lg px-3 py-2 text-left text-sm text-ink transition-colors hover:bg-blush focus:bg-blush"
-                >
-                  <span>{item.label}</span>
-                  <ChevronRight aria-hidden className={cn('size-4 text-berry transition-transform', salonOpen && 'translate-x-0.5')} />
-                </button>
-              ) : (
-                <a
-                  href={item.href}
-                  onClick={() => item.highlight && track('nov_nav_click', { placement: 'nav', page: location.pathname })}
-                  className={cn('flex min-h-11 items-center justify-between gap-2 rounded-lg px-3 py-2 text-sm transition-colors hover:bg-blush', item.highlight ? 'bg-blush font-semibold text-berry' : 'text-ink', item.divider && 'mt-1 rounded-t-none border-t border-ink/10')}
-                >
-                  <span>
-                    {item.label}
-                    {item.note && <span className={cn('font-normal', item.highlight ? 'text-berry' : 'text-muted')}> · {item.note}</span>}
-                  </span>
-                  {item.pill && <span className="shrink-0 rounded-full bg-mint px-2 py-0.5 text-xs font-semibold text-success">{item.pill}</span>}
-                </a>
-              )}
-              {hasServices && salonOpen && (
-                <ul
-                  id={`${id}-${item.label.replace(/[^a-z0-9]+/gi, '-').toLowerCase()}-services`}
-                  className="absolute left-full top-0 z-10 -ml-px w-48 rounded-card border border-ink/10 bg-cream p-2 shadow-lift"
-                >
-                  {item.links!.map((service) => (
-                    <li key={service.label}>
-                      <a href={service.href} className="flex min-h-10 items-center rounded-lg px-3 text-sm text-ink transition-colors hover:bg-blush hover:text-berry">
-                        {service.label}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </li>
-          );
-        })}
-      </ul>
-      {menu.viewAll && (
-        <a href={menu.viewAll.href} className="mt-1 flex min-h-11 items-center justify-center border-t border-ink/10 text-sm font-medium text-berry underline-offset-4 hover:underline">
-          {menu.viewAll.label} →
-        </a>
-      )}
-    </NavDropdown>
-  );
-}
-
-/** Desktop "Salons" item: a small dropdown with one row per salon and whether it is open. */
-function SalonsMenu({ label, isActive }: { label: string; isActive: boolean }) {
-  return (
-    <NavDropdown id="salons" label={label} isActive={isActive}>
-          <ul>
-            {locations.map((salon) => (
-              <li key={salon.id}>
-                <a
-                  href={salon.path}
-                  aria-current={currentSalon?.id === salon.id ? 'page' : undefined}
-                  className="flex min-h-14 items-center gap-3 rounded-lg px-3 py-2 transition-colors hover:bg-blush"
-                >
-                  <span className="grid size-9 shrink-0 place-items-center rounded-full bg-blush text-berry">
-                    <MapPin aria-hidden className="size-4" />
-                  </span>
-                  <span className="min-w-0 flex-1">
-                    <span className="block text-sm font-semibold text-ink">Xing {salon.name}</span>
-                    <span className="block truncate text-xs text-muted">{salon.area}</span>
-                  </span>
-                  <StatusDot salon={salon} />
-                </a>
-              </li>
-            ))}
-          </ul>
-          <a
-            href={salonsPath}
-            className="mt-1 flex min-h-11 items-center justify-center border-t border-ink/10 text-sm font-medium text-berry underline-offset-4 hover:underline"
-          >
-            Compare all salons
-          </a>
-    </NavDropdown>
-  );
-}
 
 export function Header() {
   const contact = pageContact();
@@ -277,6 +98,38 @@ export function Header() {
     setMenuPath([]);
     setMenuOpen(true);
   };
+
+  const offerPanels: MegaPanel[] = offersMenu().items.map((group) => ({
+    id: group.label.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+    label: group.label,
+    title: group.label,
+    description: 'Choose an offer, then select your preferred Xing salon when you book.',
+    links: group.links ?? [{ label: group.label, href: group.href }],
+  }));
+  const salonPanels: MegaPanel[] = locations.map((salon) => ({
+    id: salon.id,
+    label: salon.name,
+    title: `Xing ${salon.name}`,
+    description: `${salon.area}. Explore services, directions, timings and local salon information.`,
+    links: [
+      { label: `Explore Xing ${salon.name}`, href: salon.path, note: salon.area },
+      { label: 'Book an appointment', href: bookingHref('', salon.id), note: 'Choose your services and a time' },
+    ],
+  }));
+  const blogPanels: MegaPanel[] = blogCategories.map((category) => ({
+    id: category.slug,
+    label: category.name,
+    title: category.name,
+    description: `${category.count} ${category.count === 1 ? 'article' : 'articles'} from the Xing team.`,
+    links: blogPosts.filter((post) => post.categorySlug === category.slug).slice(0, 6).map((post) => ({ label: post.title, href: `/blog/${post.slug}`, note: `${post.readTime} min read` })),
+  }));
+  const faqPanels: MegaPanel[] = faqGroups().map((group) => ({
+    id: group.id,
+    label: group.label,
+    title: group.title,
+    description: 'Quick answers from Xing, with the full details available on the FAQ page.',
+    links: group.blocks.flatMap((block) => block.items).slice(0, 6).map((item) => ({ label: item.q, href: item.href })),
+  }));
 
   // Only one bar at the foot of the screen: the quick-actions bar steps aside while the drawer is open.
   useEffect(() => {
@@ -331,8 +184,10 @@ export function Header() {
               {nav.map((item) => {
                 const isActive = active === item.id;
                 if (item.id === SERVICES_ID) return <ServicesMegaMenu key={item.id} label={item.label} isActive={isActive} underline={UNDERLINE} />;
-                if (item.id === SALONS_ID) return <SalonsMenu key={item.id} label={item.label} isActive={isActive} />;
-                if (item.id === OFFERS_ID) return <LinksMenu key={item.id} id="offers" label={item.label} href={offersPath} isActive={isActive} menu={offersMenu()} />;
+                if (item.id === OFFERS_ID) return <SectionMegaMenu key={item.id} id="offers" label={item.label} isActive={isActive} underline={UNDERLINE} panels={offerPanels} viewAll={{ label: 'View All Offers', href: offersPath }} />;
+                if (item.id === SALONS_ID) return <SectionMegaMenu key={item.id} id="salons" label={item.label} isActive={isActive} underline={UNDERLINE} panels={salonPanels} viewAll={{ label: 'Explore All Salons', href: salonsPath }} />;
+                if (item.id === GUIDES_ID && hasBlog) return <SectionMegaMenu key={item.id} id="blogs" label={item.label} isActive={isActive} underline={UNDERLINE} panels={blogPanels} viewAll={{ label: 'Explore All Blogs', href: '/blog' }} />;
+                if (item.id === FAQ_ID) return <SectionMegaMenu key={item.id} id="faq" label={item.label} isActive={isActive} underline={UNDERLINE} panels={faqPanels} viewAll={{ label: 'Explore All FAQs', href: faqPath }} />;
                 return (
                   <li key={item.id}>
                     <a

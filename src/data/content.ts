@@ -69,6 +69,7 @@ export const seo = {
 };
 
 export const faqPath = '/faq';
+export const referralPath = '/referral';
 
 export const nav = [
   { label: 'Home', id: 'home' },
@@ -77,6 +78,7 @@ export const nav = [
   { label: 'Salons', id: 'branches' },
   { label: 'Blogs', id: 'guides' },
   { label: 'FAQ', id: 'faq' },
+  { label: 'Referral', id: 'referral' },
   { label: 'About Us', id: 'about' },
 ] as const;
 

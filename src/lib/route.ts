@@ -2,7 +2,7 @@ import { categorySlugs, postSlugs } from 'virtual:blog-routes';
 import { salonById, salonsPath } from '../data/branches';
 import { celebrationOffersPath } from '../data/celebrationOffers';
 import { bookingPath } from '../data/bookingLinks';
-import { faqPath } from '../data/content';
+import { faqPath, referralPath } from '../data/content';
 import { membershipPath } from '../data/membershipLinks';
 import type { ServicePageContent } from '../data/pages/types';
 import { privacyPath } from '../data/privacy';
@@ -66,6 +66,9 @@ export const isAbout = path === '/about';
 /** /faq, the site's questions in one place. */
 export const isFaq = path === faqPath;
 
+/** /referral: the refer-a-friend reward form. */
+export const isReferral = path === referralPath;
+
 /** /privacy. */
 export const isPrivacy = path === privacyPath;
 
@@ -89,9 +92,9 @@ const blogNotLiveYet = !hasBlog && /^\/blog(\/|$)/.test(path);
 
 /** An address no page answers to. */
 export const isNotFound =
-  path !== '/' && !isServicePage && !currentCategory && !isServicesHub && !isOffers && !isIndividualOffer && !blogRoute && !isAbout && !isFaq && !isPrivacy && !isMembership && !isCelebrationOffers && !isBooking && !isSalons && !currentSalon && !(path in redirects) && !isStaticPage && !blogNotLiveYet;
+  path !== '/' && !isServicePage && !currentCategory && !isServicesHub && !isOffers && !isIndividualOffer && !blogRoute && !isAbout && !isFaq && !isReferral && !isPrivacy && !isMembership && !isCelebrationOffers && !isBooking && !isSalons && !currentSalon && !(path in redirects) && !isStaticPage && !blogNotLiveYet;
 
-export const isHome = !isStaticPage && !isIndividualOffer && !isServicePage && !currentCategory && !isServicesHub && !isOffers && !blogRoute && !isAbout && !isFaq && !isPrivacy && !isMembership && !isCelebrationOffers && !isBooking && !isSalons && !currentSalon && !isNotFound;
+export const isHome = !isStaticPage && !isIndividualOffer && !isServicePage && !currentCategory && !isServicesHub && !isOffers && !blogRoute && !isAbout && !isFaq && !isReferral && !isPrivacy && !isMembership && !isCelebrationOffers && !isBooking && !isSalons && !currentSalon && !isNotFound;
 
 /** Link to a landing-page section such as "#offers", from whichever page we are on. Other paths pass through. */
 export const homeHref = (href: string) => (href.startsWith('#') && !isHome ? `/${href}` : href);

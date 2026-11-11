@@ -93,7 +93,7 @@ function sendMail(array $mail, array $to, string $subject, string $html, string 
 }
 
 $type = clean($lead['type'] ?? '', 30);
-if (!in_array($type, ['appointment', 'gift', 'membership', 'corporate'], true)) respond(422, ['ok' => false, 'code' => 'invalid_type']);
+if (!in_array($type, ['appointment', 'gift', 'membership', 'corporate', 'referral'], true)) respond(422, ['ok' => false, 'code' => 'invalid_type']);
 $name = clean($lead['name'] ?? '', 60);
 $phone = preg_replace('/\D+/', '', clean($lead['phone'] ?? '', 20));
 if (strlen($name) < 2 || !preg_match('/^(?:91)?[6-9]\d{9}$/', $phone)) respond(422, ['ok' => false, 'code' => 'invalid_contact']);
@@ -102,6 +102,13 @@ $salonInput = clean($lead['salon'] ?? ($lead['location'] ?? ''), 80);
 $salonKey = str_contains(strtolower($salonInput), 'sarjapur') || $salonInput === 'sarjapur' ? 'sarjapur'
     : (str_contains(strtolower($salonInput), 'hsr') || $salonInput === 'hsr' ? 'hsr' : (str_contains(strtolower($salonInput), 'brookfield') || $salonInput === 'brookfield' ? 'brookfield' : ''));
 if ($salonKey === '') respond(422, ['ok' => false, 'code' => 'invalid_salon']);
+
+$referredName = clean($lead['referredName'] ?? '', 60);
+$referredPhone = preg_replace('/\D+/', '', clean($lead['referredPhone'] ?? '', 20));
+$referredSalonInput = clean($lead['referredSalon'] ?? '', 80);
+$referredSalonKey = str_contains(strtolower($referredSalonInput), 'sarjapur') || $referredSalonInput === 'sarjapur' ? 'sarjapur'
+    : (str_contains(strtolower($referredSalonInput), 'hsr') || $referredSalonInput === 'hsr' ? 'hsr' : (str_contains(strtolower($referredSalonInput), 'brookfield') || $referredSalonInput === 'brookfield' ? 'brookfield' : ''));
+if ($type === 'referral' && (strlen($referredName) < 2 || !preg_match('/^(?:91)?[6-9]\d{9}$/', $referredPhone) || $referredSalonKey === '')) respond(422, ['ok' => false, 'code' => 'invalid_referral']);
 
 $recipients = [
     'sarjapur' => 'xing.sarjapura@gmail.com',
@@ -121,6 +128,9 @@ $fields = [
     'Preferred date' => clean($lead['date'] ?? '', 20),
     'Preferred time' => clean($lead['time'] ?? '', 30),
     'Offer' => clean($lead['offer'] ?? '', 160),
+    'Referred customer' => $referredName,
+    'Referred customer phone' => $referredPhone,
+    'Referred customer salon' => $referredSalonInput,
     'Gift recipient' => valueAt($lead, 'gift.recipientName'),
     'Gift message' => valueAt($lead, 'gift.message'),
     'Membership services' => valueAt($lead, 'membership.services'),
@@ -131,10 +141,13 @@ foreach ($fields as $label => $value) if ($value !== '') $rows .= '<tr><th style
 $html = '<!doctype html><html><body style="font-family:Arial,sans-serif;color:#27151C"><h2>New Xing ' . htmlspecialchars($typeLabel, ENT_QUOTES, 'UTF-8') . ' request</h2><table style="border-collapse:collapse;width:100%;max-width:680px">' . $rows . '</table></body></html>';
 
 try {
-    $targets = $isUat
-        ? array_values(array_unique([$mail['central_recipient'], $mail['copy_recipient']]))
-        : array_values(array_unique([$recipients[$salonKey], $mail['central_recipient'], $mail['copy_recipient']]));
-    $subject = ($isUat ? '[UAT TEST] ' : '') . "New Xing {$typeLabel} request — {$salonInput}";
+    // A referral needs visibility across every outlet, while other lead types stay with their selected salon.
+    $targets = $type === 'referral'
+        ? array_values(array_unique([...array_values($recipients), $mail['central_recipient'], $mail['copy_recipient']]))
+        : ($isUat
+            ? array_values(array_unique([$mail['central_recipient'], $mail['copy_recipient']]))
+            : array_values(array_unique([$recipients[$salonKey], $mail['central_recipient'], $mail['copy_recipient']])));
+    $subject = ($isUat ? '[UAT TEST] ' : '') . "New Xing {$typeLabel} request — " . ($type === 'referral' ? 'All outlets' : $salonInput);
     sendMail($mail, $targets, $subject, $html, clean($lead['email'] ?? '', 120));
     respond(200, ['ok' => true, 'leadId' => $leadId]);
 } catch (Throwable $error) {

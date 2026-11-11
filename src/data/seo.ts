@@ -10,7 +10,7 @@ import { offerPage } from './offerPages';
 import { legacyOfferRoutes } from './staticOfferPages';
 import { branchPages, salonsPage, type BranchPageContent } from './branchPages';
 import { allFaqs, faqGroups, faqPage } from './faqPage';
-import { faq, faqPath, footer, guidePath, guides, hero, HERO_SIZES, locations, seo, SERVICE_HERO_SIZES, signatureColor, site } from './content';
+import { faq, faqPath, footer, guidePath, guides, hero, HERO_SIZES, locations, referralPath, seo, SERVICE_HERO_SIZES, signatureColor, site } from './content';
 import { faqs as gmFaqs, gmPage, howToVideo, membershipPath, occasions, tiers } from './giftMembership';
 import { notFound } from './notFound';
 import {
@@ -628,6 +628,30 @@ export const faqPageMeta: PageMeta = {
       '@context': 'https://schema.org',
       '@type': 'FAQPage',
       mainEntity: allFaqs(faqGroups()).map((item) => ({ '@type': 'Question', name: item.q, acceptedAnswer: { '@type': 'Answer', text: item.a } })),
+    },
+  ],
+};
+
+/** /referral: a direct conversion page for existing guests sharing Xing with a friend. */
+export const referralMeta: PageMeta = {
+  path: referralPath,
+  title: 'Refer a Friend & Get 10% Off | Xing Premium Salon Bangalore',
+  description: 'Refer a friend to Xing Premium Unisex Salon. Existing and new guests each receive 10% off after referral confirmation at Sarjapur Road, HSR Layout or Brookfield.',
+  image: OG_IMAGE,
+  jsonLd: [
+    crumbs([
+      ['Home', '/'],
+      ['Referral rewards', referralPath],
+    ]),
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      '@id': `${abs(referralPath)}#webpage`,
+      url: abs(referralPath),
+      name: 'Xing Refer a Friend Rewards',
+      description: 'Refer a friend to Xing Premium Unisex Salon. Both the existing and new guest receive 10% off after confirmation.',
+      isPartOf: { '@id': `${site.url}/#website` },
+      inLanguage: 'en-IN',
     },
   ],
 };

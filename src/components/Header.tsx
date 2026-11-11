@@ -10,7 +10,7 @@ import { useHistoryClose } from '../hooks/useHistoryClose';
 import { useScrollSpy } from '../hooks/useScrollSpy';
 import { track } from '../lib/analytics';
 import { cn } from '../lib/cn';
-import { blogRoute, currentPage, currentSalon, hasBlog, homeHref, isAbout, isCelebrationOffers, isFaq, isHome, isMembership, isOffers, isSalons, isStaticPage } from '../lib/route';
+import { blogRoute, currentPage, currentSalon, hasBlog, homeHref, isAbout, isCelebrationOffers, isFaq, isHome, isMembership, isOffers, isReferral, isSalons, isStaticPage } from '../lib/route';
 import { bookingWhatsappHref, PICK_CALL, whatsappLink } from '../lib/whatsapp';
 import { StatusDot } from './branch/StatusChip';
 import { Button } from './ui/Button';
@@ -39,6 +39,7 @@ const ABOUT_ID = 'about';
 /** The "Salons" item: spied as the salons section on the home page, and a page of its own (/salons) as a link. */
 const SALONS_ID = 'branches';
 const FAQ_ID = 'faq';
+const REFERRAL_ID = 'referral';
 // "Home" is the home page itself (/), never /#home: a hash link would land below the header.
 const navHref = (id: string) =>
   id === 'home'
@@ -47,6 +48,8 @@ const navHref = (id: string) =>
     ? '/about'
     : id === FAQ_ID
       ? faqPath
+      : id === REFERRAL_ID
+        ? '/referral'
       : id === OFFERS_ID
         ? offersPath
       : id === GUIDES_ID && hasBlog
@@ -289,6 +292,8 @@ export function Header() {
         ? ABOUT_ID
         : isFaq
           ? FAQ_ID
+          : isReferral
+            ? REFERRAL_ID
         : isOffers || isMembership || isCelebrationOffers || isStaticPage
           ? OFFERS_ID
             : isSalons || currentSalon

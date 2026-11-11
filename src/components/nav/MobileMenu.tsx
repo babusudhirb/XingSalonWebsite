@@ -1,6 +1,6 @@
 import { useEffect, useRef, type ReactNode, type RefObject, type TouchEvent } from 'react';
 import { AnimatePresence, m, useReducedMotion } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Phone, X } from 'lucide-react';
+import { ArrowRight, ChevronLeft, ChevronRight, Phone, X } from 'lucide-react';
 import type { NavMenu } from '../../data/navMenus';
 import { servicesHubPath, servicesIn, visibleCategories } from '../../data/services';
 import { cn } from '../../lib/cn';
@@ -38,7 +38,7 @@ interface MobileMenuProps {
 
 const SWIPE_PX = 60;
 const SLIDE_S = 0.22;
-const categoryLinkLabel = (title: string) => (title === 'Tattoo' ? 'All Tattoos' : `All ${title}`);
+const categoryLinkLabel = (title: string) => `View ${title} Services`;
 
 /** A level's top row: Back (or the logo), its title, and Close. Stays put while the level scrolls under it. */
 function LevelHeader({ title, back, onBack, onClose, headingRef }: { title: string; back?: string; onBack?: () => void; onClose: () => void; headingRef: RefObject<HTMLHeadingElement> }) {
@@ -213,16 +213,19 @@ export function MobileMenu({ items, servicesId, menus, path, onEnter, onUp, onCl
           })}
         </ul>
         <div className="shrink-0 border-t border-ink/10 bg-cream px-4 pt-4 [padding-bottom:max(1rem,env(safe-area-inset-bottom))]">
-          <div className="flex flex-wrap gap-x-4 gap-y-1">
-            <a href={servicesHubPath} onClick={onNavigate} className="inline-flex min-h-11 items-center text-sm font-semibold text-berry underline-offset-4 hover:underline">
+          <a href="/menu/xing-salons-menu-catalog-2026.pdf" target="_blank" rel="noopener noreferrer" onClick={onNavigate} className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-full bg-berry px-5 text-sm font-semibold text-cream">
+            Explore Our Full Salon Menu
+            <ArrowRight aria-hidden className="size-4" />
+          </a>
+          <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1">
+            <a href={servicesHubPath} onClick={onNavigate} className="inline-flex min-h-11 items-center gap-1 text-sm font-semibold text-berry underline-offset-4 hover:underline">
               View All Services
-            </a>
-            <a href="/menu/xing-salons-menu-catalog-2026.pdf" target="_blank" rel="noopener noreferrer" onClick={onNavigate} className="inline-flex min-h-11 items-center text-sm font-semibold text-berry underline-offset-4 hover:underline">
-              Explore Our Full Salon Menu
+              <ArrowRight aria-hidden className="size-3.5" />
             </a>
             {visibleCategories.map((entry) => (
-              <a key={entry.key} href={entry.path} onClick={onNavigate} className="inline-flex min-h-11 items-center text-sm font-medium text-ink underline-offset-4 hover:text-berry hover:underline">
+              <a key={entry.key} href={entry.path} onClick={onNavigate} className="inline-flex min-h-11 items-center gap-1 text-sm font-medium text-ink underline-offset-4 hover:text-berry hover:underline">
                 {categoryLinkLabel(entry.title)}
+                <ArrowRight aria-hidden className="size-3.5" />
               </a>
             ))}
           </div>

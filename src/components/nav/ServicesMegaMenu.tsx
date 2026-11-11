@@ -14,7 +14,7 @@ const PANEL_ID = 'services-menu';
 // Gives visitors enough time to move from the header to the panel without losing it.
 const CLOSE_DELAY_MS = 350;
 
-const categoryLinkLabel = (title: string) => (title === 'Tattoo' ? 'All Tattoos' : `All ${title}`);
+const categoryLinkLabel = (title: string) => `View ${title} Services`;
 
 /** The category the visitor is browsing, so the menu opens on it; Hair Care otherwise. */
 const startTab = Math.max(
@@ -175,18 +175,19 @@ export function ServicesMegaMenu({ label, isActive, underline }: { label: string
             </div>
             <div className="border-t border-ink/10">
               <div className="container-site flex items-center justify-between gap-6 py-3.5">
-                <div className="flex flex-wrap items-center gap-x-6 gap-y-1">
-                  <a href={servicesHubPath} onClick={close} className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-berry underline-offset-4 hover:underline">
-                    View All Services
-                    <ArrowRight aria-hidden className="size-4" />
-                  </a>
-                  <a href="/menu/xing-salons-menu-catalog-2026.pdf" target="_blank" rel="noopener noreferrer" onClick={close} className="inline-flex min-h-11 items-center gap-1.5 text-sm font-semibold text-berry underline-offset-4 hover:underline">
+                <div className="flex flex-wrap items-center gap-2">
+                  <a href="/menu/xing-salons-menu-catalog-2026.pdf" target="_blank" rel="noopener noreferrer" onClick={close} className="inline-flex min-h-11 items-center gap-1.5 rounded-full bg-berry px-5 text-sm font-semibold text-cream transition-colors hover:bg-berrydark">
                     Explore Our Full Salon Menu
                     <ArrowRight aria-hidden className="size-4" />
                   </a>
+                  <a href={servicesHubPath} onClick={close} className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-berry/30 px-4 text-sm font-semibold text-berry transition-colors hover:border-berry hover:bg-blush">
+                    View All Services
+                    <ArrowRight aria-hidden className="size-4" />
+                  </a>
                   {visibleCategories.map((entry) => (
-                    <a key={entry.key} href={entry.path} onClick={close} className="inline-flex min-h-11 items-center text-sm font-medium text-ink underline-offset-4 hover:text-berry hover:underline">
+                    <a key={entry.key} href={entry.path} onClick={close} className="inline-flex min-h-11 items-center gap-1 rounded-full px-3 text-sm font-medium text-ink transition-colors hover:bg-blush hover:text-berry">
                       {categoryLinkLabel(entry.title)}
+                      <ArrowRight aria-hidden className="size-3.5" />
                     </a>
                   ))}
                 </div>

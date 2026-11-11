@@ -13,7 +13,7 @@ updatedDate: 2026-10-31
 featuredImage: { src: "/og/blog/pre-event-skin-prep-timeline.webp", width: 1200, height: 630, srcSet: "/images/blog/pre-event-skin-prep-timeline-card.webp 640w, /og/blog/pre-event-skin-prep-timeline.webp 1200w" }
 featuredImageAlt: "Facial skin prep before an event at Xing Salon Bangalore"
 relatedServices: ["hydra-facial", "facial-cleanup", "body-polish"]
-relatedPosts: ["hydra-facial-benefits", "pre-wedding-salon-timeline", "hydra-facial-vs-facial-vs-cleanup"]
+relatedPosts: ["hydra-facial-benefits", "hydra-facial-vs-facial-vs-cleanup", "skin-care-pollution-bangalore"]
 draft: false
 takeaways:
   - "Start four to six weeks before a big event so treatments have time to build results."
@@ -162,7 +162,7 @@ If you have a skin condition, speak to a dermatologist before starting a new rou
 
 ## Skin Care for Grooms and Guests
 
-Pre-event prep isn't only for brides. Grooms, family and guests can follow the same timeline with clean-ups, facials, threading and grooming. If you have a wedding coming up, our [pre-wedding salon timeline](/blog/pre-wedding-salon-timeline) covers hair, skin and nails together.
+Pre-event prep works best when it is planned around your own skin, hair and schedule. A clean-up, facial, threading or grooming appointment can be spaced out so you have time to see how your skin responds before the event.
 
 ## Tell Your Therapist About Your Skin
 

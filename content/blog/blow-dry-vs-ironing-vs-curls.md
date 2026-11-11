@@ -13,7 +13,7 @@ updatedDate: 2026-11-10
 featuredImage: { src: "/images/svc-hair.webp", width: 640, height: 480 }
 featuredImageAlt: "Styling chairs at Xing Premium Unisex Salon, HSR Layout, where clients choose blow dry vs ironing for their occasion"
 relatedServices: ["womens-haircut-styling"]
-relatedPosts: ["heat-styling-hair-damage", "pre-wedding-salon-timeline", "layered-haircut-guide"]
+relatedPosts: ["heat-styling-hair-damage", "layered-haircut-guide", "haircut-for-face-shape-women"]
 draft: false
 takeaways:
   - "A blow dry gives smooth, bouncy volume; ironing gives sleek, straight, glossy hair; tongs give waves or curls."
@@ -190,7 +190,7 @@ Many Indian weddings have several functions, each with a different outfit. You m
 - **Wedding:** soft, romantic waves or curls
 - **Reception:** sleek ironed hair or glamorous curls
 
-Planning the full wedding? Our [pre-wedding salon timeline](/blog/pre-wedding-salon-timeline) covers hair, skin and nails together.
+Planning for a big event? Build in time for a haircut, any colour change and your final styling rather than booking everything on the same day.
 
 ## Pairing Styling With a Haircut
 

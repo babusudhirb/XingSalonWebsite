@@ -5,7 +5,7 @@ metaTitle: "Hard Water Hair Damage: Signs & What Helps – Xing Salon"
 metaDescription: "Dry, dull, tangled hair? Learn the signs of hard water hair damage in Bangalore, simple home fixes that work, and when a salon hair spa or Olaplex helps."
 primaryKeyword: "hard water hair damage"
 secondaryKeywords: ["hair dryness Bangalore", "hair care tips"]
-category: "Hair Care"
+category: "Bangalore Specific Blogs"
 tags: ["hard water", "dry hair", "hair spa", "Olaplex"]
 author: "Xing Salon Team"
 publishDate: 2026-10-20

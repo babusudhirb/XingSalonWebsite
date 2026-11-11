@@ -5,7 +5,7 @@ metaTitle: "Monsoon Hair Care in Bangalore: Beat Frizz – Xing Salon"
 metaDescription: "Monsoon hair care tips for Bangalore: why humidity causes frizz, a simple wash routine, scalp care, styling tips and salon treatments for the rains."
 primaryKeyword: "monsoon hair care"
 secondaryKeywords: ["frizzy hair in humidity", "rainy season hair tips"]
-category: "Hair Care"
+category: "Bangalore Specific Blogs"
 tags: ["monsoon", "frizz", "scalp care", "hair spa"]
 author: "Xing Salon Team"
 publishDate: 2026-12-01

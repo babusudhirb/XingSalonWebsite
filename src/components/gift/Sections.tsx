@@ -74,9 +74,7 @@ export function Testimonials() {
 
 const MORE_LINKS = [
   { label: 'All salon services', href: servicesHubPath },
-  { label: 'Bridal hair & styling', href: '/services/womens-haircut-styling#bridal' },
   { label: 'Current offers', href: offersPath },
-  { label: 'Pre-wedding salon timeline', href: '/blog/pre-wedding-salon-timeline' },
   { label: 'Hair spa benefits', href: '/blog/hair-spa-benefits' },
   { label: 'Hydra facial benefits', href: '/blog/hydra-facial-benefits' },
 ];

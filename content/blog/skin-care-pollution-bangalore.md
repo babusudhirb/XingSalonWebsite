@@ -5,7 +5,7 @@ metaTitle: "Skin Care Tips for Bangalore: Pollution & Sun – Xing Salon"
 metaDescription: "Practical skin care tips for Bangalore: cleansing after commutes, daily sunscreen, hydration and how clean-ups and facials help dull, polluted skin."
 primaryKeyword: "skin care tips Bangalore"
 secondaryKeywords: ["pollution skin care", "dull skin"]
-category: "Skin Care"
+category: "Bangalore Specific Blogs"
 tags: ["skin care", "pollution", "sunscreen", "facials"]
 author: "Xing Salon Team"
 publishDate: 2026-11-05

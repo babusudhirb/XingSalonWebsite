@@ -461,19 +461,6 @@ export const guides = {
       image: img('guide-balayage-last', 'Honey balayage waves seen from behind at Xing Salon Bangalore', 640, 400),
     },
     {
-      title: 'Planning Your Bridal Hair',
-      category: 'Bridal',
-      page: 'womens-haircut-styling',
-      anchor: 'bridal',
-      excerpt: 'When to book treatments, colour and styling before the wedding.',
-      points: [
-        'Book hair treatments and colour six to eight weeks ahead, so your hair has settled by the big day.',
-        'A hair spa three to four weeks before keeps lengths soft and glossy.',
-        'Share your outfit, jewellery and reference photos with your stylist when you book your wedding-day styling.',
-      ],
-      image: img('svc-hair', 'Styling stations with round lit mirrors at Xing HSR Layout, where bridal hair is styled', 640, 480),
-    },
-    {
       title: 'How Often Should You Get a Hair Spa?',
       category: 'Hair Spa',
       page: 'hair-spa',

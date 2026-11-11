@@ -13,7 +13,7 @@ updatedDate: 2026-11-24
 featuredImage: { src: "/images/loc-hsr-1.webp", width: 800, height: 600 }
 featuredImageAlt: "Inside Xing Premium Unisex Salon, HSR Layout, where women book a polish for its body polishing benefits"
 relatedServices: ["body-polish", "waxing"]
-relatedPosts: ["waxing-aftercare-ingrown-hairs", "pre-event-skin-prep-timeline", "pre-wedding-salon-timeline"]
+relatedPosts: ["waxing-aftercare-ingrown-hairs", "pre-event-skin-prep-timeline", "manicure-pedicure-benefits"]
 draft: false
 takeaways:
   - "Body polishing exfoliates dull, dry skin, then polishes and moisturises it for soft, smooth, glowing skin."
@@ -111,7 +111,7 @@ Body polishing is popular for special occasions, but it works just as well as re
 
 ### Timing for events
 
-For events, book your body polish **one to three days before** the occasion. That gives your skin time to settle while still looking freshly polished on the day. Many brides also start a few weeks earlier for the best glow. Our [pre-wedding salon timeline](/blog/pre-wedding-salon-timeline) shows how body polish fits with hair, skin and nail prep.
+For an event, book your body polish **one to three days before** the occasion. That gives your skin time to settle while still looking freshly polished on the day. Pair it with a simple hair, skin and nail plan rather than trying several new services at the last minute.
 
 ## Body Polish and Waxing: Get the Timing Right
 

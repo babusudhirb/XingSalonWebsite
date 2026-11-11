@@ -2,9 +2,7 @@ import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { AnimatePresence, m } from 'framer-motion';
 import { ArrowLeft, BadgePercent, Check, CircleCheckBig, Tag, X } from 'lucide-react';
 import { useBooking } from '../context/booking';
-import { booking, locations, primaryLocation, serviceMenu, site } from '../data/content';
-import { individualOffers, type IndividualOffer } from '../data/individualOffers';
-import { services } from '../data/services';
+import { booking, locations, primaryLocation, site } from '../data/content';
 import { getBranch } from '../lib/branch';
 import { cn } from '../lib/cn';
 import { whatsappLink } from '../lib/whatsapp';
@@ -48,7 +46,34 @@ interface ChoiceGroupProps {
 }
 
 type BookingTab = 'offers' | 'hair-care' | 'skin-care' | 'nail-care';
-const bookingMenus = serviceMenu.filter((menu) => menu.id === 'hair-care' || menu.id === 'skin-care' || menu.id === 'nail-care');
+const bookingMenus: Array<{ id: Exclude<BookingTab, 'offers'>; label: string; sections: Array<{ title: string; items: string[] }> }> = [
+  {
+    id: 'hair-care', label: 'Hair Care', sections: [
+      { title: 'Haircuts & Styling', items: ['Women’s Haircut & Styling', 'Men’s Haircut & Beard', 'Kids Haircut', 'Blow Dry & Styling'] },
+      { title: 'Hair Colour', items: ['Balayage', 'Highlights', 'Global Hair Colour', 'Fashion Colour'] },
+      { title: 'Hair Treatments', items: ['Keratin', 'Straightening & Smoothening', 'Nanoplastia', 'Olaplex Bond Repair'] },
+      { title: 'Hair Spa', items: ['Moroccan Hair Spa', 'Tri Bond Hair Spa', 'Anti-Dandruff Hair Spa', 'Anti-Hair Fall Hair Spa'] },
+    ],
+  },
+  {
+    id: 'skin-care', label: 'Skin Care', sections: [
+      { title: 'Facials', items: ['Hydra Facial', 'Anti-Aging Facial', 'Skin Brightening / Vit E Facial'] },
+      { title: 'Body Polish', items: ['Full Body', 'Full Legs', 'Full Arms'] },
+      { title: 'Waxing', items: ['Full Body', 'Full Legs', 'Full Arms', 'Upper Lip', 'Lower Lip', 'Bikini'] },
+      { title: 'Threading', items: ['Eyebrows', 'Upper Lip'] },
+      { title: 'Manicure & Pedicure', items: ['Alga', 'Heel Peel', 'Crystal', 'Deluxe'] },
+    ],
+  },
+  {
+    id: 'nail-care', label: 'Nail Care', sections: [
+      { title: 'File & Polish', items: ['File & Polish'] },
+      { title: 'Extensions', items: ['Acrylic', 'Temporary', 'Poly Gel', 'Removal'] },
+      { title: 'Overlays', items: ['Overlay'] },
+      { title: 'Nail Art', items: ['Nail Art'] },
+    ],
+  },
+];
+const bookingOffers = ['Hair Colour Offer', 'Hair Treatment Offer', 'Skin Care Offer', 'Celebration, Membership & Gift Card'];
 const bookingTabs: Array<{ id: BookingTab; label: string }> = [
   { id: 'offers', label: 'Offers' },
   ...bookingMenus.map((menu) => ({ id: menu.id as Exclude<BookingTab, 'offers'>, label: menu.label })),
@@ -75,7 +100,7 @@ function ServiceBuilder({ selectedServices, selectedOffer, onToggleService, onOf
   selectedServices: string[];
   selectedOffer: string;
   onToggleService: (item: string) => void;
-  onOfferChange: (offer: IndividualOffer | null) => void;
+  onOfferChange: (offer: string | null) => void;
   error?: string;
 }) {
   const [tab, setTab] = useState<BookingTab>('offers');
@@ -99,18 +124,15 @@ function ServiceBuilder({ selectedServices, selectedOffer, onToggleService, onOf
         {tab === 'offers' ? (
           <div className="mt-5">
             <div className="flex items-start justify-between gap-4">
-              <div><h4 className="font-medium text-ink">Add one offer, if applicable</h4><p className="mt-1 text-xs leading-relaxed text-muted">Select one offer for this request. Your salon confirms eligibility before the appointment.</p></div>
+              <h4 className="font-medium text-ink">Add an offer, if applicable</h4>
               {selectedOffer && <button type="button" onClick={() => onOfferChange(null)} className="min-h-11 shrink-0 text-xs font-medium text-berry underline underline-offset-4">Remove offer</button>}
             </div>
-            <div className="mt-4 grid gap-3 sm:grid-cols-2">
-              {individualOffers.map((offer) => {
-                const active = selectedOffer === offer.title;
-                return <button key={offer.id} type="button" onClick={() => onOfferChange(offer)} aria-pressed={active} className={cn('rounded-xl border p-4 text-left transition hover:border-berry focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-berry', active ? 'border-berry bg-white ring-1 ring-berry' : 'border-ink/10 bg-white')}>
-                  <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-berry">{offer.category}</span>
-                  <span className="mt-1 block font-medium text-ink">{offer.title}</span>
-                  <span className="mt-1 block text-xs leading-relaxed text-muted">{offer.value}</span>
-                </button>;
-              })}
+            <div className="mt-4 flex flex-wrap gap-2">
+              {bookingOffers.map((offer) => (
+                <button key={offer} type="button" onClick={() => onOfferChange(offer)} aria-pressed={selectedOffer === offer} className={cn('inline-flex min-h-11 items-center rounded-lg border px-3 py-2 text-sm transition', selectedOffer === offer ? 'border-berry bg-berry text-cream' : 'border-ink/15 bg-white text-ink hover:border-berry')}>
+                  {offer}
+                </button>
+              ))}
             </div>
           </div>
         ) : (
@@ -119,11 +141,12 @@ function ServiceBuilder({ selectedServices, selectedOffer, onToggleService, onOf
               <section key={section.title}>
                 <h4 className="text-sm font-semibold text-ink">{section.title}</h4>
                 <div className="mt-3 flex flex-wrap gap-2">
-                  {section.items.filter((item) => !/bridal|tattoo/i.test(item)).map((item) => (
-                    <button key={item} type="button" aria-pressed={isSelected(item)} onClick={() => onToggleService(item)} className={cn('inline-flex min-h-11 items-center gap-2 rounded-lg border px-3 py-2 text-left text-sm transition', isSelected(item) ? 'border-berry bg-berry text-cream' : 'border-ink/15 bg-white text-ink hover:border-berry')}>
-                      {isSelected(item) && <Check aria-hidden className="size-3.5 shrink-0" />}{item}
+                  {section.items.map((item) => {
+                    const selection = `${section.title} — ${item}`;
+                    return <button key={item} type="button" aria-pressed={isSelected(selection)} onClick={() => onToggleService(selection)} className={cn('inline-flex min-h-11 items-center gap-2 rounded-lg border px-3 py-2 text-left text-sm transition', isSelected(selection) ? 'border-berry bg-berry text-cream' : 'border-ink/15 bg-white text-ink hover:border-berry')}>
+                      {isSelected(selection) && <Check aria-hidden className="size-3.5 shrink-0" />}{item}
                     </button>
-                  ))}
+                  })}
                 </div>
               </section>
             ))}
@@ -198,9 +221,8 @@ export function BookingFlow({ service = '', location = '', detail = '', offer = 
     if (!active) return;
     const asked = new URLSearchParams(window.location.search).get('salon') ?? getBranch() ?? '';
     const initialService = detail ? `${service}${service ? ' — ' : ''}${detail}` : service;
-    const initialOffer = individualOffers.find((item) => item.id === offer || item.title === offer)?.title ?? offer;
     setForm({ ...EMPTY, services: initialService ? [initialService] : [], location: location || (locations.find((loc) => loc.id === asked)?.name ?? '') });
-    setSelectedOffer(initialOffer);
+    setSelectedOffer(offer);
     setErrors({});
     setNotice('');
     setStep(0);
@@ -224,14 +246,7 @@ export function BookingFlow({ service = '', location = '', detail = '', offer = 
     setErrors((previous) => ({ ...previous, services: undefined }));
   };
 
-  const changeOffer = (chosen: IndividualOffer | null) => {
-    setSelectedOffer(chosen?.title ?? '');
-    if (!chosen?.service) return;
-    const linkedService = services[chosen.service]?.label;
-    if (!linkedService) return;
-    setForm((previous) => previous.services.includes(linkedService) ? previous : { ...previous, services: [...previous.services, linkedService] });
-    setErrors((previous) => ({ ...previous, services: undefined }));
-  };
+  const changeOffer = (chosen: string | null) => setSelectedOffer(chosen ?? '');
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();

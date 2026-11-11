@@ -5,7 +5,6 @@ import { locations, salonsPath } from '../data/branches';
 import { faqPath, nav, site } from '../data/content';
 import { offersPath } from '../data/offers';
 import { offersMenu, salonsMenu, type NavMenu } from '../data/navMenus';
-import { faqGroups } from '../data/faqPage';
 import { servicesHubPath } from '../data/services';
 import { useHistoryClose } from '../hooks/useHistoryClose';
 import { useScrollSpy } from '../hooks/useScrollSpy';
@@ -32,7 +31,6 @@ import { ServicesMegaMenu } from './nav/ServicesMegaMenu';
 import { Logo, WhatsAppIcon } from './ui/Decor';
 import { UtilityBar } from './UtilityBar';
 import { Modal } from './ui/Modal';
-import { categories as blogCategories } from 'virtual:blog-index';
 
 const NAV_IDS = nav.map((item) => item.id);
 const GUIDES_ID = 'guides';
@@ -313,10 +311,17 @@ export function Header() {
     setMenuOpen(true);
   };
   const blogTopics = [
-    ...blogCategories.map((category) => ({ label: category.name === 'Skin Care' ? 'Skin Care & Waxing' : category.name, href: `/blog/category/${category.slug}`, note: `${category.count} ${category.count === 1 ? 'post' : 'posts'}` })),
-    { label: 'Waxing & Aftercare', href: '/blog/types-of-waxing', note: 'Guide' },
+    { label: 'Hair Care', href: '/blog/category/hair-care' },
+    { label: 'Hair Treatments', href: '/blog/category/hair-treatments' },
+    { label: 'Hair Colour', href: '/blog/category/hair-colour' },
+    { label: 'Skin Care & Waxing', href: '/blog/category/skin-care' },
   ];
-  const faqTopics = faqGroups().map((group) => ({ label: group.label, href: `${faqPath}#${group.id}` }));
+  const faqTopics = [
+    { label: 'Smoothing & Treatments', href: `${faqPath}#treatments` },
+    { label: 'Hair Colour', href: `${faqPath}#hair-colour` },
+    { label: 'Gift Cards & Membership', href: `${faqPath}#gifts` },
+    { label: 'Nails & Grooming', href: `${faqPath}#skin-nails` },
+  ];
 
   // Only one bar at the foot of the screen: the quick-actions bar steps aside while the drawer is open.
   useEffect(() => {

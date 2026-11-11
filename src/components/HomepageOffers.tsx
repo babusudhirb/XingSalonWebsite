@@ -20,7 +20,7 @@ export function HomepageOffers() {
         </Button>
       </div>
       <div className="mt-8">
-        <SnapRow carousel autoPlayMs={10_000} itemWidth="w-[82%] sm:w-[24rem] lg:w-[23rem]" label="Current salon offers">
+        <SnapRow carousel autoPlayMs={5_000} itemWidth="w-[82%] sm:w-[24rem] lg:w-[23rem]" label="Current salon offers">
         {individualOffers.map((offer) => (
           <article key={offer.id} className="svc-card flex h-full flex-col overflow-hidden bg-white">
             <Picture image={offer.image} sizes="(min-width:1024px) 23rem, (min-width:640px) 24rem, 82vw" className={OFFER_IMAGE_FRAME} />

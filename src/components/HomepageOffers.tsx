@@ -1,37 +1,28 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { bookingPath } from '../data/bookingLinks';
-import { salonOffers, type SalonOffer } from '../data/offers';
+import { individualOfferPath, individualOffers, type IndividualOffer } from '../data/individualOffers';
 import { Button } from './ui/Button';
 import { Picture } from './ui/Primitives';
 import { Section, SectionHeader } from './service/SectionHeader';
 
 const OFFERS_PER_SLIDE = 3;
-const slides = Array.from({ length: Math.ceil(salonOffers.length / OFFERS_PER_SLIDE) }, (_, index) => salonOffers.slice(index * OFFERS_PER_SLIDE, (index + 1) * OFFERS_PER_SLIDE));
+const slides = Array.from({ length: Math.ceil(individualOffers.length / OFFERS_PER_SLIDE) }, (_, index) => individualOffers.slice(index * OFFERS_PER_SLIDE, (index + 1) * OFFERS_PER_SLIDE));
 
-const offerLabel = (offer: SalonOffer) => {
-  if (offer.id === 'keratin') return 'Hair Treatment';
-  if (offer.id === 'hair-colour') return 'Hair Colour';
-  if (offer.id === 'hydra-facial') return 'Skin Care';
-  if (offer.id === 'tuesday') return 'Salon Offer';
-  if (offer.id === 'membership') return 'Membership';
-  return 'Gifting';
-};
-
-const offerHeadline = (offer: SalonOffer) => {
-  if (offer.id === 'keratin') return 'Keratin for Every Hair Length';
-  if (offer.id === 'hair-colour') return 'Hair Colour, Matched to You';
-  if (offer.id === 'hydra-facial') return 'Hydra Facial Glow';
-  if (offer.id === 'membership') return 'More Value, All Year';
-  if (offer.id === 'gift-card') return 'Gift a Xing Experience';
-  return offer.title;
-};
+const offerLabel = (offer: IndividualOffer) => offer.category;
 
 /** Homepage offer gallery. Visitors control the cards, then either learn the details or book their salon. */
 export function HomepageOffers() {
   const [activeSlide, setActiveSlide] = useState(0);
+  const [paused, setPaused] = useState(false);
   const canGoBack = activeSlide > 0;
   const canGoForward = activeSlide < slides.length - 1;
+
+  useEffect(() => {
+    if (paused) return;
+    const timer = window.setInterval(() => setActiveSlide((current) => (current + 1) % slides.length), 10_000);
+    return () => window.clearInterval(timer);
+  }, [paused]);
 
   return (
     <Section tone="tint" id="offers">
@@ -42,20 +33,20 @@ export function HomepageOffers() {
           <ArrowRight aria-hidden className="size-4" />
         </Button>
       </div>
-      <div className="mt-8 grid gap-5 md:grid-cols-3">
+      <div className="mt-8 grid gap-5 md:grid-cols-3" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)} onFocusCapture={() => setPaused(true)} onBlurCapture={() => setPaused(false)}>
         {slides[activeSlide].map((offer) => (
           <article key={offer.id} className="svc-card flex h-full flex-col overflow-hidden bg-white">
             <Picture image={offer.image} sizes="(min-width:1024px) 30vw, (min-width:640px) 45vw, 90vw" className="aspect-[4/3] w-full object-cover" />
             <div className="flex flex-1 flex-col p-5">
               <p className="text-xs font-semibold uppercase tracking-wide text-berry">{offerLabel(offer)}</p>
-              <h3 className="mt-2 font-display text-3xl font-medium leading-tight text-ink">{offerHeadline(offer)}</h3>
-              <p className="mt-3 text-lg font-semibold text-berry">{offer.badge}</p>
-              <p className="mt-3 text-sm leading-relaxed text-muted">{offer.sub}</p>
+              <h3 className="mt-2 font-display text-3xl font-medium leading-tight text-ink">{offer.title}</h3>
+              <p className="mt-3 text-lg font-semibold text-berry">{offer.value}</p>
+              <p className="mt-3 text-sm leading-relaxed text-muted">{offer.description}</p>
               <div className="mt-auto flex gap-3 pt-5">
-                <Button variant="outline" href={`/offers#${offer.id}`} arrow={false} className="min-w-0 flex-1">
+                <Button variant="outline" href={individualOfferPath(offer.id)} arrow={false} className="min-w-0 flex-1">
                   View Offer
                 </Button>
-                <Button href={offer.bookingService ? `${bookingPath}?service=${encodeURIComponent(offer.bookingService)}` : bookingPath} className="shrink-0 whitespace-nowrap">
+                <Button href={offer.service ? `${bookingPath}?service=${encodeURIComponent(offer.service)}` : bookingPath} className="shrink-0 whitespace-nowrap">
                   Book Appointment
                 </Button>
               </div>

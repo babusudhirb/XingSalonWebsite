@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { X } from 'lucide-react';
-import { fromLabel, offerPage, offerPageForService, offerPath, saveLabel } from '../../data/offerPages';
-import type { BranchId } from '../../data/offers';
+import { individualOfferPath, rotatedIndividualOffers } from '../../data/individualOffers';
 import { track } from '../../lib/analytics';
 import { getBranch } from '../../lib/branch';
 import { currentPage } from '../../lib/route';
@@ -37,14 +36,14 @@ const visitorBusy = () =>
   !!document.querySelector('[role="dialog"][aria-modal="true"]') || !!document.activeElement?.matches('input, textarea, select, [contenteditable="true"]');
 
 /**
- * One offer page as a small toast at the foot of the screen (above the quick-actions bar on phones): the one that
- * fits the service page it is on, else the hair colour offers. At most once in 3 days, never in the first 8 seconds,
+ * One evergreen offer as a small toast at the foot of the screen (above the quick-actions bar on phones). Its selection
+ * is stable for a page but rotates across the shared offer catalogue. At most once in 3 days, never in the first 8 seconds,
  * and not on /offers (App.tsx leaves it out there).
  */
 export default function OfferPopup() {
   const [open, setOpen] = useState(false);
-  const page = offerPage((currentPage && offerPageForService(currentPage.slug)) || 'hair-colour');
-  const params = { offer_id: page.id, placement: 'popup', branch: getBranch() ?? 'none' };
+  const offer = rotatedIndividualOffers(currentPage?.slug ?? window.location.pathname, 1)[0];
+  const params = { offer_id: offer.id, placement: 'popup', branch: getBranch() ?? 'none' };
 
   useEffect(() => {
     if (shownRecently()) return;
@@ -100,13 +99,13 @@ export default function OfferPopup() {
       className="fixed inset-x-3 bottom-[calc(theme(spacing.action-bar)+0.75rem+env(safe-area-inset-bottom))] z-40 max-h-[30svh] rounded-2xl bg-cream p-3 shadow-lift ring-1 ring-berry/15 motion-safe:animate-[toast-in_0.35s_ease-out] md:inset-x-auto md:bottom-5 md:left-5 md:max-h-none md:w-[24rem]"
     >
       <div className="flex items-center gap-3">
-        <Picture image={page.image} decorative sizes="120px" className="size-16 shrink-0 rounded-xl object-cover" />
-        <a href={offerPath(page.id, (getBranch() as BranchId | null) ?? 'hsr-layout')} data-cta={`offer-card-${page.id}`} onClick={() => track('popup_claim', params)} className="min-w-0 flex-1">
+        <Picture image={offer.image} decorative sizes="120px" className="size-16 shrink-0 rounded-xl object-cover" />
+        <a href={individualOfferPath(offer.id)} data-cta={`offer-card-${offer.id}`} onClick={() => track('popup_claim', params)} className="min-w-0 flex-1">
           <p id="offer-toast-title" className="truncate font-display text-xl font-medium leading-tight text-ink">
-            {page.name}
+            {offer.title}
           </p>
-          <p className="truncate text-sm font-semibold text-berry">{[fromLabel(page), saveLabel(page)].filter(Boolean).join(' · ')}</p>
-          <span className="inline-flex min-h-11 items-center text-sm font-medium text-berry underline underline-offset-4">See the offers</span>
+          <p className="truncate text-sm font-semibold text-berry">{offer.value}</p>
+          <span className="inline-flex min-h-11 items-center text-sm font-medium text-berry underline underline-offset-4">View offer</span>
         </a>
         <button type="button" onClick={dismiss} aria-label="Close offer" className="grid size-11 shrink-0 self-start place-items-center rounded-full text-ink hover:bg-blush">
           <X aria-hidden className="size-5" />

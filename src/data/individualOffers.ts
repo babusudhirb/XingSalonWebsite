@@ -59,3 +59,10 @@ export const individualOffers: IndividualOffer[] = [
 
 export const individualOfferPath = (id: string) => `/offers/${id}`;
 export const individualOfferById = (id: string) => individualOffers.find((offer) => offer.id === id);
+
+/** Keeps repeated offer slots fresh while remaining stable for a particular page and its prerendered HTML. */
+export function rotatedIndividualOffers(seed: string, count = individualOffers.length) {
+  const start = [...seed].reduce((total, character) => (total * 31 + character.charCodeAt(0)) >>> 0, 0) % individualOffers.length;
+  const rotated = [...individualOffers.slice(start), ...individualOffers.slice(0, start)];
+  return rotated.slice(0, Math.min(count, rotated.length));
+}

@@ -3,7 +3,7 @@
 // only adds the chip bar's moving highlight and edge fades.
 import { OfferPagesSection } from '../components/offers/OfferPageCards';
 import { StaticFaq } from '../components/services/StaticFaq';
-import type { OfferPageId } from '../data/offerPages';
+import type { IndividualOfferCategory } from '../data/individualOffers';
 import { categoryFaqs } from '../data/hubFaqs';
 import { useEffect, useMemo } from 'react';
 import { ArrowRight, BookOpen } from 'lucide-react';
@@ -15,7 +15,7 @@ import { useScrollSpy } from '../hooks/useScrollSpy';
 import { cn } from '../lib/cn';
 
 /** The offer pages for each category's services. Nail care has none. */
-const CATEGORY_OFFERS: Record<string, OfferPageId[] | undefined> = { 'hair-care': ['hair-colour', 'hair-treatment'], 'skin-body': ['skin-care'] };
+const CATEGORY_OFFERS: Record<string, IndividualOfferCategory[] | undefined> = { 'hair-care': ['Hair Colour', 'Hair Treatments'], 'skin-body': ['Skin & Care'] };
 
 const CHIP = 'inline-flex min-h-11 shrink-0 items-center rounded-full border px-4 text-base font-medium transition-colors duration-150 motion-reduce:transition-none md:text-sm';
 const CHIP_ON = 'border-berry bg-berry text-cream';

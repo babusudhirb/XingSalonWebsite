@@ -1,0 +1,1 @@
+import{j as r}from"./booking-Bzfo1_tO.js";import{S as e}from"./Services-KK1qBm5T.js";import"./search-DU6vrm14.js";import"./book-open-DM5nIYK-.js";function m(){return r.jsx(e,{showMenu:!0})}export{m as default};

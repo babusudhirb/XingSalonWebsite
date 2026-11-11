@@ -1,0 +1,1 @@
+const a="Xing Premium Unisex Salon is a Bangalore salon group founded in 2020, with salons on Sarjapur Road, in HSR Layout and in Brookfield, offering hair, skin, nail and grooming services.",o={book:"Book Appointment",whatsapp:"Chat on WhatsApp",call:"Call",details:"View Details"};export{o as C,a as E};

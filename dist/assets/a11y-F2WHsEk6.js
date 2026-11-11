@@ -1,0 +1,1 @@
+function a(e,t,l,f){var o,s;let r=t;if(e.key==="ArrowRight")r=(t+1)%l;else if(e.key==="ArrowLeft")r=(t-1+l)%l;else if(e.key==="Home")r=0;else if(e.key==="End")r=l-1;else return;e.preventDefault(),f(r),(s=(o=e.currentTarget.closest('[role="tablist"]'))==null?void 0:o.querySelectorAll('[role="tab"]')[r])==null||s.focus()}export{a as o};

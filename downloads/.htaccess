@@ -1,0 +1,2 @@
+RewriteEngine On
+RewriteRule ^xing-salons-menu-catalog-2026\.pdf$ /menu/xing-salons-menu-catalog-2026.pdf [R=301,L]

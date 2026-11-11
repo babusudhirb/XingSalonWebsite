@@ -44,7 +44,7 @@ export default function OffersPage() {
           <ul className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {offers.map((offer) => <li key={offer.id} id={offer.id} className="flex h-full flex-col overflow-hidden rounded-card border border-ink/10 bg-white shadow-soft">
               <Picture image={offer.image} sizes="(min-width:1024px) 30vw, (min-width:640px) 45vw, 90vw" className={OFFER_IMAGE_FRAME} />
-              <div className="flex flex-1 flex-col p-5"><p className="text-sm font-semibold text-berry">{offer.kicker}</p><h3 className="mt-1 font-display text-3xl font-medium text-ink">{offer.title}</h3><p className="mt-2 text-sm leading-relaxed text-muted">{offer.description}</p><p className="mt-4 text-sm font-medium text-berry">{offer.value}</p><Button href={individualOfferPath(offer.id)} className="mt-auto w-full pt-5">View offer</Button></div>
+              <div className="flex flex-1 flex-col p-5"><p className="text-sm font-semibold text-berry">{offer.kicker}</p><h3 className="mt-1 font-display text-3xl font-medium text-ink">{offer.title}</h3><p className="mt-2 text-sm leading-relaxed text-muted">{offer.description}</p><p className="mt-4 text-sm font-medium text-berry">{offer.value}</p><div className="mt-auto grid grid-cols-2 gap-3 pt-5"><Button variant="outline" href={individualOfferPath(offer.id)} arrow={false} className="w-full whitespace-nowrap">View Offer</Button><Button href={offer.service ? `${bookingPath}?service=${encodeURIComponent(offer.service)}` : bookingPath} arrow={false} className="w-full whitespace-nowrap">Book Offer</Button></div></div>
             </li>)}
           </ul>
           <p className="mt-8 text-sm text-muted">{offersPage.smallPrint}</p>

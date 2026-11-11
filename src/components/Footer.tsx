@@ -64,7 +64,8 @@ function FooterColumn({ title, children }: { title: string; children: ReactNode 
 
 const FOOTER_LINK = 'inline-flex min-h-11 min-w-11 items-center text-xs text-cream/70 transition-colors hover:text-gold lg:min-h-0';
 
-export function Footer() {
+/** The booking journey keeps its footer focused on salon services, without routing a visitor to a separate outlet. */
+export function Footer({ bookingOnly = false }: { bookingOnly?: boolean }) {
   return (
     <footer className="clear-action-bar on-dark bg-ink text-cream">
       <div className="container-site grid gap-8 py-12 sm:grid-cols-2 lg:grid-cols-12 lg:gap-8">
@@ -88,15 +89,17 @@ export function Footer() {
               );
             })}
           </ul>
-          <a
-            href={studio.instagram.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-3 inline-flex min-h-11 items-center gap-2 text-xs text-cream/70 transition-colors hover:text-gold"
-          >
-            <Instagram aria-hidden className="size-3.5 text-gold" />
-            Tattoo studio: {studio.instagram.handle}
-          </a>
+          {!bookingOnly && (
+            <a
+              href={studio.instagram.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-3 inline-flex min-h-11 items-center gap-2 text-xs text-cream/70 transition-colors hover:text-gold"
+            >
+              <Instagram aria-hidden className="size-3.5 text-gold" />
+              Tattoo studio: {studio.instagram.handle}
+            </a>
+          )}
           {/* The group's gym, a separate business with its own site. */}
           <a
             href={fitness.website}
@@ -113,7 +116,7 @@ export function Footer() {
           {footer.columns.map((column) => (
             <FooterColumn key={column.title} title={column.title}>
               <ul className="md:space-y-2.5">
-                {column.links.filter((link) => hasBlog || link.href !== '/blog').map((link) => (
+                {column.links.filter((link) => (hasBlog || link.href !== '/blog') && (!bookingOnly || !/bridal|tattoo/i.test(`${link.label} ${link.href}`))).map((link) => (
                   <li key={link.label}>
                     <a href={homeHref(link.href)} className={FOOTER_LINK}>
                       {link.label}

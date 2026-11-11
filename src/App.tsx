@@ -215,7 +215,7 @@ export default function App() {
               <Landing />
             )}
           </main>
-          <Footer />
+          <Footer bookingOnly={isBooking} />
           <FloatingActions />
           {/* Service pages, salon pages, the offers page and the membership page render the buttons themselves,
               with their own prefilled message (and, on a salon's page, that salon's numbers). */}

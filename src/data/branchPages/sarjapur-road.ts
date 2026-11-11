@@ -43,7 +43,6 @@ export const sarjapurRoad: BranchPageContent = {
       { slug: 'hair-smoothening', label: 'Straightening & Smoothening', text: 'A tailored smoother or straighter finish for your hair.' },
       { slug: 'moroccan-hair-spa', label: 'Hair Spa Rituals', text: 'Targeted spas for dry, frizzy or falling hair, with bond repair.' },
       { slug: 'mens-haircut-beard-grooming', label: 'Men’s Grooming', text: 'Fades, beard trims and shaves, fitted around the working week.' },
-      { slug: 'nail-extensions', label: 'Nail Extensions', text: 'Acrylic, poly gel and builder gel extensions, plus refills.' },
       { slug: 'hydra-facial', label: 'Hydra Facial', text: 'A deep cleanse and hydration that leaves skin fresh and glowing.' },
     ],
   },

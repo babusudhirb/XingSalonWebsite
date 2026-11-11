@@ -36,7 +36,6 @@ export const hsrLayout: BranchPageContent = {
     title: 'Popular Services at Our HSR Layout Salon',
     text: 'From the Nail Bar to colour and smoothing, here’s what HSR books most.',
     items: [
-      { slug: 'nail-extensions', label: 'Nail Bar: Extensions & Art', text: 'Extensions, overlays and nail art at our dedicated Nail Bar.' },
       { slug: 'manicure', label: 'Manicure & Pedicure', text: 'Relaxing mani-pedis in the pedicure lounge, from D-Lux to Detox.' },
       { slug: 'global-hair-color', label: 'Hair Colour & Balayage', text: 'Root touch-ups to full balayage, with a free colour consultation.' },
       { slug: 'keratin-treatment', label: 'Keratin & Smoothing', text: 'Keratin, smoothening and straightening for frizz-free, glossy hair.' },

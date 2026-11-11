@@ -41,7 +41,6 @@ export const brookfield: BranchPageContent = {
       { slug: 'moroccan-hair-spa', label: 'Hair Spa Rituals', text: 'Nourishing, anti-dandruff, anti-hairfall and bond-repair spas for soft, healthy hair.' },
       { slug: 'womens-haircut-styling', label: 'Haircuts & Styling', text: 'Layers, face-framing cuts, blow-dries, ironing and curls.' },
       { slug: 'hydra-facial', label: 'Hydra Facial & Skin Care', text: 'Deep cleansing and hydration for fresh, glowing skin.' },
-      { slug: 'nail-extensions', label: 'Nail Extensions & Nail Art', text: 'Acrylic, poly gel and builder gel extensions, with chrome, cat-eye and French art.' },
       { slug: 'mens-haircut-beard-grooming', label: 'Men’s Grooming', text: 'Fades, textured cuts, beard trims and styling, and men’s hair colour.' },
       { slug: 'womens-haircut-styling', hash: '#bridal', label: 'Bridal Hair', text: 'Wedding-day hair styling, plus the hair spas and treatments that lead up to it.' },
     ],

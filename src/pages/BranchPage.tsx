@@ -12,7 +12,6 @@ import { ArrowLink, Button } from '../components/ui/Button';
 import { WhatsAppIcon } from '../components/ui/Decor';
 import { Modal } from '../components/ui/Modal';
 import { Picture, Reveal } from '../components/ui/Primitives';
-import { Fold } from '../components/ui/Fold';
 import { SnapRow } from '../components/ui/SnapRow';
 import { locations, type Salon } from '../data/branches';
 import { SalonNap } from '../components/SalonNap';
@@ -98,7 +97,7 @@ export default function BranchPage({ salon }: { salon: Salon }) {
         <SectionHeader eyebrow="Services" title={page.services.title} text={page.services.text} />
         <div className="mt-10">
           <SnapRow className="md:grid-cols-2 md:gap-5 lg:grid-cols-4">
-            {page.services.items.map((item, i) => {
+            {page.services.items.filter((item) => item.slug !== 'nail-extensions').slice(0, 8).map((item, i) => {
               const image = servicePages[item.slug]?.hero.image;
               return (
                 <Reveal key={item.label} delay={(i % 4) * 0.05} className="h-full">
@@ -152,9 +151,9 @@ export default function BranchPage({ salon }: { salon: Salon }) {
 
       <Section tone="tint">
         <SectionHeader eyebrow="Your Visit" title="How It Works" />
-        <Fold>
+        <div className="mt-6">
           <ProcessStepper steps={visitSteps} />
-        </Fold>
+        </div>
       </Section>
 
       <Location salon={salon} title={page.reach.title} notes={page.reach.notes} />

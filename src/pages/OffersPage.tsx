@@ -42,9 +42,9 @@ export default function OffersPage() {
             {filters.map((item) => <button key={item.id} type="button" role="tab" aria-selected={filter === item.id} onClick={() => setFilter(item.id)} className={cn('min-h-11 shrink-0 rounded-full border px-4 text-sm font-medium', filter === item.id ? 'border-berry bg-berry text-cream' : 'border-ink/15 text-ink hover:border-berry')}>{item.label}</button>)}
           </div>
           <ul className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {offers.map((offer) => <li key={offer.id} id={offer.id} className="overflow-hidden rounded-card border border-ink/10 bg-white shadow-soft">
+            {offers.map((offer) => <li key={offer.id} id={offer.id} className="flex h-full flex-col overflow-hidden rounded-card border border-ink/10 bg-white shadow-soft">
               <Picture image={offer.image} sizes="(min-width:1024px) 30vw, (min-width:640px) 45vw, 90vw" className={OFFER_IMAGE_FRAME} />
-              <div className="p-5"><p className="text-sm font-semibold text-berry">{offer.kicker}</p><h3 className="mt-1 font-display text-3xl font-medium text-ink">{offer.title}</h3><p className="mt-2 text-sm leading-relaxed text-muted">{offer.description}</p><p className="mt-4 text-sm font-medium text-berry">{offer.value}</p><Button href={individualOfferPath(offer.id)} className="mt-5 w-full">View offer</Button></div>
+              <div className="flex flex-1 flex-col p-5"><p className="text-sm font-semibold text-berry">{offer.kicker}</p><h3 className="mt-1 font-display text-3xl font-medium text-ink">{offer.title}</h3><p className="mt-2 text-sm leading-relaxed text-muted">{offer.description}</p><p className="mt-4 text-sm font-medium text-berry">{offer.value}</p><Button href={individualOfferPath(offer.id)} className="mt-auto w-full pt-5">View offer</Button></div>
             </li>)}
           </ul>
           <p className="mt-8 text-sm text-muted">{offersPage.smallPrint}</p>

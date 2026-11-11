@@ -1,7 +1,10 @@
 // The Offers, Gifts and Salons menus, for the desktop header and the mobile drawer.
 import { locations, salonsPath } from './branches';
 import type { Img } from './content';
-import { individualOfferPath, individualOffers } from './individualOffers';
+import { celebrationOffersPath } from './celebrationOffers';
+import { membershipPath } from './membershipLinks';
+import type { BranchId } from './offers';
+import { salonOfferPages, type OfferPageId } from './staticOfferPages';
 
 
 export interface NavMenuItem {
@@ -26,14 +29,32 @@ export interface NavMenu {
   feature?: { image: Img; title: string; button: string; href: string };
 }
 
-/** The menu is derived from the same catalogue as every offer card, so it cannot become stale. */
+const GIFT_ITEMS: NavMenuItem[] = [
+  { label: 'Birthday & Anniversary Offers', href: celebrationOffersPath, divider: true },
+  { label: 'Membership Offers', href: `${membershipPath}#membership` },
+  { label: 'Gift Cards', href: `${membershipPath}#gift-cards` },
+];
+
+const OFFER_LINKS: { id: OfferPageId; label: string }[] = [
+  { id: 'hair-colour', label: 'Hair Colour' },
+  { id: 'hair-treatment', label: 'Hair Treatment' },
+  { id: 'skin-care', label: 'Skin Care' },
+];
+
+/** Visitors choose the offer family first, then their location. These legacy destinations stay intact for campaigns and ads. */
 export const offersMenu = (): NavMenu => ({
   title: 'Offers',
-  items: [...new Set(individualOffers.map((offer) => offer.category))].map((category, index) => {
-    const offers = individualOffers.filter((offer) => offer.category === category);
-    return { label: category, href: individualOfferPath(offers[0].id), divider: index > 0, links: offers.map((offer) => ({ label: offer.title, href: individualOfferPath(offer.id) })) };
-  }),
-  viewAll: { label: 'View all offers', href: '/offers' },
+  items: [
+    ...OFFER_LINKS.map((offer) => ({
+      label: offer.label,
+      href: salonOfferPages['hsr-layout'][offer.id],
+      links: locations.map((salon) => ({
+        label: `Xing ${salon.name}`,
+        href: salon.id === 'brookfield' ? 'https://xingsalon.com/' : salonOfferPages[salon.id as BranchId][offer.id],
+      })),
+    })),
+    ...GIFT_ITEMS,
+  ],
 });
 
 export const salonsMenu: NavMenu = {

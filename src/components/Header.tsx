@@ -372,7 +372,7 @@ export function Header() {
                 const isActive = active === item.id;
                 if (item.id === SERVICES_ID) return <ServicesMegaMenu key={item.id} label={item.label} isActive={isActive} underline={UNDERLINE} />;
                 if (item.id === SALONS_ID) return <SalonsMenu key={item.id} label={item.label} isActive={isActive} />;
-                if (item.id === OFFERS_ID) return <LinksMenu key={item.id} id="offers" label={item.label} href={offersPath} isActive={isActive} menu={offersMenu()} clickOnly={false} />;
+                if (item.id === OFFERS_ID) return <LinksMenu key={item.id} id="offers" label={item.label} href={offersPath} isActive={isActive} menu={offersMenu()} />;
                 if (item.id === GUIDES_ID && hasBlog) return <TopicMenu key={item.id} id="blogs" label={item.label} href="/blog" isActive={isActive} items={blogTopics} viewAll="Explore all blogs" />;
                 if (item.id === FAQ_ID) return <TopicMenu key={item.id} id="faq" label={item.label} href={faqPath} isActive={isActive} items={faqTopics} viewAll="Explore all FAQs" />;
                 return (

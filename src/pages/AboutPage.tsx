@@ -134,7 +134,7 @@ export default function AboutPage() {
       </section>
 
       <Section tone="white">
-        <SectionHeader eyebrow={about.why.eyebrow} title={about.why.title} />
+        <SectionHeader eyebrow={about.why.eyebrow} title={about.why.title} text={about.why.text} />
         <BenefitGrid items={about.why.items} />
       </Section>
 

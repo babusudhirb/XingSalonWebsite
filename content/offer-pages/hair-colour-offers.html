@@ -553,56 +553,7 @@ h1, h2, h3, h4, .title, .section-title,
 })();
 
 </script>
-<style>
-  .offer-actions.sarjapur-contact-actions{display:grid;grid-template-columns:54px minmax(105px,1fr) minmax(150px,1.45fr);gap:10px;align-items:center;}
-  .sarjapur-contact-actions .sarjapur-contact{min-height:52px;border:1px solid #e2ceda;border-radius:12px;background:#fff;color:#5c334c;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;transition:transform .18s ease,box-shadow .18s ease,background .18s ease;}
-  .sarjapur-contact-actions .sarjapur-contact:hover{transform:translateY(-2px);box-shadow:0 8px 18px -13px rgba(116,31,78,.45);}
-  .sarjapur-contact-actions .sarjapur-call{font-size:22px;}
-  .sarjapur-contact-actions .sarjapur-whatsapp{gap:7px;background:#25d366;border-color:#25d366;color:#fff;}
-  .sarjapur-contact-actions .sarjapur-whatsapp::before{content:'◔';font-size:18px;font-weight:700;}
-  .sarjapur-contact-actions .sarjapur-book{border:0;background:#d9237d;color:#fff;padding:12px 16px;cursor:pointer;white-space:nowrap;}
-  .sarjapur-contact-actions .sarjapur-book:hover{background:#bb1769;}
-  @media(max-width:420px){.offer-actions.sarjapur-contact-actions{grid-template-columns:50px minmax(95px,1fr) minmax(130px,1.4fr);gap:8px}.sarjapur-contact-actions .sarjapur-contact{min-height:50px}.sarjapur-contact-actions .sarjapur-book{font-size:11px;padding-inline:8px;}}
-</style>
-<script>
-  (() => {
-    document.querySelectorAll('.offer-card').forEach(card => {
-      const actions = card.querySelector('.offer-actions');
-      if (!actions || actions.dataset.sarjapurButtonsReady) return;
-      const service = actions.querySelector('[data-service]')?.dataset.service || card.querySelector('h3')?.textContent.trim() || 'hair color';
-      const existingWhatsapp = actions.querySelector('a[href*="wa.me"]');
-      const call = document.createElement('a');
-      call.className = 'sarjapur-contact sarjapur-call';
-      call.href = 'tel:+918970007440';
-      call.setAttribute('aria-label', `Call Xing about ${service}`);
-      call.textContent = '☎';
-      const whatsapp = document.createElement('a');
-      whatsapp.className = 'sarjapur-contact sarjapur-whatsapp';
-      whatsapp.href = existingWhatsapp?.href || `https://wa.me/918970007440?text=${encodeURIComponent(`Hi Xing! I am interested in ${service}.`)}`;
-      whatsapp.target = '_blank';
-      whatsapp.rel = 'noopener';
-      whatsapp.setAttribute('aria-label', `WhatsApp Xing about ${service}`);
-      whatsapp.textContent = 'WhatsApp';
-      const book = document.createElement('button');
-      book.type = 'button';
-      book.className = 'sarjapur-contact sarjapur-book';
-      book.textContent = 'Book Free Consultation';
-      book.addEventListener('click', () => {
-        const dialog = document.getElementById('leadDialog');
-        const select = dialog?.querySelector('select[name="service"]');
-        if (select && [...select.options].some(option => option.value === service)) select.value = service;
-        if (dialog && !dialog.open) {
-          dialog.showModal();
-          document.body.classList.add('modal-open');
-          dialog.querySelector('input[name="name"]')?.focus();
-        }
-      });
-      actions.replaceChildren(call, whatsapp, book);
-      actions.classList.add('sarjapur-contact-actions');
-      actions.dataset.sarjapurButtonsReady = 'true';
-    });
-  })();
-</script>
+<script src="/offer-pages/offer-actions.js"></script>
 <script src="/offer-pages/salon-picker.js"></script>
 </body>
 </html>

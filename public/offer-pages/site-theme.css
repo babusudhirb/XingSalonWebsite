@@ -168,22 +168,53 @@ h1 .accent, h2 .accent, .section-title .accent { font-style: italic; }
 .salon-list h3 { font-size: 20px; }
 .salon-list address { margin: 8px 0 12px; line-height: 1.6; }
 
-/* "Choose your salon" (salon-picker.js): a bottom sheet on phones, a small modal from 641px. */
+/* "Choose your salon" (salon-picker.js), as on the rest of the site (src/components/BranchPicker.tsx): a bottom sheet on
+   phones, a modal from 641px. Each salon shows its areas and, for a call or WhatsApp, the number it will reach. */
 .salon-picker { padding: 0; border: 0; background: transparent; width: 100%; max-width: 100%; margin: auto auto 0; color: var(--ink); }
 .salon-picker::backdrop { background: rgb(39 21 28 / 0.45); }
-.salon-picker-panel { background: #fffafd; border-radius: 22px 22px 0 0; padding: 18px 16px calc(18px + env(safe-area-inset-bottom)); }
-.salon-picker-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
-.salon-picker-head h2 { font-size: 22px; letter-spacing: -0.02em; }
-.salon-picker-close { min-width: 44px; min-height: 44px; border: 0; background: none; font-size: 28px; line-height: 1; color: var(--ink); }
-.salon-picker-list { display: grid; gap: 10px; }
-.salon-picker-list button { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; min-height: 60px; padding: 12px 16px; text-align: left; background: #fff; border: 1px solid #e0d2de; border-radius: 16px; color: var(--ink); }
-.salon-picker-list button strong { font-size: 16px; font-weight: 600; }
-.salon-picker-list button span { font-size: 13px; color: var(--muted); }
-.salon-picker-list button:hover, .salon-picker-list button.is-current { border-color: var(--rose); background: #fff0f8; }
+.salon-picker-panel { background: #fff9f8; border-radius: 22px 22px 0 0; padding: 22px 20px calc(14px + env(safe-area-inset-bottom)); }
+.salon-picker-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 6px; }
+.salon-picker-head h2 { font-size: 26px; line-height: 1.15; letter-spacing: -0.01em; font-weight: 500; }
+.salon-picker-close { flex: none; min-width: 44px; min-height: 44px; margin: -6px -8px 0 0; border: 0; border-radius: 999px; background: none; font-size: 28px; line-height: 1; color: var(--ink); cursor: pointer; }
+.salon-picker-close:hover { background: #fce4ea; color: #a8325e; }
+.salon-picker-list { display: grid; }
+.salon-picker-list button { display: flex; align-items: center; gap: 16px; width: 100%; min-height: 64px; padding: 16px 0; text-align: left; background: none; border: 0; border-top: 1px solid rgb(39 21 28 / 0.1); color: var(--ink); font: inherit; cursor: pointer; }
+.salon-picker-list button:first-child { border-top: 0; }
+.salon-picker-list button:focus-visible { outline: 2px solid #a8325e; outline-offset: 2px; border-radius: 12px; }
+.salon-picker-icon { flex: none; display: grid; place-items: center; width: 48px; height: 48px; border-radius: 999px; background: #fce4ea; color: #a8325e; }
+.salon-picker[data-action="whatsapp"] .salon-picker-icon { background: #dff1e6; color: #1faf54; }
+.salon-picker-icon svg { width: 22px; height: 22px; }
+.salon-picker-text { flex: 1; min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 3px; }
+.salon-picker-name { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; font-size: 17px; font-weight: 600; }
+.salon-picker-badge { display: none; padding: 2px 8px; border-radius: 999px; background: #d2a445; color: var(--ink); font-size: 12px; font-weight: 600; white-space: nowrap; }
+.salon-picker-list button.is-current .salon-picker-badge { display: inline-block; }
+.salon-picker-areas { display: flex; align-items: flex-start; gap: 6px; min-width: 0; font-size: 14px; line-height: 1.4; color: var(--muted); }
+.salon-picker-areas svg { flex: none; width: 14px; height: 14px; margin-top: 2px; }
+.salon-picker-phone { font-size: 15px; font-weight: 500; color: var(--ink); }
+.salon-picker-phone:empty { display: none; }
+.salon-picker-chevron { flex: none; width: 20px; height: 20px; color: #a8325e; transition: transform 0.2s; }
+.salon-picker-list button:hover .salon-picker-chevron { transform: translateX(4px); }
 @media (min-width: 641px) {
-  .salon-picker { width: min(420px, calc(100% - 32px)); margin: auto; }
-  .salon-picker-panel { border-radius: 22px; padding: 22px; }
+  .salon-picker { width: min(560px, calc(100% - 32px)); margin: auto; }
+  .salon-picker-panel { border-radius: 22px; padding: 28px 32px 18px; }
+  .salon-picker-head h2 { font-size: 30px; }
 }
+
+/* The offer cards' action row (offer-actions.js): a large "Call now" across the card, then WhatsApp and a smaller
+   "Book free consultation" side by side. */
+.offer-actions.offer-cta { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: stretch; }
+.offer-act { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 10px 14px; border-radius: 14px; border: 1.5px solid transparent; font: inherit; font-weight: 700; font-size: 14px; line-height: 1.2; text-align: center; text-decoration: none; cursor: pointer; transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease, background 0.18s ease; }
+.offer-act svg { flex: none; width: 20px; height: 20px; }
+.offer-act:hover { transform: translateY(-2px); }
+.offer-act:focus-visible { outline: 2px solid #a8325e; outline-offset: 3px; }
+.offer-act-call { grid-column: 1 / -1; min-height: 58px; font-size: 18px; letter-spacing: 0.01em; background: #a8325e; color: #fff; box-shadow: 0 12px 24px -14px rgb(168 50 94 / 0.8); }
+.offer-act-call svg { width: 22px; height: 22px; }
+.offer-act-call:hover { background: #87244a; color: #fff; }
+a.offer-act-whatsapp { background: #1faf54; border-color: #1faf54; color: #fff; }
+a.offer-act-whatsapp:hover { background: #1faf54; color: #fff; filter: brightness(1.05); }
+.offer-act-book { background: #fff; border-color: #a8325e; color: #a8325e; font-size: 13px; font-weight: 600; }
+.offer-act-book:hover { background: #fce4ea; color: #87244a; }
+@media (max-width: 360px) { .offer-act { font-size: 13px; padding-inline: 10px; } .offer-act-book { font-size: 12px; } }
 
 /* Every WhatsApp button on the offer pages in WhatsApp green (hero, offer cards, mobile dock). */
 a.btn[href*="wa.me"], a[class*="-whatsapp"][href*="wa.me"] { background: #1FAF54; border-color: #1FAF54; color: #fff; }

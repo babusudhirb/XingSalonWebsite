@@ -336,6 +336,14 @@ function contentFiles(path: string) {
 const OFFER_PAGES = resolve(__dirname, 'content/offer-pages');
 const suppliedOfferPage = (path: string) => readFile(join(OFFER_PAGES, `${path.slice(1)}.html`), 'utf8');
 
+/** The offer pages' own CSS and scripts (public/offer-pages/) with ?v=<content hash>. Hostinger caches them for a
+ * week under a fixed name, so without it a returning visitor keeps an old copy next to the new page. */
+const versionOfferAssets = (html: string) =>
+  html.replace(/\/offer-pages\/([\w-]+\.(?:css|js))(?=["'])/g, (url, file: string) => {
+    const hash = createHash('sha256').update(readFileSync(resolve(__dirname, 'public/offer-pages', file))).digest('hex').slice(0, 10);
+    return `${url}?v=${hash}`;
+  });
+
 function seoPlugin(state: { blog: Blog }, options: HeadOptions): Plugin {
   let outDir = 'dist';
   const extra = () => [aboutMeta, faqPageMeta, referralMeta, privacyMeta, membershipMeta, celebrationOffersMeta, bookingMeta, notFoundMeta, ...blogRoutes(state.blog.posts.map((post) => ({ ...post.meta, faqs: post.body.faqs })), state.blog.categories)];
@@ -396,7 +404,7 @@ function seoPlugin(state: { blog: Blog }, options: HeadOptions): Plugin {
       // The offer pages (content/offer-pages/): the supplied files in the site's colours, fonts, logo and header. Their
       // own inline scripts (tags, galleries, forms) go into the CSP's hashes like the site's.
       for (const path of staticPages) {
-        const html = blendOfferPage(await suppliedOfferPage(path), offerPageAssets);
+        const html = versionOfferAssets(blendOfferPage(await suppliedOfferPage(path), offerPageAssets));
         for (const m of html.matchAll(/<script(?![^>]*\bsrc=)(?![^>]*application\/ld\+json)[^>]*>([\s\S]*?)<\/script>/g)) if (m[1].trim()) inlineScripts.add(m[1]);
         await writeFile(join(outDir, `${path}.html`), html);
       }

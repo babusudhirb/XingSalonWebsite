@@ -1,4 +1,4 @@
-// The site's own header, for the salon offer pages (content/offer-pages/*.html, served at /hsrhaircoloroffers and the
+// The site's own header, for the salon offer pages (content/offer-pages/*.html, served at /hair-colour-offers and the
 // rest). Built as /embed/site-header.js and mounted into <div data-site-header> on each of them, inside a shadow
 // root: the site's CSS styles the header and its menus, drawer and booking form, while the page's own CSS and the
 // site's cannot reach each other. The same components as every other page, so the header never drifts.

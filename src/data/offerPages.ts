@@ -1,9 +1,9 @@
-// The three offers each salon has (hair colour, hair treatment, skin care), as the offer cards, the popup and
-// llms.txt show them: a name, the prices from the salon's posters and a photo. Each links to that salon's own offer
-// page (src/data/staticOfferPages.ts).
+// The three offers (hair colour, hair treatment, skin care), as the offer cards, the popup and llms.txt show them:
+// a name, the prices from the salons' posters and a photo. Each links to its one offer page for all three salons
+// (src/data/staticOfferPages.ts).
 import type { Img } from './content';
-import { formatPrice, type BranchId } from './offers';
-import { salonOfferPages, type OfferPageId } from './staticOfferPages';
+import { formatPrice } from './offers';
+import { offerPagePaths, type OfferPageId } from './staticOfferPages';
 
 export type { OfferPageId };
 
@@ -61,8 +61,8 @@ export const offerPages: OfferPage[] = [
 
 export const offerPage = (id: OfferPageId) => offerPages.find((page) => page.id === id)!;
 
-/** Where an offer lives for a salon: its own offer page. */
-export const offerPath = (id: OfferPageId, salon: BranchId) => salonOfferPages[salon][id];
+/** Where an offer lives: its one page for all three salons. */
+export const offerPath = (id: OfferPageId) => offerPagePaths[id];
 
 /** The lowest price on the page: "from ₹399 per streak". */
 export const fromLabel = (page: OfferPage) => {

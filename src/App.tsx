@@ -10,7 +10,7 @@ import { BookingProvider } from './context/booking';
 import { MobileStickyBar } from './components/service/MobileStickyBar';
 import { OfferSheetsProvider } from './components/offers/OfferSheets';
 import { trackContactClicks } from './lib/analytics';
-import { blogRoute, currentCategory, currentIndividualOffer, currentLegacyOffer, currentPage, currentSalon, isAbout, isBooking, isCelebrationOffers, isFaq, isIndividualOffer, isPrivacy, isReferral, isServicePage, loadCurrentPage, isMembership, isNotFound, isSalons, isServicesHub } from './lib/route';
+import { blogRoute, currentCategory, currentIndividualOffer, currentPage, currentSalon, isAbout, isBooking, isCelebrationOffers, isFaq, isIndividualOffer, isPrivacy, isReferral, isServicePage, loadCurrentPage, isMembership, isNotFound, isSalons, isServicesHub } from './lib/route';
 import { whenHydrated } from './lib/hydration';
 import { isPrerender, readyLazy, wasPrerendered } from './lib/prerender';
 import { bookingWhatsappHref } from './lib/whatsapp';
@@ -34,7 +34,6 @@ const SalonsPage = readyLazy(() => import('./pages/SalonsPage'));
 const BranchPage = readyLazy(() => import('./pages/BranchPage'));
 const NotFoundPage = readyLazy(() => import('./pages/NotFoundPage'));
 const OffersPage = readyLazy(() => import('./pages/OffersPage'));
-const LegacyOfferPage = readyLazy(() => import('./pages/LegacyOfferPage'));
 const IndividualOfferPage = readyLazy(() => import('./pages/IndividualOfferPage'));
 // Neither is needed to show a page, so both load later: the booking form on its first use, the offer popup
 // once the page has settled.
@@ -57,9 +56,7 @@ async function loadPage() {
     const { preloadBlog } = await import('./pages/blog/BlogRoutes');
     return preloadBlog(blogRoute);
   }
-  const page = currentLegacyOffer
-    ? LegacyOfferPage
-    : isIndividualOffer
+  const page = isIndividualOffer
     ? IndividualOfferPage
     : isServicePage
     ? ServicePage
@@ -182,9 +179,7 @@ export default function App() {
             placeholder stands in for the hero, instead of a blank page. */}
         <Boundary fallback={<PageSkeleton />}>
           <main id="main">
-            {currentLegacyOffer ? (
-              <LegacyOfferPage route={currentLegacyOffer} />
-            ) : currentIndividualOffer ? (
+            {currentIndividualOffer ? (
               <IndividualOfferPage offer={currentIndividualOffer} />
             ) : currentPage ? (
               <ServicePage page={currentPage} />

@@ -1,4 +1,4 @@
-/* The salon offer pages (/hsrhaircoloroffers and the rest) in the site's fonts. Loaded after each page's own styles,
+/* The salon offer pages (/hair-colour-offers and the rest) in the site's fonts. Loaded after each page's own styles,
    so the same selectors win. Only the look changes: the pages' layout, sizes, text and pictures are their own.
    Their colours are moved onto the site's palette by the build (src/lib/offerPageHtml.ts).
    Fonts and palette: src/index.css and tailwind.config.ts. */
@@ -161,3 +161,30 @@ h1 .accent, h2 .accent, .section-title .accent { font-style: italic; }
     font-size: 14px;
   }
 }
+
+/* #location on the all-salon offer pages: each salon with its own directions and number. */
+.salon-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.salon-list li { background: #fff; border: 1px solid #efd6e5; border-radius: 20px; padding: 18px 20px; }
+.salon-list h3 { font-size: 20px; }
+.salon-list address { margin: 8px 0 12px; line-height: 1.6; }
+
+/* "Choose your salon" (salon-picker.js): a bottom sheet on phones, a small modal from 641px. */
+.salon-picker { padding: 0; border: 0; background: transparent; width: 100%; max-width: 100%; margin: auto auto 0; color: var(--ink); }
+.salon-picker::backdrop { background: rgb(39 21 28 / 0.45); }
+.salon-picker-panel { background: #fffafd; border-radius: 22px 22px 0 0; padding: 18px 16px calc(18px + env(safe-area-inset-bottom)); }
+.salon-picker-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+.salon-picker-head h2 { font-size: 22px; letter-spacing: -0.02em; }
+.salon-picker-close { min-width: 44px; min-height: 44px; border: 0; background: none; font-size: 28px; line-height: 1; color: var(--ink); }
+.salon-picker-list { display: grid; gap: 10px; }
+.salon-picker-list button { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; min-height: 60px; padding: 12px 16px; text-align: left; background: #fff; border: 1px solid #e0d2de; border-radius: 16px; color: var(--ink); }
+.salon-picker-list button strong { font-size: 16px; font-weight: 600; }
+.salon-picker-list button span { font-size: 13px; color: var(--muted); }
+.salon-picker-list button:hover, .salon-picker-list button.is-current { border-color: var(--rose); background: #fff0f8; }
+@media (min-width: 641px) {
+  .salon-picker { width: min(420px, calc(100% - 32px)); margin: auto; }
+  .salon-picker-panel { border-radius: 22px; padding: 22px; }
+}
+
+/* Every WhatsApp button on the offer pages in WhatsApp green (hero, offer cards, mobile dock). */
+a.btn[href*="wa.me"], a[class*="-whatsapp"][href*="wa.me"] { background: #1FAF54; border-color: #1FAF54; color: #fff; }
+a.btn[href*="wa.me"]:hover, a[class*="-whatsapp"][href*="wa.me"]:hover { background: #1FAF54; color: #fff; filter: brightness(1.05); }

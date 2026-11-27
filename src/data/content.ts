@@ -1,9 +1,8 @@
 // Single source of truth for all site copy, links and image references.
 // Keep this file free of React/asset imports: vite.config.ts also reads it to build SEO tags.
 import { CTA } from './style';
-import { allHoursText, bookingSlots, locations as salons, ratingHeadline, SALON_HOURS, topRating, totalReviewsLabel, totalReviewsRounded } from './branches';
-import type { BranchId } from './offers';
-import { salonOfferPages } from './staticOfferPages';
+import { allHoursText, bookingSlots, ratingHeadline, SALON_HOURS, topRating, totalReviewsLabel, totalReviewsRounded } from './branches';
+import { offerPagePaths } from './staticOfferPages';
 import type { IconKey } from './pages/types';
 
 export interface Img {
@@ -952,8 +951,10 @@ export const footer = {
         { label: 'Services', href: '/services' },
         { label: 'Guides', href: '#guides' },
         { label: 'Blog', href: '/blog' },
-        // Each salon's offers, as the nav's Offers menu lists them.
-        ...salons.map((salon) => ({ label: `Offers · ${salon.name}`, href: salonOfferPages[salon.id as BranchId]['hair-colour'] })),
+        // The three offer pages, as the nav's Offers menu lists them.
+        { label: 'Hair Colour Offers', href: offerPagePaths['hair-colour'] },
+        { label: 'Hair Treatment Offers', href: offerPagePaths['hair-treatment'] },
+        { label: 'Skin Care Offers', href: offerPagePaths['skin-care'] },
         { label: 'Gift Cards & Membership', href: '/membership-gift-cards' },
       ],
     },

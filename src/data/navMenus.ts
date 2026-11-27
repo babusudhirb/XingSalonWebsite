@@ -3,8 +3,7 @@ import { locations, salonsPath } from './branches';
 import type { Img } from './content';
 import { celebrationOffersPath } from './celebrationOffers';
 import { membershipPath } from './membershipLinks';
-import type { BranchId } from './offers';
-import { salonOfferPages, type OfferPageId } from './staticOfferPages';
+import { offerPagePaths, type OfferPageId } from './staticOfferPages';
 
 
 export interface NavMenuItem {
@@ -36,25 +35,15 @@ const GIFT_ITEMS: NavMenuItem[] = [
 ];
 
 const OFFER_LINKS: { id: OfferPageId; label: string }[] = [
-  { id: 'hair-colour', label: 'Hair Colour' },
-  { id: 'hair-treatment', label: 'Hair Treatment' },
-  { id: 'skin-care', label: 'Skin Care' },
+  { id: 'hair-colour', label: 'Hair Colour Offers' },
+  { id: 'hair-treatment', label: 'Hair Treatment Offers' },
+  { id: 'skin-care', label: 'Skin Care Offers' },
 ];
 
-/** Visitors choose the offer family first, then their location. These legacy destinations stay intact for campaigns and ads. */
+/** One flat link per treatment, straight to its offer page; the salon is chosen there, on WhatsApp, Call or Book. */
 export const offersMenu = (): NavMenu => ({
   title: 'Offers',
-  items: [
-    ...OFFER_LINKS.map((offer) => ({
-      label: offer.label,
-      href: salonOfferPages['hsr-layout'][offer.id],
-      links: locations.map((salon) => ({
-        label: `Xing ${salon.name}`,
-        href: salon.id === 'brookfield' ? 'https://xingsalon.com/' : salonOfferPages[salon.id as BranchId][offer.id],
-      })),
-    })),
-    ...GIFT_ITEMS,
-  ],
+  items: [...OFFER_LINKS.map((offer) => ({ label: offer.label, href: offerPagePaths[offer.id] })), ...GIFT_ITEMS],
 });
 
 export const salonsMenu: NavMenu = {

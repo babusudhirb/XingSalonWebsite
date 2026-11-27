@@ -8,15 +8,14 @@ import type { ServicePageContent } from '../data/pages/types';
 import { privacyPath } from '../data/privacy';
 import { offersPath } from '../data/offers';
 import { categoryBySlug, redirects, servicesHubPath } from '../data/services';
-import { legacyOfferByPath } from '../data/staticOfferPages';
+import { staticPages } from '../data/staticOfferPages';
 import { individualOfferById } from '../data/individualOffers';
 
 // Pages are separate documents (plain links, full page loads), so the route is fixed for the page's lifetime.
 const path = window.location.pathname.replace(/\/+$/, '') || '/';
 if (path in redirects) window.location.replace(redirects[path]);
-/** One of the historic offer addresses, now served by the shared React offer page. */
-export const currentLegacyOffer = legacyOfferByPath[path];
-export const isStaticPage = !!currentLegacyOffer;
+/** One of the offer pages served as supplied (/hair-colour-offers and the rest), with the site's header embedded. */
+export const isStaticPage = staticPages.includes(path);
 /** A shareable evergreen offer detail page. */
 export const currentIndividualOffer = individualOfferById(path.match(/^\/offers\/([a-z0-9-]+)$/)?.[1] ?? '');
 export const isIndividualOffer = !!currentIndividualOffer;

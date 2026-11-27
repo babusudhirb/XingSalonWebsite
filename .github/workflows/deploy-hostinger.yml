@@ -156,11 +156,8 @@ jobs:
           [[ "$homepage" != *'/src/main.tsx'* ]]
           [[ "$homepage" == *'/assets/index-'* ]]
           for path in \
-            /sarjapaurahaircoloroffers/ \
-            /sarjapurahairtreatmentoffers/ \
-            /sarjapuraskincareoffers/ \
-            /hsrhaircoloroffers/ \
-            /hsrhairtreatmentoffers/ \
-            /hsrskincareoffers/; do
+            /hair-colour-offers \
+            /hair-treatment-offers \
+            /skin-care-offers; do
             curl --fail --silent --show-error "https://xingsalons.com$path" | grep -q 'data-site-header'
           done

@@ -127,8 +127,8 @@ export function blendOfferPage(html: string, inject: Inject, path = '') {
       .replace(header, '')
       .replace(/<body([^>]*)>/, '<body$1>\n<div data-site-header></div>')
       .replace(wordmark, `$1${FOOTER_LOGO}$2`)
-      // These supplied pages live at clean URLs such as /sarjapaurahaircoloroffers/. Their original `images/...`
-      // references would therefore resolve to /sarjapaurahaircoloroffers/images/... instead of the shared public
+      // These supplied pages live at clean URLs such as /hair-colour-offers. Their original `images/...`
+      // references would therefore resolve to /hair-colour-offers/images/... instead of the shared public
       // image directory. Make every image reference root-relative in the generated page, including gallery scripts.
       .replace(/(["'(])images\//g, '$1/images/')
       .replace('</head>', `${inject.head}\n</head>`)

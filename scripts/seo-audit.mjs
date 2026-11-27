@@ -25,7 +25,7 @@ const inDist = (href) => {
   return existsSync(file) || existsSync(`${file}.html`);
 };
 // The salon offer pages (public/, src/data/staticOfferPages.ts), served as supplied: their head is their own.
-const copiedPages = new Set([...readFileSync('src/data/staticOfferPages.ts', 'utf8').matchAll(/'(\/[a-z]+offers)'/g)].map((m) => m[1]));
+const copiedPages = new Set([...readFileSync('src/data/staticOfferPages.ts', 'utf8').matchAll(/'(\/[a-z-]+-offers)'/g)].map((m) => m[1]));
 
 /** The page body: the first-paint shell plus the app root, or a copied page's whole <body> (public/<slug>.html). */
 function bodyOf(html) {

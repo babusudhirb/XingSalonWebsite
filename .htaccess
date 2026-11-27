@@ -1,6 +1,11 @@
 Options -MultiViews
 RewriteEngine On
 
+# The six per-salon offer pages became one page per offer for all three salons (src/data/services.ts → redirects).
+RewriteRule ^(sarjapaurahaircoloroffers|sarjapurahaircoloroffers|hsrhaircoloroffers)(\.html)?/?$ /hair-colour-offers [R=301,L]
+RewriteRule ^(sarjapurahairtreatmentoffers|hsrhairtreatmentoffers)(\.html)?/?$ /hair-treatment-offers [R=301,L]
+RewriteRule ^(sarjapuraskincareoffers|hsrskincareoffers)(\.html)?/?$ /skin-care-offers [R=301,L]
+
 # The production build creates one pre-rendered .html file per page. Vercel
 # previously removed the extension automatically; Hostinger needs this rule to
 # resolve the site's clean URLs (for example, /services/hair-care).

@@ -1,0 +1,221 @@
+/* The salon offer pages (/hair-colour-offers and the rest) in the site's fonts. Loaded after each page's own styles,
+   so the same selectors win. Only the look changes: the pages' layout, sizes, text and pictures are their own.
+   Their colours are moved onto the site's palette by the build (src/lib/offerPageHtml.ts).
+   Fonts and palette: src/index.css and tailwind.config.ts. */
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url('/fonts/cormorant-garamond.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: italic;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/cormorant-garamond-italic-500.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('/fonts/poppins-300.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/poppins-400.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/poppins-500.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* The pages' 700 and 800 weights use the site's heaviest, as the site never goes past 600. */
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600 900;
+  font-display: swap;
+  src: url('/fonts/poppins-600.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  --sans: Poppins, 'Poppins Fallback', system-ui, sans-serif;
+  --display: 'Cormorant Garamond', Georgia, serif;
+  /* The buttons' pink-to-violet blend: the site's solid berry. */
+  --blend: linear-gradient(110deg, #A8325E 0%, #A8325E 100%);
+}
+
+/* Headings in Cormorant Garamond at medium weight, as across the site; accent words in its italic. */
+h1, h2, h3, h4, .title, .section-title, .wordmark {
+  font-family: var(--display);
+  font-weight: 500;
+  letter-spacing: 0;
+}
+h1 .accent, h2 .accent, .section-title .accent { font-style: italic; }
+
+/* Small capitals labels, as the site's eyebrows. */
+.kicker { font-weight: 500; letter-spacing: 0.22em; }
+
+/* The site's logo in the footer, at the site footer's size (h-12). */
+.footer .brand .site-logo { display: block; height: 48px; width: auto; max-width: none; }
+
+/* The site's header (/embed/site-header.js): its place is kept while it loads, so nothing moves (60px on phones;
+   the 32px salon bar and the 76px header from 1024px). */
+[data-site-header] { display: block; min-height: 3.75rem; font-weight: 400; line-height: 1.5; }
+@media (min-width: 1024px) {
+  [data-site-header] { min-height: calc(2rem + 4.75rem); }
+}
+
+/*
+  Hair-colour offer pages are supplied legacy documents. Their original phone rules
+  made labels 9–10px and several interactive controls only 40px high.  Keep the
+  supplied desktop composition intact; on a phone, make the same content readable
+  and comfortably tappable instead.
+*/
+@media (max-width: 640px) {
+  body.hair-colour-offers .announcement {
+    min-height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    line-height: 1.35;
+  }
+
+  body.hair-colour-offers .hero h1 {
+    font-size: clamp(44px, 12.5vw, 58px);
+  }
+
+  body.hair-colour-offers .hero-reassurance,
+  body.hair-colour-offers .hero-trust,
+  body.hair-colour-offers .hero-visual-top,
+  body.hair-colour-offers .hero-visual-foot,
+  body.hair-colour-offers .reference-note {
+    font-size: 11px;
+  }
+
+  body.hair-colour-offers .hero-actions .btn,
+  body.hair-colour-offers .reference-actions .btn,
+  body.hair-colour-offers .offer-actions .btn,
+  body.hair-colour-offers .color-help .btn {
+    min-height: 48px;
+    font-size: 12px;
+  }
+
+  body.hair-colour-offers .hero-picker {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-snap-type: inline proximity;
+    padding-bottom: 5px;
+  }
+
+  body.hair-colour-offers .hero-picker button {
+    flex: 0 0 auto;
+    min-height: 44px;
+    padding-inline: 14px;
+    font-size: 11px;
+    scroll-snap-align: start;
+  }
+
+  body.hair-colour-offers .hero-enquire {
+    min-height: 44px;
+    font-size: 12px;
+  }
+
+  body.hair-colour-offers .offer-tabs a {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    font-size: 12px;
+  }
+
+  body.hair-colour-offers .offer-category,
+  body.hair-colour-offers .offer-category span:first-child,
+  body.hair-colour-offers .offer-price small,
+  body.hair-colour-offers .offers-note,
+  body.hair-colour-offers .kicker {
+    font-size: 11px;
+  }
+
+  body.hair-colour-offers .offer-info > p,
+  body.hair-colour-offers .section-top .section-intro,
+  body.hair-colour-offers .enquire-copy > p,
+  body.hair-colour-offers .steps p,
+  body.hair-colour-offers .faq-list details p {
+    font-size: 14px;
+  }
+}
+
+/* #location on the all-salon offer pages: each salon with its own directions and number. */
+.salon-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.salon-list li { background: #fff; border: 1px solid #efd6e5; border-radius: 20px; padding: 18px 20px; }
+.salon-list h3 { font-size: 20px; }
+.salon-list address { margin: 8px 0 12px; line-height: 1.6; }
+
+/* "Choose your salon" (salon-picker.js), as on the rest of the site (src/components/BranchPicker.tsx): a bottom sheet on
+   phones, a modal from 641px. Each salon shows its areas and, for a call or WhatsApp, the number it will reach. */
+.salon-picker { padding: 0; border: 0; background: transparent; width: 100%; max-width: 100%; margin: auto auto 0; color: var(--ink); }
+.salon-picker::backdrop { background: rgb(39 21 28 / 0.45); }
+.salon-picker-panel { background: #fff9f8; border-radius: 22px 22px 0 0; padding: 22px 20px calc(14px + env(safe-area-inset-bottom)); }
+.salon-picker-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 6px; }
+.salon-picker-head h2 { font-size: 26px; line-height: 1.15; letter-spacing: -0.01em; font-weight: 500; }
+.salon-picker-close { flex: none; min-width: 44px; min-height: 44px; margin: -6px -8px 0 0; border: 0; border-radius: 999px; background: none; font-size: 28px; line-height: 1; color: var(--ink); cursor: pointer; }
+.salon-picker-close:hover { background: #fce4ea; color: #a8325e; }
+.salon-picker-list { display: grid; }
+.salon-picker-list button { display: flex; align-items: center; gap: 16px; width: 100%; min-height: 64px; padding: 16px 0; text-align: left; background: none; border: 0; border-top: 1px solid rgb(39 21 28 / 0.1); color: var(--ink); font: inherit; cursor: pointer; }
+.salon-picker-list button:first-child { border-top: 0; }
+.salon-picker-list button:focus-visible { outline: 2px solid #a8325e; outline-offset: 2px; border-radius: 12px; }
+.salon-picker-icon { flex: none; display: grid; place-items: center; width: 48px; height: 48px; border-radius: 999px; background: #fce4ea; color: #a8325e; }
+.salon-picker[data-action="whatsapp"] .salon-picker-icon { background: #dff1e6; color: #1faf54; }
+.salon-picker-icon svg { width: 22px; height: 22px; }
+.salon-picker-text { flex: 1; min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 3px; }
+.salon-picker-name { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; font-size: 17px; font-weight: 600; }
+.salon-picker-badge { display: none; padding: 2px 8px; border-radius: 999px; background: #d2a445; color: var(--ink); font-size: 12px; font-weight: 600; white-space: nowrap; }
+.salon-picker-list button.is-current .salon-picker-badge { display: inline-block; }
+.salon-picker-areas { display: flex; align-items: flex-start; gap: 6px; min-width: 0; font-size: 14px; line-height: 1.4; color: var(--muted); }
+.salon-picker-areas svg { flex: none; width: 14px; height: 14px; margin-top: 2px; }
+.salon-picker-phone { font-size: 15px; font-weight: 500; color: var(--ink); }
+.salon-picker-phone:empty { display: none; }
+.salon-picker-chevron { flex: none; width: 20px; height: 20px; color: #a8325e; transition: transform 0.2s; }
+.salon-picker-list button:hover .salon-picker-chevron { transform: translateX(4px); }
+@media (min-width: 641px) {
+  .salon-picker { width: min(560px, calc(100% - 32px)); margin: auto; }
+  .salon-picker-panel { border-radius: 22px; padding: 28px 32px 18px; }
+  .salon-picker-head h2 { font-size: 30px; }
+}
+
+/* The offer cards' action row (offer-actions.js): a large "Call now" across the card, then WhatsApp and a smaller
+   "Book free consultation" side by side. */
+.offer-actions.offer-cta { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: stretch; }
+.offer-act { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 10px 14px; border-radius: 14px; border: 1.5px solid transparent; font: inherit; font-weight: 700; font-size: 14px; line-height: 1.2; text-align: center; text-decoration: none; cursor: pointer; transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease, background 0.18s ease; }
+.offer-act svg { flex: none; width: 20px; height: 20px; }
+.offer-act:hover { transform: translateY(-2px); }
+.offer-act:focus-visible { outline: 2px solid #a8325e; outline-offset: 3px; }
+.offer-act-call { grid-column: 1 / -1; min-height: 58px; font-size: 18px; letter-spacing: 0.01em; background: #a8325e; color: #fff; box-shadow: 0 12px 24px -14px rgb(168 50 94 / 0.8); }
+.offer-act-call svg { width: 22px; height: 22px; }
+.offer-act-call:hover { background: #87244a; color: #fff; }
+a.offer-act-whatsapp { background: #1faf54; border-color: #1faf54; color: #fff; }
+a.offer-act-whatsapp:hover { background: #1faf54; color: #fff; filter: brightness(1.05); }
+.offer-act-book { background: #fff; border-color: #a8325e; color: #a8325e; font-size: 13px; font-weight: 600; }
+.offer-act-book:hover { background: #fce4ea; color: #87244a; }
+@media (max-width: 360px) { .offer-act { font-size: 13px; padding-inline: 10px; } .offer-act-book { font-size: 12px; } }
+
+/* Every WhatsApp button on the offer pages in WhatsApp green (hero, offer cards, mobile dock). */
+a.btn[href*="wa.me"], a[class*="-whatsapp"][href*="wa.me"] { background: #1FAF54; border-color: #1FAF54; color: #fff; }
+a.btn[href*="wa.me"]:hover, a[class*="-whatsapp"][href*="wa.me"]:hover { background: #1FAF54; color: #fff; filter: brightness(1.05); }
